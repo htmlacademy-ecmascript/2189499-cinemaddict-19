@@ -8,6 +8,8 @@ import SortView from '../view/sort-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import FilmListTitleView from '../view/film-list-title-view.js';
 import SectionFilmListExtraView from '../view/section-film-list-extra-view.js';
+import UserNameStatusView from '../view/user-name-status-view.js';
+import FooterStatisticsView from '../view/footer-statistics-view.js';
 
 export default class BoardPresenter {
   sectionFilmsComponent = new SectionFilmsView();
@@ -17,16 +19,24 @@ export default class BoardPresenter {
   sortComponent = new SortView();
   showMoreButton = new ShowMoreButtonView();
   filmListTitle = new FilmListTitleView();
+  userNameStatusComponent = new UserNameStatusView();
+  footerStatisticsConponent = new FooterStatisticsView();
 
-  constructor({boardContainer}) {
-    this.boardContainer = boardContainer;
+  constructor({header, main, footer}) {
+    this.header = header;
+    this.main = main;
+    this.footer = footer;
   }
 
-  init() {
-    render(this.menuComponent, this.boardContainer);
-    render(this.sortComponent, this.boardContainer);
+  initHeader() {
+    render(this.userNameStatusComponent, this.header);
+  }
+
+  initMain() {
+    render(this.menuComponent, this.main);
+    render(this.sortComponent, this.main);
     render(this.filmListTitle, this.filmListComponent.getElement());
-    render(this.sectionFilmsComponent, this.boardContainer);
+    render(this.sectionFilmsComponent, this.main);
     render(this.filmListComponent, this.sectionFilmsComponent.getElement());
     render(this.filmListContainerComponent, this.filmListComponent.getElement());
     for (let i = 0; i < 5; i++) {
@@ -35,5 +45,9 @@ export default class BoardPresenter {
     render(this.showMoreButton, this.filmListComponent.getElement());
     render(new SectionFilmListExtraView(), this.sectionFilmsComponent.getElement());
     render(new SectionFilmListExtraView(), this.sectionFilmsComponent.getElement());
+  }
+
+  initFooter() {
+    render(this.footerStatisticsConponent, this.footer);
   }
 }
