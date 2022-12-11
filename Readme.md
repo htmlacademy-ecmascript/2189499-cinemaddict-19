@@ -1,7 +1,7 @@
 # Проект «Киноман»
 
 * Студент: [Александр Сорокин](https://up.htmlacademy.ru/ecmascript/19/user/2189499).
-* Наставник: [Yury Lavrukhin](https://htmlacademy.ru/profile/id2038891).
+* Наставник: [Дмитрий Сацукевич](https://htmlacademy.ru/profile/id2221953).
 
 ---
 
