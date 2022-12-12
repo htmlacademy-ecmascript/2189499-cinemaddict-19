@@ -1,3 +1,4 @@
+import { getRandomArrayElement } from '../utils';
 
 
 const mockMovie = [
@@ -8,7 +9,7 @@ const mockMovie = [
     ],
     'film_info': {
       'title': 'Control',
-      'alternative_title': 'Kolobok povesilsa',
+      'alternative_title': 'Post-punk',
       'total_rating': 8.3,
       'poster': 'images/posters/control.jpeg',
       'age_rating': 16,
@@ -231,3 +232,9 @@ const mockComments =
     'date': '2019-05-11T16:12:32.554Z',
     'emotion': 'smile'
   };
+
+function getRandomMovie() {
+  return getRandomArrayElement(mockMovie);
+}
+
+export {getRandomMovie};
