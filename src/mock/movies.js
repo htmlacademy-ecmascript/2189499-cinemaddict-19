@@ -1,12 +1,76 @@
 import { getRandomArrayElement } from '../utils';
 
+const mockComments = [
+  {
+    id: 0,
+    author: 'Ilya OReilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
+  },
+  {
+    id: 1,
+    author: 'Ilya OReilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
+  },
+  {
+    id: 2,
+    author: 'Ilya OReilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
+  },
+  {
+    id: 3,
+    author: 'Ilya OReilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
+  },
+  {
+    id: 4,
+    author: 'Ilya OReilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
+  },
+  {
+    id: 5,
+    author: 'Ilya OReilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
+  },
+  {
+    id: 6,
+    authr: 'Ilya OReilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
+  },
+  {
+    id: 7,
+    author: 'Ilya OReilly',
+    comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
+    date: '2019-05-11T16:12:32.554Z',
+    emotion: 'smile'
+  },
+];
+
+console.log(mockComments[0]);
 
 const mockMovie = [
   {
-    'id': '0',
-    // 'comments': [
-    //   $Comment.id$, $Comment.id$
-    // ],
+    id: 0,
+    comments: [
+      mockComments[0],
+      mockComments[1],
+      mockComments[3],
+      mockComments[4],
+      mockComments[5],
+    ],
     filmInfo: {
       title: 'The Man With Golden Arm',
       alternativeTitle: 'Laziness Who Sold Themselves',
@@ -39,10 +103,14 @@ const mockMovie = [
   },
 
   {
-    'id': '1',
-    // 'comments': [
-    //   $Comment.id$, $Comment.id$
-    // ],
+    id: 1,
+    comments: [
+      mockComments[0],
+      mockComments[1],
+      mockComments[3],
+      mockComments[4],
+      mockComments[5],
+    ],
     filmInfo: {
       title: 'Made For Each Other',
       alternativeTitle: 'Laziness Who Sold Themselves',
@@ -75,10 +143,14 @@ const mockMovie = [
   },
 
   {
-    'id': '2',
-    // 'comments': [
-    //   $Comment.id$, $Comment.id$
-    // ],
+    id: 2,
+    comments: [
+      mockComments[0],
+      mockComments[1],
+      mockComments[3],
+      mockComments[4],
+      mockComments[5],
+    ],
     filmInfo: {
       title: 'Popeye Meets Sindbad',
       alternativeTitle: 'Laziness Who Sold Themselves',
@@ -111,10 +183,14 @@ const mockMovie = [
   },
 
   {
-    'id': '3',
-    // 'comments': [
-    //   $Comment.id$, $Comment.id$
-    // ],
+    id: 3,
+    comments: [
+      mockComments[0],
+      mockComments[1],
+      mockComments[3],
+      mockComments[4],
+      mockComments[5],
+    ],
     filmInfo: {
       title: 'Sagebrush Trail',
       alternativeTitle: 'Laziness Who Sold Themselves',
@@ -147,10 +223,14 @@ const mockMovie = [
   },
 
   {
-    'id': '4',
-    // 'comments': [
-    //   $Comment.id$, $Comment.id$
-    // ],
+    id: 4,
+    comments: [
+      mockComments[0],
+      mockComments[1],
+      mockComments[3],
+      mockComments[4],
+      mockComments[5],
+    ],
     filmInfo: {
       title: 'The Great Flamrion',
       alternativeTitle: 'Laziness Who Sold Themselves',
@@ -183,10 +263,14 @@ const mockMovie = [
   },
 
   {
-    'id': '5',
-    // 'comments': [
-    //   $Comment.id$, $Comment.id$
-    // ],
+    id: 5,
+    comments: [
+      mockComments[0],
+      mockComments[1],
+      mockComments[3],
+      mockComments[4],
+      mockComments[5],
+    ],
     filmInfo: {
       title: 'Santa Claus Conquers The Martrians',
       alternativeTitle: 'Laziness Who Sold Themselves',
@@ -218,15 +302,6 @@ const mockMovie = [
     }
   }
 ];
-
-// const mockComments =
-//   {
-//     'id': '1',
-//     'author': 'Ilya O\'Reilly',
-//     'comment': 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
-//     'date': '2019-05-11T16:12:32.554Z',
-//     'emotion': 'smile'
-//   };
 
 function getRandomMovie() {
   return (getRandomArrayElement(mockMovie));
