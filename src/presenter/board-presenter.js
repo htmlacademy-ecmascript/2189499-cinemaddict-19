@@ -10,8 +10,10 @@ import FilmListTitleView from '../view/film-list-title-view.js';
 import SectionFilmListExtraView from '../view/section-film-list-extra-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';
 import FooterStatisticsView from '../view/footer-statistics-view.js';
+import PopupView from '../view/popup-view';
 
 export default class BoardPresenter {
+  popupView = new PopupView();
   sectionFilmsComponent = new SectionFilmsView();
   filmListComponent = new FilmListView();
   filmListContainerComponent = new FilmListContainerView();
@@ -22,11 +24,12 @@ export default class BoardPresenter {
   userNameStatusComponent = new UserNameStatusView();
   footerStatisticsConponent = new FooterStatisticsView();
 
-  constructor({header, main, footer, movieModel}) {
+  constructor({header, main, footer, movieModel, body}) {
     this.header = header;
     this.main = main;
     this.footer = footer;
     this.movieModel = movieModel;
+    this.body = body;
   }
 
   initHeader() {
@@ -52,6 +55,10 @@ export default class BoardPresenter {
 
   initFooter() {
     render(this.footerStatisticsConponent, this.footer);
+  }
+
+  initPopup() {
+    render(this.popupView,this.body);
   }
 }
 
