@@ -1,1 +1,1 @@
-const emotion = ['smile', 'sleeping', 'puke', 'angry'];
+const emotions = ['smile', 'sleeping', 'puke', 'angry'];
