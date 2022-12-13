@@ -35,7 +35,7 @@ export default class BoardPresenter {
 
   initMain() {
     this.listMovie = [...this.movieModel.getMovie()];
-    console.log([...this.movieModel.getMovie()]);
+    // console.log([...this.movieModel.getMovie[i]()]);
     render(this.menuComponent, this.main);
     render(this.sortComponent, this.main);
     render(this.filmListTitle, this.filmListComponent.getElement());

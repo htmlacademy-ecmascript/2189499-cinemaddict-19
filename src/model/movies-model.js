@@ -6,7 +6,6 @@ export default class MovieModel {
   movie = Array.from({length: MOVIE_COUNT}, getRandomMovie);
 
   getMovie() {
-    console.log(this.movie);
     return this.movie;
   }
 }

@@ -1,9 +1,10 @@
 import {createElement} from '../render.js';
 
-function createCardFilmsTemplate() {
+function createCardFilmsTemplate(movie) {
+  console.log(movie);
   return `<article class="film-card">
   <a class="film-card__link">
-    <h3 class="film-card__title">Sagebrush Trail</h3>
+    <h3 class="film-card__title"></h3>
     <p class="film-card__rating">3.2</p>
     <p class="film-card__info">
       <span class="film-card__year">1933</span>
@@ -23,8 +24,12 @@ function createCardFilmsTemplate() {
 }
 
 export default class CardFilmsView {
+  constructor({movie}) {
+    this.movie = movie;
+  }
+
   getTemplate() {
-    return createCardFilmsTemplate();
+    return createCardFilmsTemplate(this.task);
   }
 
   getElement() {
