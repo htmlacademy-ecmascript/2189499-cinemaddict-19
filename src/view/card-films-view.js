@@ -1,18 +1,18 @@
 import {createElement} from '../render.js';
 
 function createCardFilmsTemplate(movie) {
-  console.log(movie);
+  const {filmInfo} = movie;
   return `<article class="film-card">
   <a class="film-card__link">
-    <h3 class="film-card__title"></h3>
-    <p class="film-card__rating">3.2</p>
+    <h3 class="film-card__title">${filmInfo.title}</h3>
+    <p class="film-card__rating">${filmInfo.totalRating}</p>
     <p class="film-card__info">
-      <span class="film-card__year">1933</span>
-      <span class="film-card__duration">54m</span>
-      <span class="film-card__genre">Western</span>
+      <span class="film-card__year"></span>
+      <span class="film-card__duration">${filmInfo.duration}m</span>
+      <span class="film-card__genre">${filmInfo.genre}</span>
     </p>
-    <img src="./images/posters/sagebrush-trail.jpg" alt="" class="film-card__poster">
-    <p class="film-card__description">Sentenced for a murder he did not commit, John Brant escapes from prison determined to find the real killer. By chance Brant's narrow escap…</p>
+    <img src="./images/posters/${filmInfo.poster}" alt="" class="film-card__poster">
+    <p class="film-card__description">${filmInfo.description}</p>
     <span class="film-card__comments">89 comments</span>
   </a>
   <div class="film-card__controls">
@@ -29,7 +29,7 @@ export default class CardFilmsView {
   }
 
   getTemplate() {
-    return createCardFilmsTemplate(this.task);
+    return createCardFilmsTemplate(this.movie);
   }
 
   getElement() {
