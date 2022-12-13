@@ -22,10 +22,11 @@ export default class BoardPresenter {
   userNameStatusComponent = new UserNameStatusView();
   footerStatisticsConponent = new FooterStatisticsView();
 
-  constructor({header, main, footer}) {
+  constructor({header, main, footer, movieModel}) {
     this.header = header;
     this.main = main;
     this.footer = footer;
+    this.movieModel = movieModel;
   }
 
   initHeader() {
@@ -33,14 +34,16 @@ export default class BoardPresenter {
   }
 
   initMain() {
+    this.listMovie = [...this.movieModel.getMovie()];
+    console.log([...this.movieModel.getMovie()]);
     render(this.menuComponent, this.main);
     render(this.sortComponent, this.main);
     render(this.filmListTitle, this.filmListComponent.getElement());
     render(this.sectionFilmsComponent, this.main);
     render(this.filmListComponent, this.sectionFilmsComponent.getElement());
     render(this.filmListContainerComponent, this.filmListComponent.getElement());
-    for (let i = 0; i < 5; i++) {
-      render(new CardFilmsView(), this.filmListContainerComponent.getElement());
+    for (let i = 0; i < this.listMovie.length; i++) {
+      render(new CardFilmsView({movie: this.listMovie[i]}), this.filmListContainerComponent.getElement());
     }
     render(this.showMoreButton, this.filmListComponent.getElement());
     render(new SectionFilmListExtraView(), this.sectionFilmsComponent.getElement());
@@ -51,3 +54,5 @@ export default class BoardPresenter {
     render(this.footerStatisticsConponent, this.footer);
   }
 }
+
+
