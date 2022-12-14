@@ -11,7 +11,7 @@ function humanizeMovieDueDate(dueDate) {
 }
 
 function humanizeMovieDuration(durationTime) {
-  return dayjs.duration(durationTime, 'minutes').format(DURATION_FORMAT);
+  return durationTime ? dayjs.duration(durationTime, 'minutes').format(DURATION_FORMAT) : '';
 }
 
 function getRandomArrayElement(items) {
