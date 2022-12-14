@@ -56,8 +56,8 @@ export default class BoardPresenter {
   }
 
   initPopup() {
-    this.listMovie = this.movieModel.getPopupMovie();
-    render(new PopupView(this.listMovie), this.body);
+    this.popupMovie = this.movieModel.getPopupMovie();
+    render(new PopupView(this.popupMovie), this.body);
   }
 }
 
