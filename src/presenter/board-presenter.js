@@ -11,6 +11,15 @@ import SectionFilmListExtraView from '../view/section-film-list-extra-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';
 import FooterStatisticsView from '../view/footer-statistics-view.js';
 import PopupView from '../view/popup-view';
+import PopupFilmCommentView from '../view/popup-film-details-new-comment-view.js';
+import PopupFilmSectionView from '../view/popup-film-section-view.js';
+import PopupFilmCommentListView from '../view/popup-film-comment-list-view.js';
+import PopupFilmDetailsInnerView from '../view/popup-film-details-inner-view.js';
+import PopupFilmDetailsBottomContainerView from '../view/popup-film-details-bottom-container-view.js';
+import PopupFilmDetailsCommentsWrapView from '../view/popup-film-details-comments-wrap-view.js';
+import PopupFilmDetailsCommentsTitleView from '../view/popup-film-details-comments-title-view.js';
+import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-view.js';
+import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
 
 export default class BoardPresenter {
   sectionFilmsComponent = new SectionFilmsView();
@@ -22,6 +31,12 @@ export default class BoardPresenter {
   filmListTitle = new FilmListTitleView();
   userNameStatusComponent = new UserNameStatusView();
   footerStatisticsConponent = new FooterStatisticsView();
+  popupFilmSectionView = new PopupFilmSectionView();
+  popupFilmCommentList = new PopupFilmCommentListView();
+  popupFilmFeatilsInnerView = new PopupFilmDetailsInnerView();
+  popupFilmDetailsBottomContainerView = new PopupFilmDetailsBottomContainerView();
+  popupFilmDetailsCommentsWrapView = new PopupFilmDetailsCommentsWrapView();
+  popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
 
   constructor({header, main, footer, movieModel, body}) {
     this.header = header;
@@ -57,7 +72,17 @@ export default class BoardPresenter {
 
   initPopup() {
     this.popupMovie = this.movieModel.getPopupMovie();
-    render(new PopupView(this.popupMovie), this.body);
+    render(this.popupFilmSectionView, this.body);
+    // render(this.popupFilmCommentList, this.popupFilmSectionView.getElement());
+    render(this.popupFilmFeatilsInnerView, this.popupFilmSectionView.getElement());
+    render(new PopupView(this.popupMovie), this.popupFilmFeatilsInnerView.getElement());
+    render(this.popupFilmDetailsBottomContainerView, this.popupFilmFeatilsInnerView.getElement());
+    render(this.popupFilmDetailsCommentsWrapView, this.popupFilmDetailsBottomContainerView.getElement());
+    render(new PopupFilmDetailsCommentsTitleView(), this.popupFilmDetailsCommentsWrapView.getElement());
+    render(this.popupFilmCommentList,this.popupFilmDetailsCommentsWrapView.getElement());
+    render(new PopupFilmCommentStructureView(), this.popupFilmCommentList.getElement());
+    render(this.popupFilmDetailNewCommentView, this.popupFilmDetailsCommentsWrapView.getElement());
+    // render(new PopupFilmCommentView(), this.popupFilmSectionView.getElement());
   }
 }
 

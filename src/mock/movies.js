@@ -178,11 +178,7 @@ const mockMovie = [
   {
     id: 0,
     comments: [
-      mockComments[0],
-      mockComments[1],
-      mockComments[3],
-      mockComments[4],
-      mockComments[5],
+      1,2,3
     ],
     filmInfo: {
       title: 'The Man With Golden Arm',
@@ -218,13 +214,7 @@ const mockMovie = [
   {
     id: 1,
     comments: [
-      mockComments[0],
-      mockComments[1],
-      mockComments[3],
-      mockComments[4],
-      mockComments[5],
-      mockComments[6],
-      mockComments[7],
+      4,3,6,7
     ],
     filmInfo: {
       title: 'Made For Each Other',
@@ -297,7 +287,7 @@ const mockMovie = [
   {
     id: 3,
     comments: [
-      mockComments[10],
+      3,6,8,
     ],
     filmInfo: {
       title: 'Sagebrush Trail',
@@ -333,6 +323,7 @@ const mockMovie = [
   {
     id: 4,
     comments: [
+      3,1,2
     ],
     filmInfo: {
       title: 'The Great Flamrion',
@@ -368,16 +359,7 @@ const mockMovie = [
   {
     id: 5,
     comments: [
-      mockComments[10],
-      mockComments[11],
-      mockComments[12],
-      mockComments[13],
-      mockComments[14],
-      mockComments[15],
-      mockComments[16],
-      mockComments[17],
-      mockComments[18],
-      mockComments[19],
+      2,1,5,6
     ],
     filmInfo: {
       title: 'Santa Claus Conquers The Martrians',
