@@ -2,7 +2,7 @@ import {createElement} from '../render.js';
 import { humanizeMovieDuration } from '../utils.js';
 import { humanizeReleaseDate } from '../utils.js';
 function createPopupTemplate(popupMovie) {
-  const {id, filmInfo} = popupMovie;
+  const {filmInfo, comments} = popupMovie;
   return `<section class="film-details">
   <div class="film-details__inner">
     <div class="film-details__top-container">
@@ -77,7 +77,7 @@ function createPopupTemplate(popupMovie) {
 
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">4</span></h3>
+        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
         <ul class="film-details__comments-list">
           <li class="film-details__comment">
