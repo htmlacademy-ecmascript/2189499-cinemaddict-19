@@ -189,7 +189,7 @@ const mockMovie = [
       alternativeTitle: 'Laziness Who Sold Themselves',
       totalRating: 10,
       poster: 'the-man-with-the-golden-arm.jpg',
-      ageRating: 0,
+      ageRating: 6,
       director: 'Tom Ford',
       writers: [
         'Takeshi Kitano'
@@ -231,7 +231,7 @@ const mockMovie = [
       alternativeTitle: 'Laziness Who Sold Themselves',
       totalRating: 5,
       poster: 'made-for-each-other.png',
-      ageRating: 0,
+      ageRating: 12,
       director: 'Arlanda Bloom',
       writers: [
         'Jhone Depth'
@@ -316,7 +316,7 @@ const mockMovie = [
         date: '2003-01-01T00:00:00.000Z',
         releaseCountry: 'Sweden'
       },
-      duration: 25,
+      duration: 110,
       genre: [
         'Arthouse'
       ],
@@ -339,7 +339,7 @@ const mockMovie = [
       alternativeTitle: 'Laziness Who Sold Themselves',
       totalRating: 7.7,
       poster: 'the-great-flamarion.jpg',
-      ageRating: 0,
+      ageRating: 18,
       director: 'Aphex Twin',
       writers: [
         'Rodger Whaters'
@@ -384,7 +384,7 @@ const mockMovie = [
       alternativeTitle: 'Laziness Who Sold Themselves',
       totalRating: 5.1,
       poster: 'santa-claus-conquers-the-martians.jpg',
-      ageRating: 0,
+      ageRating: 12,
       director: 'Tom Ford',
       writers: [
         'Leonardo Dicapro'

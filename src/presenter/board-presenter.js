@@ -13,7 +13,6 @@ import FooterStatisticsView from '../view/footer-statistics-view.js';
 import PopupView from '../view/popup-view';
 
 export default class BoardPresenter {
-  popupView = new PopupView();
   sectionFilmsComponent = new SectionFilmsView();
   filmListComponent = new FilmListView();
   filmListContainerComponent = new FilmListContainerView();
@@ -38,7 +37,6 @@ export default class BoardPresenter {
 
   initMain() {
     this.listMovie = [...this.movieModel.getMovie()];
-    // console.log([...this.movieModel.getMovie[i]()]);
     render(this.menuComponent, this.main);
     render(this.sortComponent, this.main);
     render(this.filmListTitle, this.filmListComponent.getElement());
@@ -58,7 +56,8 @@ export default class BoardPresenter {
   }
 
   initPopup() {
-    render(this.popupView,this.body);
+    this.listMovie = this.movieModel.getPopupMovie();
+    render(new PopupView(this.listMovie), this.body);
   }
 }
 
