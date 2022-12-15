@@ -1,6 +1,6 @@
 import { getRandomArrayElement } from '../utils';
 
-const emotions = ['smile', 'sleeping', 'puke', 'angry'];
+const emotions = ['smile.png', 'sleeping.png', 'puke.png', 'angry.png'];
 
 const mockComments = [
   {
@@ -47,7 +47,7 @@ const mockComments = [
   },
   {
     id: 6,
-    authr: 'Ilya OReilly',
+    author: 'Ilya OReilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
     emotion: getRandomArrayElement(emotions)
@@ -397,4 +397,4 @@ function getRandomMovie() {
   return (getRandomArrayElement(mockMovie));
 }
 
-export {getRandomMovie};
+export {getRandomMovie, mockComments};

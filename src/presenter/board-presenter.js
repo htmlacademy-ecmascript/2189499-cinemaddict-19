@@ -20,6 +20,7 @@ import PopupFilmDetailsCommentsTitleView from '../view/popup-film-details-commen
 import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-view.js';
 import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
 
+
 export default class BoardPresenter {
   sectionFilmsComponent = new SectionFilmsView();
   filmListComponent = new FilmListView();
@@ -70,6 +71,7 @@ export default class BoardPresenter {
 
   initPopup() {
     this.popupMovie = this.movieModel.getPopupMovie();
+    // console.log(this.popupMovie);
     render(this.popupFilmSectionView, this.body);
     render(this.popupFilmFeatilsInnerView, this.popupFilmSectionView.getElement());
     render(new PopupView(this.popupMovie), this.popupFilmFeatilsInnerView.getElement());
@@ -77,9 +79,8 @@ export default class BoardPresenter {
     render(this.popupFilmDetailsCommentsWrapView, this.popupFilmDetailsBottomContainerView.getElement());
     render(new PopupFilmDetailsCommentsTitleView(), this.popupFilmDetailsCommentsWrapView.getElement());
     render(this.popupFilmCommentList,this.popupFilmDetailsCommentsWrapView.getElement());
-    render(new PopupFilmCommentStructureView(), this.popupFilmCommentList.getElement());
     for (let i = 0; i < this.popupMovie.comments.length; i++) {
-      render(new PopupFilmDetailNewCommentView({comments: this.popupMovie.comments[i]}), this.popupFilmDetailsCommentsWrapView.getElement());
+      render(new PopupFilmCommentStructureView({comment: this.popupMovie.comments[i]}), this.popupFilmCommentList.getElement());
     }
   }
 }
