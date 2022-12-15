@@ -72,7 +72,6 @@ export default class BoardPresenter {
 
   initPopup() {
     this.popupMovie = this.movieModel.getPopupMovie();
-    // console.log(this.popupMovie);
     render(this.popupFilmSectionView, this.body);
     render(this.popupFilmFeatilsInnerView, this.popupFilmSectionView.getElement());
     render(new PopupView(this.popupMovie), this.popupFilmFeatilsInnerView.getElement());
