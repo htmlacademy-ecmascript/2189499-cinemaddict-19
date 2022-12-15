@@ -14,7 +14,4 @@ const mainPresenter = new BoardPresenter({
 });
 
 
-mainPresenter.initHeader();
-mainPresenter.initMain();
-mainPresenter.initFooter();
-mainPresenter.initPopup();
+mainPresenter.init();
