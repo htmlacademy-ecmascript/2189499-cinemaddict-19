@@ -250,8 +250,7 @@ const mockMovie = [
   {
     id: 2,
     comments: [
-      mockComments[8],
-      mockComments[9],
+      8, 9,
     ],
     filmInfo: {
       title: 'Popeye Meets Sindbad',
