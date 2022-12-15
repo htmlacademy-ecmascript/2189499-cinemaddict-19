@@ -36,6 +36,7 @@ export default class BoardPresenter {
   popupFilmFeatilsInnerView = new PopupFilmDetailsInnerView();
   popupFilmDetailsBottomContainerView = new PopupFilmDetailsBottomContainerView();
   popupFilmDetailsCommentsWrapView = new PopupFilmDetailsCommentsWrapView();
+  popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
 
   constructor({header, main, footer, movieModel, body}) {
     this.header = header;
@@ -79,6 +80,7 @@ export default class BoardPresenter {
     render(this.popupFilmDetailsCommentsWrapView, this.popupFilmDetailsBottomContainerView.getElement());
     render(new PopupFilmDetailsCommentsTitleView(), this.popupFilmDetailsCommentsWrapView.getElement());
     render(this.popupFilmCommentList,this.popupFilmDetailsCommentsWrapView.getElement());
+    render(this.popupFilmDetailNewCommentView, this.popupFilmDetailsCommentsWrapView.getElement());
     for (let i = 0; i < this.popupMovie.comments.length; i++) {
       render(new PopupFilmCommentStructureView({comment: this.popupMovie.comments[i]}), this.popupFilmCommentList.getElement());
     }
