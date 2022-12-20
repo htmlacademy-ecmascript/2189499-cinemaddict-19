@@ -22,43 +22,49 @@ import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-commen
 
 
 export default class BoardPresenter {
-  sectionFilmsComponent = new SectionFilmsView();
-  filmListComponent = new FilmListView();
-  filmListContainerComponent = new FilmListContainerView();
-  menuComponent = new MenuView();
-  sortComponent = new SortView();
-  showMoreButton = new ShowMoreButtonView();
-  filmListTitle = new FilmListTitleView();
-  userNameStatusComponent = new UserNameStatusView();
-  footerStatisticsConponent = new FooterStatisticsView();
-  popupFilmSectionView = new PopupFilmSectionView();
-  popupFilmCommentList = new PopupFilmCommentListView();
-  popupFilmFeatilsInnerView = new PopupFilmDetailsInnerView();
-  popupFilmDetailsBottomContainerView = new PopupFilmDetailsBottomContainerView();
-  popupFilmDetailsCommentsWrapView = new PopupFilmDetailsCommentsWrapView();
-  popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
+  #header = null;
+  #main = null;
+  #footer = null;
+  #movieModel = null;
+  #body = null;
 
-  constructor({header, main, footer, movieModel, body, }) {
-    this.header = header;
-    this.main = main;
-    this.footer = footer;
-    this.movieModel = movieModel;
-    this.body = body;
+  #sectionFilmsComponent = new SectionFilmsView();
+  #filmListComponent = new FilmListView();
+  #filmListContainerComponent = new FilmListContainerView();
+  #menuComponent = new MenuView();
+  #sortComponent = new SortView();
+  #showMoreButton = new ShowMoreButtonView();
+  #filmListTitle = new FilmListTitleView();
+  #userNameStatusComponent = new UserNameStatusView();
+  #footerStatisticsConponent = new FooterStatisticsView();
+  #popupFilmSectionView = new PopupFilmSectionView();
+  #popupFilmCommentList = new PopupFilmCommentListView();
+  #popupFilmFeatilsInnerView = new PopupFilmDetailsInnerView();
+  #popupFilmDetailsBottomContainerView = new PopupFilmDetailsBottomContainerView();
+  #popupFilmDetailsCommentsWrapView = new PopupFilmDetailsCommentsWrapView();
+  #popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
+
+  constructor({header, main, footer, movieModel, body}) {
+    this.#header = header;
+    this.#main = main;
+    this.#footer = footer;
+    this.#movieModel = movieModel;
+    this.#body = body;
 
   }
 
 
   initHeader() {
-    render(this.userNameStatusComponent, this.header);
+    render(this.#userNameStatusComponent, this.#header);
   }
 
 
   initMain() {
     this.listMovie = [...this.movieModel.getMovie()];
-    render(this.menuComponent, this.main);
-    render(this.sortComponent, this.main);
-    render(this.filmListTitle, this.filmListComponent.getElement());
-    render(this.sectionFilmsComponent, this.main);
+    render(this.#menuComponent, this.main);
+    render(this.#sortComponent, this.main);
+    render(this.#filmListTitle, this.filmListComponent.getElement());
+    render(this.#sectionFilmsComponent, this.main);
     render(this.filmListComponent, this.sectionFilmsComponent.getElement());
     render(this.filmListContainerComponent, this.filmListComponent.getElement());
     for (let i = 0; i < this.listMovie.length; i++) {
