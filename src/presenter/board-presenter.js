@@ -92,7 +92,6 @@ export default class BoardPresenter {
     this.initHeader();
     this.initMain();
     this.initFooter();
-    this.initPopup();
   }
 }
 
