@@ -31,18 +31,16 @@ export default class BoardPresenter {
   #sectionFilmsComponent = new SectionFilmsView();
   #filmListComponent = new FilmListView();
   #filmListContainerComponent = new FilmListContainerView();
-  #menuComponent = new MenuView();
-  #sortComponent = new SortView();
-  #showMoreButton = new ShowMoreButtonView();
   #filmListTitle = new FilmListTitleView();
   #userNameStatusComponent = new UserNameStatusView();
-  #footerStatisticsConponent = new FooterStatisticsView();
   #popupFilmSectionView = new PopupFilmSectionView();
   #popupFilmCommentList = new PopupFilmCommentListView();
   #popupFilmFeatilsInnerView = new PopupFilmDetailsInnerView();
   #popupFilmDetailsBottomContainerView = new PopupFilmDetailsBottomContainerView();
   #popupFilmDetailsCommentsWrapView = new PopupFilmDetailsCommentsWrapView();
   #popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
+  #listMovie = [];
+
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -60,23 +58,24 @@ export default class BoardPresenter {
 
 
   initMain() {
-    this.listMovie = [...this.movieModel.getMovie()];
-    render(this.#menuComponent, this.main);
-    render(this.#sortComponent, this.main);
-    render(this.#filmListTitle, this.filmListComponent.getElement());
-    render(this.#sectionFilmsComponent, this.main);
-    render(this.filmListComponent, this.sectionFilmsComponent.getElement());
-    render(this.filmListContainerComponent, this.filmListComponent.getElement());
-    for (let i = 0; i < this.listMovie.length; i++) {
-      render(new CardFilmsView({movie: this.listMovie[i]}), this.filmListContainerComponent.getElement());
+    render(new MenuView(), this.#main);
+    render(new SortView(), this.#main);
+    render(this.#filmListComponent, this.#main);
+    render(this.#sectionFilmsComponent, this.#filmListComponent.element);
+    render(new FilmListTitleView(), this.#sectionFilmsComponent.element);
+    render(this.#filmListContainerComponent, this.#sectionFilmsComponent.element);
+    this.#listMovie = [...this.#movieModel.movie];
+    for (let i = 0; i < this.#listMovie.length; i++) {
+      this.#renderMovieCards(this.#listMovie[i]);
+      // render(new CardFilmsView({movie: this.#listMovie[i]}), this.#filmListContainerComponent.element);
     }
-    render(this.showMoreButton, this.filmListComponent.getElement());
-    render(new SectionFilmListExtraView(), this.sectionFilmsComponent.getElement());
-    render(new SectionFilmListExtraView(), this.sectionFilmsComponent.getElement());
+    render(new ShowMoreButtonView(), this.#sectionFilmsComponent.element);
+    render(new SectionFilmListExtraView(), this.#sectionFilmsComponent.element);
+    render(new SectionFilmListExtraView(), this.#sectionFilmsComponent.element);
   }
 
   initFooter() {
-    render(this.footerStatisticsConponent, this.footer);
+    render(new FooterStatisticsView(), this.#footer);
   }
 
   initPopup() {
@@ -98,6 +97,11 @@ export default class BoardPresenter {
     this.initHeader();
     this.initMain();
     this.initFooter();
+  }
+
+  #renderMovieCards(movie) {
+    const cardComponent = new CardFilmsView({movie});
+    render(cardComponent, this.#filmListContainerComponent.element);
   }
 }
 

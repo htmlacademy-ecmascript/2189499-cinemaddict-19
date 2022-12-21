@@ -10,7 +10,7 @@ function createMenuTemplate() {
 }
 
 export default class MenuView {
-  #element;
+  #element = null;
   get template() {
     return createMenuTemplate();
   }
