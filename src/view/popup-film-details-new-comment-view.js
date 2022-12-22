@@ -33,19 +33,20 @@ function createPopupFilmDetailsNewCommentTemplate() {
 }
 
 export default class PopupFilmDetailNewCommentView {
-  getTemplate() {
+  #element = null;
+  get template() {
     return createPopupFilmDetailsNewCommentTemplate();
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

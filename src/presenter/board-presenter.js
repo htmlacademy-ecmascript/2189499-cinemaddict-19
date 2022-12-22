@@ -84,11 +84,12 @@ export default class BoardPresenter {
     render(this.#popupFilmFeatilsInnerView, this.#popupFilmSectionView.element);
     this.#renderMoviePopup(this.#popupMovie);
     render(this.#popupFilmDetailsBottomContainerView, this.#popupFilmFeatilsInnerView.element);
-    // render(this.#popupFilmDetailsCommentsWrapView, this.#popupFilmDetailsBottomContainerView.element);
+
+    render(this.#popupFilmDetailNewCommentView, this.#popupFilmDetailsCommentsWrapView.element);
 
     // render(new PopupFilmDetailsCommentsTitleView(), this.popupFilmDetailsCommentsWrapView.getElement());
     // render(this.popupFilmCommentList,this.popupFilmDetailsCommentsWrapView.getElement());
-    // render(this.popupFilmDetailNewCommentView, this.popupFilmDetailsCommentsWrapView.getElement());
+
     // for (let i = 0; i < this.popupMovie.comments.length; i++) {
     //   render(new PopupFilmCommentStructureView({comment: this.popupMovie.comments[i]}), this.popupFilmCommentList.getElement());
     // }
@@ -110,7 +111,8 @@ export default class BoardPresenter {
     const popupComponent = new PopupView(filmInfo);
     const popupCommentsComponent = new PopupFilmDetailsCommentsTitleView(filmInfo);
     render(popupComponent, this.#popupFilmFeatilsInnerView.element);
-    render (popupCommentsComponent, this.#popupFilmDetailsBottomContainerView.element);
+    render(this.#popupFilmDetailsCommentsWrapView, this.#popupFilmDetailsBottomContainerView.element);
+    render (popupCommentsComponent, this.#popupFilmDetailsCommentsWrapView.element);
 
   }
 }
