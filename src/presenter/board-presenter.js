@@ -115,7 +115,7 @@ export default class BoardPresenter {
     render(this.#popupFilmCommentList,this.#popupFilmDetailsCommentsWrapView.element);
     // render(new PopupFilmCommentStructureView({comment: this.#popupMovie.comments[i]}, this.#popupFilmCommentList.element));
     for (let i = 0; i < this.#popupMovie.comments.length; i++) {
-      render(new PopupFilmCommentStructureView({comment: this.#popupMovie.comments[i]}), this.#popupFilmCommentList.element);
+      render(new PopupFilmCommentStructureView(this.#popupMovie.comments[i]), this.#popupFilmCommentList.element);
     }
   }
 }
