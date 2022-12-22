@@ -3,9 +3,6 @@ import {createElement} from '../render.js';
 import { mockComments } from '../mock/movies.js';
 import { humanizeReleaseDate } from '../utils.js';
 function createPopupFilmCommentStructureTemplate(commentId) {
-//   const {index} = commentId;
-//   console.log(commentId);
-  //   console.log(comment.commeemotionemotionnts);
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
     <img src="./images/emoji/${mockComments[commentId].emotion}" width="55" height="55" alt="emoji-${mockComments[commentId].emotion}">

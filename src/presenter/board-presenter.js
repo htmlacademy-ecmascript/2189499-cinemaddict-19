@@ -84,25 +84,22 @@ export default class BoardPresenter {
     render(this.#popupFilmFeatilsInnerView, this.#popupFilmSectionView.element);
     this.#renderMoviePopup(this.#popupMovie);
     render(this.#popupFilmDetailsBottomContainerView, this.#popupFilmFeatilsInnerView.element);
-
     render(this.#popupFilmDetailNewCommentView, this.#popupFilmDetailsCommentsWrapView.element);
-
-
-    // for (let i = 0; i < this.popupMovie.comments.length; i++) {
-    //   render(new PopupFilmCommentStructureView({comment: this.popupMovie.comments[i]}), this.popupFilmCommentList.getElement());
-    // }
   }
 
   init() {
     this.initHeader();
     this.initMain();
     this.initFooter();
-    this.initPopup();
+    // this.initPopup();
   }
 
   #renderMovieCards(movie) {
     const cardComponent = new CardFilmsView({movie});
     render(cardComponent, this.#filmListContainerComponent.element);
+    cardComponent.element.querySelector('.film-card__link').addEventListener('click', ()=>{
+      console.log('push');
+    });
   }
 
   #renderMoviePopup(movie) {
@@ -113,7 +110,6 @@ export default class BoardPresenter {
     render(this.#popupFilmDetailsCommentsWrapView, this.#popupFilmDetailsBottomContainerView.element);
     render (popupCommentsComponent, this.#popupFilmDetailsCommentsWrapView.element);
     render(this.#popupFilmCommentList,this.#popupFilmDetailsCommentsWrapView.element);
-    // render(new PopupFilmCommentStructureView({comment: this.#popupMovie.comments[i]}, this.#popupFilmCommentList.element));
     for (let i = 0; i < this.#popupMovie.comments.length; i++) {
       render(new PopupFilmCommentStructureView(this.#popupMovie.comments[i]), this.#popupFilmCommentList.element);
     }
