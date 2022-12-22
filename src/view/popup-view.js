@@ -78,24 +78,26 @@ function createPopupTemplate(popupMovie) {
 }
 
 export default class PopupView {
+  #popupMovie = null;
+  #element = null;
   constructor(popupMovie) {
-    this.popupMovie = popupMovie;
+    this.#popupMovie = popupMovie;
   }
 
-  getTemplate() {
-    return createPopupTemplate(this.popupMovie);
+  get template() {
+    return createPopupTemplate(this.#popupMovie);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
 

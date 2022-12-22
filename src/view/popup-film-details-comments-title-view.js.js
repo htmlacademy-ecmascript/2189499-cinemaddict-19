@@ -1,23 +1,31 @@
 import {createElement} from '../render.js';
 
-function createPopupFilmDetailsCommentsTitleTemplate() {
-  return '<h3 class="film-details__comments-title">Comments <span class="film-details__comments-count"></span></h3>';
+function createPopupFilmDetailsCommentsTitleTemplate(commentsCount) {
+  const {comments} = commentsCount;
+  return `<h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>`;
 }
 
 export default class PopupFilmDetailsCommentsTitleView {
-  getTemplate() {
-    return createPopupFilmDetailsCommentsTitleTemplate();
+  #element = null;
+  #commentsCount = null;
+
+  constructor(commentsCount) {
+    this.#commentsCount = commentsCount;
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get template() {
+    return createPopupFilmDetailsCommentsTitleTemplate(this.#commentsCount);
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }

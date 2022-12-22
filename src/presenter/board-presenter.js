@@ -27,6 +27,8 @@ export default class BoardPresenter {
   #footer = null;
   #movieModel = null;
   #body = null;
+  #listMovie = [];
+  #popupMovie = null;
 
   #sectionFilmsComponent = new SectionFilmsView();
   #filmListComponent = new FilmListView();
@@ -39,7 +41,6 @@ export default class BoardPresenter {
   #popupFilmDetailsBottomContainerView = new PopupFilmDetailsBottomContainerView();
   #popupFilmDetailsCommentsWrapView = new PopupFilmDetailsCommentsWrapView();
   #popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
-  #listMovie = [];
 
 
   constructor({header, main, footer, movieModel, body}) {
@@ -67,7 +68,6 @@ export default class BoardPresenter {
     this.#listMovie = [...this.#movieModel.movie];
     for (let i = 0; i < this.#listMovie.length; i++) {
       this.#renderMovieCards(this.#listMovie[i]);
-      // render(new CardFilmsView({movie: this.#listMovie[i]}), this.#filmListContainerComponent.element);
     }
     render(new ShowMoreButtonView(), this.#sectionFilmsComponent.element);
     render(new SectionFilmListExtraView(), this.#sectionFilmsComponent.element);
@@ -79,29 +79,39 @@ export default class BoardPresenter {
   }
 
   initPopup() {
-    this.popupMovie = this.movieModel.getPopupMovie();
-    render(this.popupFilmSectionView, this.body);
-    render(this.popupFilmFeatilsInnerView, this.popupFilmSectionView.getElement());
-    render(new PopupView(this.popupMovie), this.popupFilmFeatilsInnerView.getElement());
-    render(this.popupFilmDetailsBottomContainerView, this.popupFilmFeatilsInnerView.getElement());
-    render(this.popupFilmDetailsCommentsWrapView, this.popupFilmDetailsBottomContainerView.getElement());
-    render(new PopupFilmDetailsCommentsTitleView(), this.popupFilmDetailsCommentsWrapView.getElement());
-    render(this.popupFilmCommentList,this.popupFilmDetailsCommentsWrapView.getElement());
-    render(this.popupFilmDetailNewCommentView, this.popupFilmDetailsCommentsWrapView.getElement());
-    for (let i = 0; i < this.popupMovie.comments.length; i++) {
-      render(new PopupFilmCommentStructureView({comment: this.popupMovie.comments[i]}), this.popupFilmCommentList.getElement());
-    }
+    this.#popupMovie = this.#movieModel.popupMovie;
+    render(this.#popupFilmSectionView, this.#body);
+    render(this.#popupFilmFeatilsInnerView, this.#popupFilmSectionView.element);
+    this.#renderMoviePopup(this.#popupMovie);
+    render(this.#popupFilmDetailsBottomContainerView, this.#popupFilmFeatilsInnerView.element);
+    // render(this.#popupFilmDetailsCommentsWrapView, this.#popupFilmDetailsBottomContainerView.element);
+
+    // render(new PopupFilmDetailsCommentsTitleView(), this.popupFilmDetailsCommentsWrapView.getElement());
+    // render(this.popupFilmCommentList,this.popupFilmDetailsCommentsWrapView.getElement());
+    // render(this.popupFilmDetailNewCommentView, this.popupFilmDetailsCommentsWrapView.getElement());
+    // for (let i = 0; i < this.popupMovie.comments.length; i++) {
+    //   render(new PopupFilmCommentStructureView({comment: this.popupMovie.comments[i]}), this.popupFilmCommentList.getElement());
+    // }
   }
 
   init() {
     this.initHeader();
     this.initMain();
     this.initFooter();
+    this.initPopup();
   }
 
   #renderMovieCards(movie) {
     const cardComponent = new CardFilmsView({movie});
     render(cardComponent, this.#filmListContainerComponent.element);
+  }
+
+  #renderMoviePopup(filmInfo) {
+    const popupComponent = new PopupView(filmInfo);
+    const popupCommentsComponent = new PopupFilmDetailsCommentsTitleView(filmInfo);
+    render(popupComponent, this.#popupFilmFeatilsInnerView.element);
+    render (popupCommentsComponent, this.#popupFilmDetailsBottomContainerView.element);
+
   }
 }
 
