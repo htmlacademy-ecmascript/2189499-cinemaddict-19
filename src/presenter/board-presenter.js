@@ -91,7 +91,7 @@ export default class BoardPresenter {
     this.initHeader();
     this.initMain();
     this.initFooter();
-    // this.initPopup();
+    this.initPopup();
   }
 
   #renderMovieCards(movie) {
@@ -113,6 +113,9 @@ export default class BoardPresenter {
     for (let i = 0; i < this.#popupMovie.comments.length; i++) {
       render(new PopupFilmCommentStructureView(this.#popupMovie.comments[i]), this.#popupFilmCommentList.element);
     }
+    popupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', ()=>{
+      console.log('close');
+    });
   }
 }
 
