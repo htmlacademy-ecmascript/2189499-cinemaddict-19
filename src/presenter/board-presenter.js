@@ -86,9 +86,7 @@ export default class BoardPresenter {
     render(this.#popupFilmDetailsBottomContainerView, this.#popupFilmFeatilsInnerView.element);
 
     render(this.#popupFilmDetailNewCommentView, this.#popupFilmDetailsCommentsWrapView.element);
-    for (let i = 0; i < this.#popupMovie.comments.length; i++) {
-      this.#renderMoviePopup(this.#popupMovie.comments[i]);
-    }
+
 
     // for (let i = 0; i < this.popupMovie.comments.length; i++) {
     //   render(new PopupFilmCommentStructureView({comment: this.popupMovie.comments[i]}), this.popupFilmCommentList.getElement());
@@ -107,15 +105,18 @@ export default class BoardPresenter {
     render(cardComponent, this.#filmListContainerComponent.element);
   }
 
-  #renderMoviePopup(filmInfo) {
-    const popupComponent = new PopupView(filmInfo);
-    const popupCommentsComponent = new PopupFilmDetailsCommentsTitleView(filmInfo);
-    const PopupFilmCommentStructureComponent = new PopupFilmCommentStructureView(filmInfo);
+  #renderMoviePopup(movie) {
+    const popupComponent = new PopupView(movie);
+    const popupCommentsComponent = new PopupFilmDetailsCommentsTitleView(movie);
+
     render(popupComponent, this.#popupFilmFeatilsInnerView.element);
     render(this.#popupFilmDetailsCommentsWrapView, this.#popupFilmDetailsBottomContainerView.element);
     render (popupCommentsComponent, this.#popupFilmDetailsCommentsWrapView.element);
     render(this.#popupFilmCommentList,this.#popupFilmDetailsCommentsWrapView.element);
-    render(PopupFilmCommentStructureComponent, this.#popupFilmCommentList.element);
+    // render(new PopupFilmCommentStructureView({comment: this.#popupMovie.comments[i]}, this.#popupFilmCommentList.element));
+    for (let i = 0; i < this.#popupMovie.comments.length; i++) {
+      render(new PopupFilmCommentStructureView({comment: this.#popupMovie.comments[i]}), this.#popupFilmCommentList.element);
+    }
   }
 }
 
