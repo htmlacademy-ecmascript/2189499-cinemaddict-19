@@ -91,21 +91,20 @@ export default class BoardPresenter {
     this.initHeader();
     this.initMain();
     this.initFooter();
-    this.initPopup();
+
   }
 
   #renderMovieCards(movie) {
     const cardComponent = new CardFilmsView({movie});
     render(cardComponent, this.#filmListContainerComponent.element);
     cardComponent.element.querySelector('.film-card__link').addEventListener('click', ()=>{
-      console.log('push');
+      this.initPopup();
     });
   }
 
   #renderMoviePopup(movie) {
     const popupComponent = new PopupView(movie);
     const popupCommentsComponent = new PopupFilmDetailsCommentsTitleView(movie);
-
     render(popupComponent, this.#popupFilmFeatilsInnerView.element);
     render(this.#popupFilmDetailsCommentsWrapView, this.#popupFilmDetailsBottomContainerView.element);
     render (popupCommentsComponent, this.#popupFilmDetailsCommentsWrapView.element);
@@ -114,7 +113,8 @@ export default class BoardPresenter {
       render(new PopupFilmCommentStructureView(this.#popupMovie.comments[i]), this.#popupFilmCommentList.element);
     }
     popupComponent.element.querySelector('.film-details__close-btn').addEventListener('click', ()=>{
-      console.log('close');
+      const popupElement = document.querySelector('.film-details');
+      popupElement.remove();
     });
   }
 }
