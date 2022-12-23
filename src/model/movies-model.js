@@ -4,14 +4,14 @@ const MOVIE_COUNT = 5;
 
 export default class MovieModel {
   #movie = Array.from({length: MOVIE_COUNT}, getRandomMovie);
-  #popupMovie = getRandomMovie();
+  #comments = getRandomMovie().comments;
 
   get movie() {
     return this.#movie;
   }
 
-  get popupMovie() {
-    return this.#popupMovie;
+  get comments() {
+    return this.#comments;
   }
 
 }
