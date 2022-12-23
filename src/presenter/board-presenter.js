@@ -88,6 +88,16 @@ export default class BoardPresenter {
     for(let i = 0; i < movie.movie.comments.length; i++){
       render(new PopupFilmCommentStructureView(this.#loadedComments[i]) ,commentList);
     }
+
+    const closePopup = () => {
+      popupView.element.parentElement.removeChild(popupView.element);
+      popupView.removeElement();
+      this.#body.classList.remove('hide-overflow');
+    };
+
+    popupView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+      closePopup();
+    });
   }
 
   #renderBoard() {
