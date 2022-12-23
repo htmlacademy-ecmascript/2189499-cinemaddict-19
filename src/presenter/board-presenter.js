@@ -58,7 +58,6 @@ export default class BoardPresenter {
     this.#listMovieMovieInfo = [...this.#movieModel.movie];
     this.#loadedComments = this.#movieModel.comments;
 
-
     this.#renderBoard();
   }
 
@@ -82,6 +81,13 @@ export default class BoardPresenter {
   #renderPopup(movie) {
     const popupView = new PopupView(movie);
     render(popupView, this.#body);
+
+    const filmDetailsCommentsTitle = popupView.element.querySelector('.film-details__comments-title');
+    render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
+    const commentList = popupView.element.querySelector('.film-details__comments-list');
+    for(let i = 0; i < movie.movie.comments.length; i++){
+      render(new PopupFilmCommentStructureView(this.#loadedComments[i]) ,commentList);
+    }
   }
 
   #renderBoard() {

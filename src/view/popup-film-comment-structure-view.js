@@ -3,6 +3,7 @@ import {createElement} from '../render.js';
 import { mockComments } from '../mock/movies.js';
 import { humanizeReleaseDate } from '../utils.js';
 function createPopupFilmCommentStructureTemplate(commentId) {
+  console.log(commentId);
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
     <img src="./images/emoji/${mockComments[commentId].emotion}" width="55" height="55" alt="emoji-${mockComments[commentId].emotion}">
@@ -19,14 +20,14 @@ function createPopupFilmCommentStructureTemplate(commentId) {
 }
 
 export default class PopupFilmCommentStructureView {
-  #comment = null;
+  #commentId = null;
   #element = null;
-  constructor(comment) {
-    this.#comment = comment;
+  constructor(commentId) {
+    this.#commentId = commentId;
   }
 
   get template() {
-    return createPopupFilmCommentStructureTemplate(this.#comment);
+    return createPopupFilmCommentStructureTemplate(this.#commentId);
   }
 
   get element() {

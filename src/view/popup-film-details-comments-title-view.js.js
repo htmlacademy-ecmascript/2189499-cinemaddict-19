@@ -1,8 +1,8 @@
 import {createElement} from '../render.js';
 
 function createPopupFilmDetailsCommentsTitleTemplate(commentsCount) {
-  const {comments} = commentsCount;
-  return `<h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>`;
+  console.log(commentsCount.movie.comments.length);
+  return `<span class="film-details__comments-count">${commentsCount.movie.comments.length}</span>`;
 }
 
 export default class PopupFilmDetailsCommentsTitleView {
