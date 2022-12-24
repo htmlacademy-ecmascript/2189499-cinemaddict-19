@@ -98,6 +98,17 @@ export default class BoardPresenter {
     popupView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
       closePopup();
     });
+
+    const escKeydownHandler = (evt) => {
+
+      if(evt.key === 'Escape' || evt.key === 'Esc') {
+        evt.preventDefault();
+        closePopup();
+        document.removeEventListener('keydown', escKeydownHandler);
+      }
+    };
+
+    document.addEventListener('keydown', escKeydownHandler);
   }
 
   #renderBoard() {
@@ -113,6 +124,8 @@ export default class BoardPresenter {
     for(let i = 0; i < this.#listMovieMovieInfo.length; i++){
       this.#renderMovieList(this.#listMovieMovieInfo[i]);
     }
+
+
   }
   // initHeader() {
   //   render(this.#userNameStatusComponent, this.#header);
