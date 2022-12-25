@@ -8,63 +8,63 @@ const mockComments = [
     author: 'felis OReilly',
     comment: 't in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomArrayElement(emotions)
+    emotion: 'smile.png'
   },
   {
     id: 1,
     author: 'Ilya OReilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomArrayElement(emotions)
+    emotion: 'sleeping.png'
   },
   {
     id: 2,
     author: 'Ilya OReilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomArrayElement(emotions)
+    emotion: 'puke.png'
   },
   {
     id: 3,
     author: 'Ilya OReilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomArrayElement(emotions)
+    emotion: 'angry.png'
   },
   {
     id: 4,
     author: 'Ilya OReilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomArrayElement(emotions)
+    emotion: 'puke.png'
   },
   {
     id: 5,
     author: 'Ilya OReilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomArrayElement(emotions)
+    emotion: 'puke.png'
   },
   {
     id: 6,
     author: 'Ilya OReilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomArrayElement(emotions)
+    emotion: 'puke.png'
   },
   {
     id: 7,
     author: 'Ilya OReilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomArrayElement(emotions)
+    emotion: 'puke.png'
   },
   {
     id: 8,
     author: 'Ilya OReilly',
     comment: 'a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.',
     date: '2019-05-11T16:12:32.554Z',
-    emotion: getRandomArrayElement(emotions)
+    emotion: 'puke.png'
   },
   {
     id: 9,
@@ -178,7 +178,7 @@ const mockMovie = [
   {
     id: 0,
     comments: [
-      1,2,3
+      1
     ],
     filmInfo: {
       title: 'The Man With Golden Arm',
@@ -214,7 +214,7 @@ const mockMovie = [
   {
     id: 1,
     comments: [
-      4,3,6,7
+      11, 17,
     ],
     filmInfo: {
       title: 'Made For Each Other',
@@ -250,7 +250,7 @@ const mockMovie = [
   {
     id: 2,
     comments: [
-      8, 9,
+      8,9
     ],
     filmInfo: {
       title: 'Popeye Meets Sindbad',
@@ -286,7 +286,7 @@ const mockMovie = [
   {
     id: 3,
     comments: [
-      3,6,8,
+      3,6
     ],
     filmInfo: {
       title: 'Sagebrush Trail',
@@ -322,7 +322,7 @@ const mockMovie = [
   {
     id: 4,
     comments: [
-      3,1,2
+      3,1
     ],
     filmInfo: {
       title: 'The Great Flamrion',
@@ -358,7 +358,7 @@ const mockMovie = [
   {
     id: 5,
     comments: [
-      2,1,5,6
+      2,1
     ],
     filmInfo: {
       title: 'Santa Claus Conquers The Martrians',

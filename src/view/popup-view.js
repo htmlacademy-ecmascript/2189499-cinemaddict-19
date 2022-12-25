@@ -2,66 +2,68 @@ import {createElement} from '../render.js';
 import { humanizeMovieDuration } from '../utils.js';
 import { humanizeReleaseDate } from '../utils.js';
 function createPopupTemplate(popupMovie) {
-  const {filmInfo} = popupMovie;
-  return `<div class="film-details__top-container">
+  const {movie} = popupMovie;
+  return `<section class="film-details">
+  <div class="film-details__inner">
+    <div class="film-details__top-container">
       <div class="film-details__close">
         <button class="film-details__close-btn" type="button">close</button>
       </div>
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
-          <img class="film-details__poster-img" src="./images/posters/${filmInfo.poster}" alt="">
+          <img class="film-details__poster-img" src="./images/posters/${movie.filmInfo.poster}" alt="">
 
-          <p class="film-details__age">${filmInfo.ageRating}+</p>
+          <p class="film-details__age">${movie.filmInfo.ageRating}+</p>
         </div>
 
         <div class="film-details__info">
           <div class="film-details__info-head">
             <div class="film-details__title-wrap">
-              <h3 class="film-details__title">${filmInfo.title}</h3>
-              <p class="film-details__title-original">Original: ${filmInfo.alternativeTitle}</p>
+              <h3 class="film-details__title">${movie.filmInfo.title}</h3>
+              <p class="film-details__title-original">Original: ${movie.filmInfo.alternativeTitle}</p>
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${filmInfo.totalRating}</p>
+              <p class="film-details__total-rating">${movie.filmInfo.totalRating}</p>
             </div>
           </div>
 
           <table class="film-details__table">
             <tr class="film-details__row">
               <td class="film-details__term">Director</td>
-              <td class="film-details__cell">${filmInfo.director}</td>
+              <td class="film-details__cell">${movie.filmInfo.director}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">${filmInfo.writers}</td>
+              <td class="film-details__cell">${movie.filmInfo.writers}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">${filmInfo.actors}</td>
+              <td class="film-details__cell">${movie.filmInfo.actors}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${humanizeReleaseDate(filmInfo.release.date)}</td>
+              <td class="film-details__cell">${humanizeReleaseDate(movie.filmInfo.release.date)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Duration</td>
-              <td class="film-details__cell">${humanizeMovieDuration(filmInfo.duration)}</td>
+              <td class="film-details__cell">${humanizeMovieDuration(movie.filmInfo.duration)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
-              <td class="film-details__cell">${filmInfo.release.releaseCountry}</td>
+              <td class="film-details__cell">USA</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Genres</td>
               <td class="film-details__cell">
-                <span class="film-details__genre">${filmInfo.genre}</span>
+                <span class="film-details__genre">Drama</span>
                 <span class="film-details__genre">Film-Noir</span>
                 <span class="film-details__genre">Mystery</span></td>
             </tr>
           </table>
 
           <p class="film-details__film-description">
-            ${filmInfo.description}
+            ${movie.filmInfo.description}
           </p>
         </div>
       </div>
@@ -73,29 +75,39 @@ function createPopupTemplate(popupMovie) {
       </section>
     </div>
 
-    
+    <div class="film-details__bottom-container">
+      <section class="film-details__comments-wrap">
+      <h3 class="film-details__comments-title">Comments </h3>
+
+        <ul class="film-details__comments-list">
+        </ul>
+      </section>
+    </div>
+  </div>
 </section>`;
 }
 
 export default class PopupView {
+  #popupMovie = null;
+  #element = null;
   constructor(popupMovie) {
-    this.popupMovie = popupMovie;
+    this.#popupMovie = popupMovie;
   }
 
-  getTemplate() {
-    return createPopupTemplate(this.popupMovie);
+  get template() {
+    return createPopupTemplate(this.#popupMovie);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
 }
 

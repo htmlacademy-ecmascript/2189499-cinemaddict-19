@@ -3,96 +3,116 @@ import FilmListView from '../view/film-list-view.js';
 import SectionFilmsView from '../view/section-films-view.js';
 import MenuView from '../view/menu-view.js';
 import { render } from '../render.js';
-import FilmListContainerView from '../view/film-list-container-view.js';
 import SortView from '../view/sort-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
-import FilmListTitleView from '../view/film-list-title-view.js';
-import SectionFilmListExtraView from '../view/section-film-list-extra-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';
 import FooterStatisticsView from '../view/footer-statistics-view.js';
 import PopupView from '../view/popup-view';
-import PopupFilmSectionView from '../view/popup-film-section-view.js';
-import PopupFilmCommentListView from '../view/popup-film-comment-list-view.js';
-import PopupFilmDetailsInnerView from '../view/popup-film-details-inner-view.js';
-import PopupFilmDetailsBottomContainerView from '../view/popup-film-details-bottom-container-view.js';
-import PopupFilmDetailsCommentsWrapView from '../view/popup-film-details-comments-wrap-view.js';
 import PopupFilmDetailsCommentsTitleView from '../view/popup-film-details-comments-title-view.js';
 import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-view.js';
 import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
 
 
 export default class BoardPresenter {
-  sectionFilmsComponent = new SectionFilmsView();
-  filmListComponent = new FilmListView();
-  filmListContainerComponent = new FilmListContainerView();
-  menuComponent = new MenuView();
-  sortComponent = new SortView();
-  showMoreButton = new ShowMoreButtonView();
-  filmListTitle = new FilmListTitleView();
-  userNameStatusComponent = new UserNameStatusView();
-  footerStatisticsConponent = new FooterStatisticsView();
-  popupFilmSectionView = new PopupFilmSectionView();
-  popupFilmCommentList = new PopupFilmCommentListView();
-  popupFilmFeatilsInnerView = new PopupFilmDetailsInnerView();
-  popupFilmDetailsBottomContainerView = new PopupFilmDetailsBottomContainerView();
-  popupFilmDetailsCommentsWrapView = new PopupFilmDetailsCommentsWrapView();
-  popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
+  #header = null;
+  #main = null;
+  #footer = null;
+  #movieModel = null;
+  #body = null;
+  #listMovieMovieInfo = [];
+  #loadedComments = null;
 
-  constructor({header, main, footer, movieModel, body, }) {
-    this.header = header;
-    this.main = main;
-    this.footer = footer;
-    this.movieModel = movieModel;
-    this.body = body;
-
-  }
+  #sectionFilmsComponent = new SectionFilmsView();
 
 
-  initHeader() {
-    render(this.userNameStatusComponent, this.header);
-  }
+  #filmListComponent = new FilmListView();
+  #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
 
 
-  initMain() {
-    this.listMovie = [...this.movieModel.getMovie()];
-    render(this.menuComponent, this.main);
-    render(this.sortComponent, this.main);
-    render(this.filmListTitle, this.filmListComponent.getElement());
-    render(this.sectionFilmsComponent, this.main);
-    render(this.filmListComponent, this.sectionFilmsComponent.getElement());
-    render(this.filmListContainerComponent, this.filmListComponent.getElement());
-    for (let i = 0; i < this.listMovie.length; i++) {
-      render(new CardFilmsView({movie: this.listMovie[i]}), this.filmListContainerComponent.getElement());
-    }
-    render(this.showMoreButton, this.filmListComponent.getElement());
-    render(new SectionFilmListExtraView(), this.sectionFilmsComponent.getElement());
-    render(new SectionFilmListExtraView(), this.sectionFilmsComponent.getElement());
-  }
+  constructor({header, main, footer, movieModel, body}) {
+    this.#header = header;
+    this.#main = main;
+    this.#footer = footer;
+    this.#movieModel = movieModel;
+    this.#body = body;
 
-  initFooter() {
-    render(this.footerStatisticsConponent, this.footer);
-  }
-
-  initPopup() {
-    this.popupMovie = this.movieModel.getPopupMovie();
-    render(this.popupFilmSectionView, this.body);
-    render(this.popupFilmFeatilsInnerView, this.popupFilmSectionView.getElement());
-    render(new PopupView(this.popupMovie), this.popupFilmFeatilsInnerView.getElement());
-    render(this.popupFilmDetailsBottomContainerView, this.popupFilmFeatilsInnerView.getElement());
-    render(this.popupFilmDetailsCommentsWrapView, this.popupFilmDetailsBottomContainerView.getElement());
-    render(new PopupFilmDetailsCommentsTitleView(), this.popupFilmDetailsCommentsWrapView.getElement());
-    render(this.popupFilmCommentList,this.popupFilmDetailsCommentsWrapView.getElement());
-    render(this.popupFilmDetailNewCommentView, this.popupFilmDetailsCommentsWrapView.getElement());
-    for (let i = 0; i < this.popupMovie.comments.length; i++) {
-      render(new PopupFilmCommentStructureView({comment: this.popupMovie.comments[i]}), this.popupFilmCommentList.getElement());
-    }
   }
 
   init() {
-    this.initHeader();
-    this.initMain();
-    this.initFooter();
-    this.initPopup();
+    this.#listMovieMovieInfo = [...this.#movieModel.movie];
+    this.#loadedComments = this.#movieModel.comments;
+
+    this.#renderBoard();
+  }
+
+
+  #renderMovieList(movie) {
+
+    const movieCardView = new CardFilmsView({movie});
+    render(movieCardView, this.#filmContainer);
+
+    const openPopup = () => {
+      this.#renderPopup({movie});
+      this.#body.classList.add('hide-overflow');
+    };
+
+    movieCardView.element.querySelector('.film-card__link').addEventListener('click', () => {
+      openPopup();
+    });
+  }
+
+
+  #renderPopup(movie) {
+    const popupView = new PopupView(movie);
+    render(popupView, this.#body);
+
+    const filmDetailsCommentsTitle = popupView.element.querySelector('.film-details__comments-title');
+    render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
+    const commentList = popupView.element.querySelector('.film-details__comments-list');
+    movie.movie.comments.forEach((element, index) => {
+      render(new PopupFilmCommentStructureView(element), commentList);
+    });
+
+    render(new PopupFilmDetailNewCommentView(), commentList);
+
+
+    const closePopup = () => {
+      popupView.element.parentElement.removeChild(popupView.element);
+      popupView.removeElement();
+      this.#body.classList.remove('hide-overflow');
+    };
+
+    popupView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+      closePopup();
+    });
+
+    const escKeydownHandler = (evt) => {
+
+      if(evt.key === 'Escape' || evt.key === 'Esc') {
+        evt.preventDefault();
+        closePopup();
+        document.removeEventListener('keydown', escKeydownHandler);
+      }
+    };
+
+    document.addEventListener('keydown', escKeydownHandler);
+  }
+
+  #renderBoard() {
+    render(new UserNameStatusView(), this.#header);
+    render(new MenuView(), this.#main);
+    render(new SortView(), this.#main);
+    render(this.#filmListComponent, this.#main);
+    render(new ShowMoreButtonView(), this.#main);
+
+
+    {render(new FooterStatisticsView(), this.#footer);}
+
+    for(let i = 0; i < this.#listMovieMovieInfo.length; i++){
+      this.#renderMovieList(this.#listMovieMovieInfo[i]);
+    }
+
+
   }
 }
 

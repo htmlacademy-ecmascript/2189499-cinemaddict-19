@@ -3,15 +3,15 @@ import { getRandomMovie } from '../mock/movies';
 const MOVIE_COUNT = 5;
 
 export default class MovieModel {
-  movie = Array.from({length: MOVIE_COUNT}, getRandomMovie);
-  popupMovie = getRandomMovie();
+  #movie = Array.from({length: MOVIE_COUNT}, getRandomMovie);
+  #comments = getRandomMovie().comments;
 
-  getMovie() {
-    return this.movie;
+  get movie() {
+    return this.#movie;
   }
 
-  getPopupMovie() {
-    return this.popupMovie;
+  get comments() {
+    return this.#comments;
   }
 
 }
