@@ -11,7 +11,7 @@ import PopupView from '../view/popup-view';
 import PopupFilmDetailsCommentsTitleView from '../view/popup-film-details-comments-title-view.js';
 import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-view.js';
 import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
-
+const MOVIE_COUNT_PER_STEP = 5;
 
 export default class BoardPresenter {
   #header = null;
@@ -27,7 +27,7 @@ export default class BoardPresenter {
 
   #filmListComponent = new FilmListView();
   #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
-
+  #loadMoreButtonComponent = null;
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -98,12 +98,25 @@ export default class BoardPresenter {
     document.addEventListener('keydown', escKeydownHandler);
   }
 
+  #loadMoreButtonHandler = (evt) => {
+    evt.preventDefault();
+    alert('work');
+  }
+
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
     render(new MenuView(), this.#main);
     render(new SortView(), this.#main);
     render(this.#filmListComponent, this.#main);
-    render(new ShowMoreButtonView(), this.#main);
+
+
+
+    if(this.#listMovieMovieInfo.length > MOVIE_COUNT_PER_STEP) {
+      this.#loadMoreButtonComponent = new ShowMoreButtonView();
+      render(this.#loadMoreButtonComponent, this.#main);
+
+      this.#loadMoreButtonComponent.element.addEventListener('click', this.#loadMoreButtonHandler)
+    }
 
 
     {render(new FooterStatisticsView(), this.#footer);}
