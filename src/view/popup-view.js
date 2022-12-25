@@ -3,7 +3,6 @@ import { humanizeMovieDuration } from '../utils.js';
 import { humanizeReleaseDate } from '../utils.js';
 function createPopupTemplate(popupMovie) {
   const {movie} = popupMovie;
-  console.log(movie.comments);
   return `<section class="film-details">
   <div class="film-details__inner">
     <div class="film-details__top-container">

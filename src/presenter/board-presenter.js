@@ -69,11 +69,8 @@ export default class BoardPresenter {
     const filmDetailsCommentsTitle = popupView.element.querySelector('.film-details__comments-title');
     render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
     const commentList = popupView.element.querySelector('.film-details__comments-list');
-    // for(let i = 0; i < movie.movie.comments.length; i++){
-    //   render(new PopupFilmCommentStructureView(this.#loadedComments[i]) ,commentList);
-    // }
     movie.movie.comments.forEach((element, index) => {
-      render(new PopupFilmCommentStructureView(this.#loadedComments[index]) ,commentList);
+      render(new PopupFilmCommentStructureView(element), commentList);
     });
 
     render(new PopupFilmDetailNewCommentView(), commentList);

@@ -1,7 +1,6 @@
 import {createElement} from '../render.js';
 
 function createPopupFilmDetailsCommentsTitleTemplate(commentsCount) {
-  console.log(commentsCount.movie.comments.length);
   return `<span class="film-details__comments-count">${commentsCount.movie.comments.length}</span>`;
 }
 
