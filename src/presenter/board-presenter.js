@@ -20,6 +20,7 @@ export default class BoardPresenter {
   #movieModel = null;
   #body = null;
   #listMovieMovieInfo = [];
+  #renderMovieCount = MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
 
   #sectionFilmsComponent = new SectionFilmsView();
@@ -100,8 +101,18 @@ export default class BoardPresenter {
 
   #loadMoreButtonHandler = (evt) => {
     evt.preventDefault();
-    alert('work');
-  }
+
+    this.#listMovieMovieInfo
+      .slice(this.#renderMovieCount, this.#renderMovieCount + MOVIE_COUNT_PER_STEP)
+      .forEach((movie) => this.#renderMovieList(movie));
+
+    this.#renderMovieCount += MOVIE_COUNT_PER_STEP;
+
+    if (this.#renderMovieCount >= this.#listMovieMovieInfo.length){
+      this.#loadMoreButtonComponent.element.remove();
+      this.#loadMoreButtonComponent.removeElement();
+    }
+  };
 
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
@@ -121,7 +132,7 @@ export default class BoardPresenter {
 
     {render(new FooterStatisticsView(), this.#footer);}
 
-    for(let i = 0; i < this.#listMovieMovieInfo.length; i++){
+    for(let i = 0; i < MOVIE_COUNT_PER_STEP; i++){
       this.#renderMovieList(this.#listMovieMovieInfo[i]);
     }
 
