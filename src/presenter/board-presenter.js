@@ -11,6 +11,7 @@ import PopupView from '../view/popup-view';
 import PopupFilmDetailsCommentsTitleView from '../view/popup-film-details-comments-title-view.js';
 import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-view.js';
 import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
+import NoMovieView from '../view/no-moviecard-view.js';
 const MOVIE_COUNT_PER_STEP = 5;
 
 export default class BoardPresenter {
@@ -117,19 +118,23 @@ export default class BoardPresenter {
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
     render(new MenuView(), this.#main);
-    render(new SortView(), this.#main);
-    render(this.#filmListComponent, this.#main);
+
+    if (this.#listMovieMovieInfo.every((movie) => movie.isArchive)) {
+      render(new NoMovieView(), this.#main);
+    } else {
+
+      render(new SortView(), this.#main);
+      render(this.#filmListComponent, this.#main);
 
 
+      if(this.#listMovieMovieInfo.length > MOVIE_COUNT_PER_STEP) {
+        this.#loadMoreButtonComponent = new ShowMoreButtonView();
+        render(this.#loadMoreButtonComponent, this.#main);
 
-    if(this.#listMovieMovieInfo.length > MOVIE_COUNT_PER_STEP) {
-      this.#loadMoreButtonComponent = new ShowMoreButtonView();
-      render(this.#loadMoreButtonComponent, this.#main);
+        this.#loadMoreButtonComponent.element.addEventListener('click', this.#loadMoreButtonHandler);
+      }
 
-      this.#loadMoreButtonComponent.element.addEventListener('click', this.#loadMoreButtonHandler)
     }
-
-
     {render(new FooterStatisticsView(), this.#footer);}
 
     for(let i = 0; i < MOVIE_COUNT_PER_STEP; i++){
