@@ -22,6 +22,20 @@ export default class BoardPresenter {
   #listMovieMovieInfo = [];
   #renderMovieCount = MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
+  #loadMoreButtonHandler = (evt) => {
+    evt.preventDefault();
+
+    this.#listMovieMovieInfo
+      .slice(this.#renderMovieCount, this.#renderMovieCount + MOVIE_COUNT_PER_STEP)
+      .forEach((movie) => this.#renderMovieList(movie));
+
+    this.#renderMovieCount += MOVIE_COUNT_PER_STEP;
+
+    if (this.#renderMovieCount >= this.#listMovieMovieInfo.length){
+      this.#loadMoreButtonComponent.element.remove();
+      this.#loadMoreButtonComponent.removeElement();
+    }
+  };
 
 
   #filmListComponent = new FilmListView();
@@ -45,20 +59,6 @@ export default class BoardPresenter {
     this.#renderBoard();
   }
 
-  #loadMoreButtonHandler = (evt) => {
-    evt.preventDefault();
-
-    this.#listMovieMovieInfo
-      .slice(this.#renderMovieCount, this.#renderMovieCount + MOVIE_COUNT_PER_STEP)
-      .forEach((movie) => this.#renderMovieList(movie));
-
-    this.#renderMovieCount += MOVIE_COUNT_PER_STEP;
-
-    if (this.#renderMovieCount >= this.#listMovieMovieInfo.length){
-      this.#loadMoreButtonComponent.element.remove();
-      this.#loadMoreButtonComponent.removeElement();
-    }
-  };
 
   #renderMovieList(movie) {
 
