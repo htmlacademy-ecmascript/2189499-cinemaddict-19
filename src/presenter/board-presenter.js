@@ -119,23 +119,22 @@ export default class BoardPresenter {
     render(new UserNameStatusView(), this.#header);
     render(new MenuView(), this.#main);
 
-    if (this.#listMovieMovieInfo.every((movie) => movie.isArchive)) {
-      render(new NoMovieView(), this.#main);
-    } else {
-
-      render(new SortView(), this.#main);
-      render(this.#filmListComponent, this.#main);
-
-
-      if(this.#listMovieMovieInfo.length > MOVIE_COUNT_PER_STEP) {
-        this.#loadMoreButtonComponent = new ShowMoreButtonView();
-        render(this.#loadMoreButtonComponent, this.#main);
-
-        this.#loadMoreButtonComponent.element.addEventListener('click', this.#loadMoreButtonHandler);
-      }
-
+    if (this.#listMovieMovieInfo.length === 0) {
+      return render(new NoMovieView(), this.#main);
     }
-    {render(new FooterStatisticsView(), this.#footer);}
+
+    render(new SortView(), this.#main);
+    render(this.#filmListComponent, this.#main);
+
+
+    if(this.#listMovieMovieInfo.length > MOVIE_COUNT_PER_STEP) {
+      this.#loadMoreButtonComponent = new ShowMoreButtonView();
+      render(this.#loadMoreButtonComponent, this.#main);
+
+      this.#loadMoreButtonComponent.element.addEventListener('click', this.#loadMoreButtonHandler);
+    }
+
+    render(new FooterStatisticsView(), this.#footer);
 
     for(let i = 0; i < MOVIE_COUNT_PER_STEP; i++){
       this.#renderMovieList(this.#listMovieMovieInfo[i]);
