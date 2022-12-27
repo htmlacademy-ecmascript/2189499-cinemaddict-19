@@ -45,6 +45,20 @@ export default class BoardPresenter {
     this.#renderBoard();
   }
 
+  #loadMoreButtonHandler = (evt) => {
+    evt.preventDefault();
+
+    this.#listMovieMovieInfo
+      .slice(this.#renderMovieCount, this.#renderMovieCount + MOVIE_COUNT_PER_STEP)
+      .forEach((movie) => this.#renderMovieList(movie));
+
+    this.#renderMovieCount += MOVIE_COUNT_PER_STEP;
+
+    if (this.#renderMovieCount >= this.#listMovieMovieInfo.length){
+      this.#loadMoreButtonComponent.element.remove();
+      this.#loadMoreButtonComponent.removeElement();
+    }
+  };
 
   #renderMovieList(movie) {
 
@@ -97,21 +111,6 @@ export default class BoardPresenter {
 
     document.addEventListener('keydown', escKeydownHandler);
   }
-
-  #loadMoreButtonHandler = (evt) => {
-    evt.preventDefault();
-
-    this.#listMovieMovieInfo
-      .slice(this.#renderMovieCount, this.#renderMovieCount + MOVIE_COUNT_PER_STEP)
-      .forEach((movie) => this.#renderMovieList(movie));
-
-    this.#renderMovieCount += MOVIE_COUNT_PER_STEP;
-
-    if (this.#renderMovieCount >= this.#listMovieMovieInfo.length){
-      this.#loadMoreButtonComponent.element.remove();
-      this.#loadMoreButtonComponent.removeElement();
-    }
-  };
 
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
