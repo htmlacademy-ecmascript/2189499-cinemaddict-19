@@ -1,6 +1,5 @@
 import CardFilmsView from '../view/card-films-view.js';
 import FilmListView from '../view/film-list-view.js';
-import SectionFilmsView from '../view/section-films-view.js';
 import MenuView from '../view/menu-view.js';
 import { render } from '../render.js';
 import SortView from '../view/sort-view.js';
@@ -24,8 +23,6 @@ export default class BoardPresenter {
   #renderMovieCount = MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
 
-  #sectionFilmsComponent = new SectionFilmsView();
-
 
   #filmListComponent = new FilmListView();
   #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
@@ -39,6 +36,7 @@ export default class BoardPresenter {
     this.#body = body;
 
   }
+
 
   init() {
     this.#listMovieMovieInfo = [...this.#movieModel.movie];
