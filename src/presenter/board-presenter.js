@@ -11,25 +11,26 @@ import PopupFilmDetailsCommentsTitleView from '../view/popup-film-details-commen
 import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-view.js';
 import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
 import NoMovieView from '../view/no-moviecard-view.js';
-const MOVIE_COUNT_PER_STEP = 5;
+
 
 export default class BoardPresenter {
+  static MOVIE_COUNT_PER_STEP = 5;
   #header = null;
   #main = null;
   #footer = null;
   #movieModel = null;
   #body = null;
   #listMovieMovieInfo = [];
-  #renderMovieCount = MOVIE_COUNT_PER_STEP;
+  #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
   #loadMoreButtonHandler = (evt) => {
     evt.preventDefault();
 
     this.#listMovieMovieInfo
-      .slice(this.#renderMovieCount, this.#renderMovieCount + MOVIE_COUNT_PER_STEP)
+      .slice(this.#renderMovieCount, this.#renderMovieCount + BoardPresenter.MOVIE_COUNT_PER_STEP)
       .forEach((movie) => this.#renderMovieList(movie));
 
-    this.#renderMovieCount += MOVIE_COUNT_PER_STEP;
+    this.#renderMovieCount += BoardPresenter.MOVIE_COUNT_PER_STEP;
 
     if (this.#renderMovieCount >= this.#listMovieMovieInfo.length){
       this.#loadMoreButtonComponent.element.remove();
@@ -117,14 +118,15 @@ export default class BoardPresenter {
     render(new MenuView(), this.#main);
 
     if (this.#listMovieMovieInfo.length === 0) {
-      return render(new NoMovieView(), this.#main);
+      render(new NoMovieView(), this.#main);
+      return ;
     }
 
     render(new SortView(), this.#main);
     render(this.#filmListComponent, this.#main);
 
 
-    if(this.#listMovieMovieInfo.length > MOVIE_COUNT_PER_STEP) {
+    if(this.#listMovieMovieInfo.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
       this.#loadMoreButtonComponent = new ShowMoreButtonView();
       render(this.#loadMoreButtonComponent, this.#main);
 
@@ -133,7 +135,7 @@ export default class BoardPresenter {
 
     render(new FooterStatisticsView(), this.#footer);
 
-    for(let i = 0; i < MOVIE_COUNT_PER_STEP; i++){
+    for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
       this.#renderMovieList(this.#listMovieMovieInfo[i]);
     }
 
