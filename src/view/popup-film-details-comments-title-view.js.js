@@ -1,14 +1,16 @@
 import {createElement} from '../render.js';
+import AbstractView from '../framework/view/abstract-view.js';
 
 function createPopupFilmDetailsCommentsTitleTemplate(commentsCount) {
   return `<span class="film-details__comments-count">${commentsCount.movie.comments.length}</span>`;
 }
 
-export default class PopupFilmDetailsCommentsTitleView {
+export default class PopupFilmDetailsCommentsTitleView extends AbstractView {
   #element = null;
   #commentsCount = null;
 
   constructor(commentsCount) {
+    super();
     this.#commentsCount = commentsCount;
   }
 
@@ -16,15 +18,4 @@ export default class PopupFilmDetailsCommentsTitleView {
     return createPopupFilmDetailsCommentsTitleTemplate(this.#commentsCount);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
 }

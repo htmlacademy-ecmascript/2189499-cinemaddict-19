@@ -1,7 +1,7 @@
 import CardFilmsView from '../view/card-films-view.js';
 import FilmListView from '../view/film-list-view.js';
 import MenuView from '../view/menu-view.js';
-import { render } from '../render.js';
+import { render } from '../framework/render';
 import SortView from '../view/sort-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';

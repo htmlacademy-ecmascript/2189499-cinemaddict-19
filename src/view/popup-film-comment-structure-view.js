@@ -1,7 +1,7 @@
 
-import {createElement} from '../render.js';
 import { mockComments } from '../mock/movies.js';
 import { humanizeReleaseDate } from '../utils.js';
+import AbstractView from '../framework/view/abstract-view.js';
 function createPopupFilmCommentStructureTemplate(commentId) {
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
@@ -18,10 +18,11 @@ function createPopupFilmCommentStructureTemplate(commentId) {
 </li>`;
 }
 
-export default class PopupFilmCommentStructureView {
+export default class PopupFilmCommentStructureView extends AbstractView {
   #commentId = null;
   #element = null;
   constructor(commentId) {
+    super();
     this.#commentId = commentId;
   }
 
@@ -29,15 +30,4 @@ export default class PopupFilmCommentStructureView {
     return createPopupFilmCommentStructureTemplate(this.#commentId);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
 }

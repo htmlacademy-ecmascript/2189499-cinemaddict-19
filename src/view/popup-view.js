@@ -1,6 +1,6 @@
-import {createElement} from '../render.js';
 import { humanizeMovieDuration } from '../utils.js';
 import { humanizeReleaseDate } from '../utils.js';
+import AbstractView from '../framework/view/abstract-view.js';
 function createPopupTemplate(popupMovie) {
   const {movie} = popupMovie;
   return `<section class="film-details">
@@ -87,10 +87,11 @@ function createPopupTemplate(popupMovie) {
 </section>`;
 }
 
-export default class PopupView {
+export default class PopupView extends AbstractView {
   #popupMovie = null;
   #element = null;
   constructor(popupMovie) {
+    super();
     this.#popupMovie = popupMovie;
   }
 
@@ -98,16 +99,5 @@ export default class PopupView {
     return createPopupTemplate(this.#popupMovie);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
 }
 

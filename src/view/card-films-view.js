@@ -1,6 +1,6 @@
-import {createElement} from '../render.js';
 import { humanizeMovieDueDate } from '../utils.js';
 import { humanizeMovieDuration } from '../utils.js';
+import AbstractView from '../framework/view/abstract-view.js';
 function createCardFilmsTemplate(movie) {
   const {filmInfo, comments} = movie;
   const commentsLength = comments.length;
@@ -25,10 +25,12 @@ function createCardFilmsTemplate(movie) {
 </article>`;
 }
 
-export default class CardFilmsView {
+export default class CardFilmsView extends AbstractView {
+
   #element = null;
   #movie = null;
   constructor({movie}) {
+    super();
     this.#movie = movie;
   }
 
@@ -36,16 +38,5 @@ export default class CardFilmsView {
     return createCardFilmsTemplate(this.#movie);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
 }
 
