@@ -1,4 +1,3 @@
-import {createElement} from '../render.js';
 import AbstractView from '../framework/view/abstract-view.js';
 
 function createPopupFilmDetailsCommentsTitleTemplate(commentsCount) {
@@ -6,7 +5,6 @@ function createPopupFilmDetailsCommentsTitleTemplate(commentsCount) {
 }
 
 export default class PopupFilmDetailsCommentsTitleView extends AbstractView {
-  #element = null;
   #commentsCount = null;
 
   constructor(commentsCount) {

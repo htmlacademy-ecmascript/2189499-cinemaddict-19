@@ -61,23 +61,35 @@ export default class BoardPresenter {
 
 
   #renderMovieList(movie) {
-
-    const movieCardView = new CardFilmsView({movie});
-    render(movieCardView, this.#filmContainer);
-
     const openPopup = () => {
       this.#renderPopup({movie});
       this.#body.classList.add('hide-overflow');
     };
 
-    movieCardView.element.querySelector('.film-card__link').addEventListener('click', () => {
-      openPopup();
+    const movieCardView = new CardFilmsView({
+      movie,
+      onShowPopupClick: () => {
+        openPopup();
+      }
     });
+    render(movieCardView, this.#filmContainer);
+
   }
 
 
   #renderPopup(movie) {
-    const popupView = new PopupView(movie);
+    const closePopup = () => {
+      popupView.element.parentElement.removeChild(popupView.element);
+      popupView.removeElement();
+      this.#body.classList.remove('hide-overflow');
+    };
+
+    const popupView = new PopupView({
+      movie,
+      onClosePopupClick: () => {
+        closePopup();
+      }
+    });
     render(popupView, this.#body);
 
     const filmDetailsCommentsTitle = popupView.element.querySelector('.film-details__comments-title');
@@ -90,15 +102,9 @@ export default class BoardPresenter {
     render(new PopupFilmDetailNewCommentView(), commentList);
 
 
-    const closePopup = () => {
-      popupView.element.parentElement.removeChild(popupView.element);
-      popupView.removeElement();
-      this.#body.classList.remove('hide-overflow');
-    };
-
-    popupView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
-      closePopup();
-    });
+    // popupView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
+    //   closePopup();
+    // });
 
     const escKeydownHandler = (evt) => {
 
@@ -131,8 +137,6 @@ export default class BoardPresenter {
       });
 
       render(this.#loadMoreButtonComponent, this.#main);
-
-      // this.#loadMoreButtonComponent.element.addEventListener('click', this.#loadMoreButtonHandler);
 
     }
 

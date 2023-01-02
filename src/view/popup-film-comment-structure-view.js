@@ -20,7 +20,6 @@ function createPopupFilmCommentStructureTemplate(commentId) {
 
 export default class PopupFilmCommentStructureView extends AbstractView {
   #commentId = null;
-  #element = null;
   constructor(commentId) {
     super();
     this.#commentId = commentId;

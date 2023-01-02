@@ -1,8 +1,8 @@
 import { humanizeMovieDuration } from '../utils.js';
 import { humanizeReleaseDate } from '../utils.js';
 import AbstractView from '../framework/view/abstract-view.js';
-function createPopupTemplate(popupMovie) {
-  const {movie} = popupMovie;
+function createPopupTemplate(movie) {
+
   return `<section class="film-details">
   <div class="film-details__inner">
     <div class="film-details__top-container">
@@ -11,43 +11,43 @@ function createPopupTemplate(popupMovie) {
       </div>
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
-          <img class="film-details__poster-img" src="./images/posters/${movie.filmInfo.poster}" alt="">
+          <img class="film-details__poster-img" src="./images/posters/${movie.movie.filmInfo.poster}" alt="">
 
-          <p class="film-details__age">${movie.filmInfo.ageRating}+</p>
+          <p class="film-details__age">${movie.movie.filmInfo.ageRating}+</p>
         </div>
 
         <div class="film-details__info">
           <div class="film-details__info-head">
             <div class="film-details__title-wrap">
-              <h3 class="film-details__title">${movie.filmInfo.title}</h3>
-              <p class="film-details__title-original">Original: ${movie.filmInfo.alternativeTitle}</p>
+              <h3 class="film-details__title">${movie.movie.filmInfo.title}</h3>
+              <p class="film-details__title-original">Original: ${movie.movie.filmInfo.alternativeTitle}</p>
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">${movie.filmInfo.totalRating}</p>
+              <p class="film-details__total-rating">${movie.movie.filmInfo.totalRating}</p>
             </div>
           </div>
 
           <table class="film-details__table">
             <tr class="film-details__row">
               <td class="film-details__term">Director</td>
-              <td class="film-details__cell">${movie.filmInfo.director}</td>
+              <td class="film-details__cell">${movie.movie.filmInfo.director}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">${movie.filmInfo.writers}</td>
+              <td class="film-details__cell">${movie.movie.filmInfo.writers}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">${movie.filmInfo.actors}</td>
+              <td class="film-details__cell">${movie.movie.filmInfo.actors}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${humanizeReleaseDate(movie.filmInfo.release.date)}</td>
+              <td class="film-details__cell">${humanizeReleaseDate(movie.movie.filmInfo.release.date)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Duration</td>
-              <td class="film-details__cell">${humanizeMovieDuration(movie.filmInfo.duration)}</td>
+              <td class="film-details__cell">${humanizeMovieDuration(movie.movie.filmInfo.duration)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
@@ -63,7 +63,7 @@ function createPopupTemplate(popupMovie) {
           </table>
 
           <p class="film-details__film-description">
-            ${movie.filmInfo.description}
+            ${movie.movie.filmInfo.description}
           </p>
         </div>
       </div>
@@ -88,16 +88,23 @@ function createPopupTemplate(popupMovie) {
 }
 
 export default class PopupView extends AbstractView {
-  #popupMovie = null;
-  #element = null;
-  constructor(popupMovie) {
+  #handleClosePopupClick = null;
+  #movie = null;
+  constructor({movie, onClosePopupClick}) {
     super();
-    this.#popupMovie = popupMovie;
+    this.#movie = movie;
+    this.#handleClosePopupClick = onClosePopupClick;
+    this.element.querySelector('.film-details__close-btn')
+      .addEventListener('click', this.#closePopupClickHandler);
   }
 
   get template() {
-    return createPopupTemplate(this.#popupMovie);
+    return createPopupTemplate(this.#movie);
   }
 
+  #closePopupClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleClosePopupClick();
+  };
 }
 
