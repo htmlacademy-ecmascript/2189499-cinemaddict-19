@@ -23,8 +23,7 @@ export default class BoardPresenter {
   #listMovieMovieInfo = [];
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
-  #loadMoreButtonHandler = (evt) => {
-    evt.preventDefault();
+  #loadMoreButtonHandler = () => {
 
     this.#listMovieMovieInfo
       .slice(this.#renderMovieCount, this.#renderMovieCount + BoardPresenter.MOVIE_COUNT_PER_STEP)
@@ -127,10 +126,14 @@ export default class BoardPresenter {
 
 
     if(this.#listMovieMovieInfo.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
-      this.#loadMoreButtonComponent = new ShowMoreButtonView();
+      this.#loadMoreButtonComponent = new ShowMoreButtonView({
+        onShowMoreClick: this.#loadMoreButtonHandler
+      });
+
       render(this.#loadMoreButtonComponent, this.#main);
 
-      this.#loadMoreButtonComponent.element.addEventListener('click', this.#loadMoreButtonHandler);
+      // this.#loadMoreButtonComponent.element.addEventListener('click', this.#loadMoreButtonHandler);
+
     }
 
     render(new FooterStatisticsView(), this.#footer);
