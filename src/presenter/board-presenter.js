@@ -23,6 +23,7 @@ export default class BoardPresenter {
   #listMovieMovieInfo = [];
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
+  #popupView = null;
   #loadMoreButtonHandler = () => {
 
     this.#listMovieMovieInfo
@@ -41,6 +42,7 @@ export default class BoardPresenter {
   #filmListComponent = new FilmListView();
   #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
   #loadMoreButtonComponent = null;
+
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -78,28 +80,26 @@ export default class BoardPresenter {
 
 
   #renderPopup(movie) {
+    const closePopup = () => {
+      this.#popupView.element.parentElement.removeChild(this.#popupView.element);
+      this.#popupView.removeElement();
+      this.#body.classList.remove('hide-overflow');
+    };
 
-
-    const popupView = new PopupView({
+    this.#popupView = new PopupView({
       movie,
       onClosePopupClick: () => closePopup.bind(this)()
     });
-    render(popupView, this.#body);
+    render(this.#popupView, this.#body);
 
-    const filmDetailsCommentsTitle = popupView.element.querySelector('.film-details__comments-title');
+    const filmDetailsCommentsTitle = this.#popupView.element.querySelector('.film-details__comments-title');
     render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
-    const commentList = popupView.element.querySelector('.film-details__comments-list');
+    const commentList = this.#popupView.element.querySelector('.film-details__comments-list');
     movie.movie.comments.forEach((element) => {
       render(new PopupFilmCommentStructureView(element), commentList);
     });
 
     render(new PopupFilmDetailNewCommentView(), commentList);
-
-    function closePopup() {
-      popupView.element.parentElement.removeChild(popupView.element);
-      popupView.removeElement();
-      this.#body.classList.remove('hide-overflow');
-    }
 
     const escKeydownHandler = (evt) => {
 
