@@ -78,17 +78,11 @@ export default class BoardPresenter {
 
 
   #renderPopup(movie) {
-    const closePopup = () => {
-      popupView.element.parentElement.removeChild(popupView.element);
-      popupView.removeElement();
-      this.#body.classList.remove('hide-overflow');
-    };
+
 
     const popupView = new PopupView({
       movie,
-      onClosePopupClick: () => {
-        closePopup();
-      }
+      onClosePopupClick: () => closePopup.bind(this)()
     });
     render(popupView, this.#body);
 
@@ -101,6 +95,11 @@ export default class BoardPresenter {
 
     render(new PopupFilmDetailNewCommentView(), commentList);
 
+    function closePopup() {
+      popupView.element.parentElement.removeChild(popupView.element);
+      popupView.removeElement();
+      this.#body.classList.remove('hide-overflow');
+    }
 
     // popupView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
     //   closePopup();
