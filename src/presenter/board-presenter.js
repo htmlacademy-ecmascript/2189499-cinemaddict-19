@@ -87,7 +87,7 @@ export default class BoardPresenter {
     };
 
     this.#popupView = new PopupView({
-      movie,
+      movie: movie,
       onClosePopupClick: () => closePopup.bind(this)()
     });
     render(this.#popupView, this.#body);
