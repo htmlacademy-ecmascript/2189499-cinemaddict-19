@@ -64,12 +64,9 @@ export default class BoardPresenter {
 
   #renderMovieList(movie) {
     const openPopup = () => {
-      this.#body.lastElementChild.remove();
+      this.#body.lastChild.replaceWith('');
       this.#renderPopup({movie});
       this.#body.classList.add('hide-overflow');
-      // this.#popupView.element.parentElement.removeChild(this.#popupView.element);
-      // this.#popupView.removeElement();
-      // this.#body.lastElementChild.removeElement();
     };
 
     const movieCardView = new CardFilmsView({
@@ -89,7 +86,7 @@ export default class BoardPresenter {
       this.#popupView.removeElement();
       this.#body.classList.remove('hide-overflow');
     };
-
+    // this.#popupView.element.remove();
     this.#popupView = new PopupView({
       movie: movie,
       onClosePopupClick: () => closePopup.bind(this)()
