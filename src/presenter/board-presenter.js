@@ -101,15 +101,11 @@ export default class BoardPresenter {
       this.#body.classList.remove('hide-overflow');
     }
 
-    // popupView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
-    //   closePopup();
-    // });
-
     const escKeydownHandler = (evt) => {
 
       if(evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
-        closePopup();
+        closePopup.bind(this)();
         document.removeEventListener('keydown', escKeydownHandler);
       }
     };
