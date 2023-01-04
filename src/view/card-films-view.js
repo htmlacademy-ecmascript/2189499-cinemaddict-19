@@ -37,9 +37,9 @@ export default class CardFilmsView extends AbstractView {
       this.#handleShowPopupClick();
     };
 
-    this.#handleShowPopupClick = onShowPopupClick;
     this.element.querySelector('.film-card__link')
       .addEventListener('click', this.#showPopupClickHandler);
+    this.#handleShowPopupClick = onShowPopupClick;
   }
 
   get template() {
