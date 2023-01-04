@@ -1,7 +1,7 @@
 import CardFilmsView from '../view/card-films-view.js';
 import FilmListView from '../view/film-list-view.js';
 import MenuView from '../view/menu-view.js';
-import { render } from '../render.js';
+import { render } from '../framework/render';
 import SortView from '../view/sort-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';
@@ -23,8 +23,8 @@ export default class BoardPresenter {
   #listMovieMovieInfo = [];
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
-  #loadMoreButtonHandler = (evt) => {
-    evt.preventDefault();
+  #popupView = null;
+  #loadMoreButtonHandler = () => {
 
     this.#listMovieMovieInfo
       .slice(this.#renderMovieCount, this.#renderMovieCount + BoardPresenter.MOVIE_COUNT_PER_STEP)
@@ -42,6 +42,7 @@ export default class BoardPresenter {
   #filmListComponent = new FilmListView();
   #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
   #loadMoreButtonComponent = null;
+
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -62,50 +63,52 @@ export default class BoardPresenter {
 
 
   #renderMovieList(movie) {
-
-    const movieCardView = new CardFilmsView({movie});
-    render(movieCardView, this.#filmContainer);
-
     const openPopup = () => {
       this.#renderPopup({movie});
       this.#body.classList.add('hide-overflow');
     };
 
-    movieCardView.element.querySelector('.film-card__link').addEventListener('click', () => {
-      openPopup();
+    const movieCardView = new CardFilmsView({
+      movie,
+      onShowPopupClick: () => {
+        openPopup();
+      }
     });
+    render(movieCardView, this.#filmContainer);
+
   }
 
 
   #renderPopup(movie) {
-    const popupView = new PopupView(movie);
-    render(popupView, this.#body);
+    const closePopup = () => {
+      this.#popupView.element.parentElement.removeChild(this.#popupView.element);
+      this.#popupView.removeElement();
+      this.#body.classList.remove('hide-overflow');
+    };
 
-    const filmDetailsCommentsTitle = popupView.element.querySelector('.film-details__comments-title');
+    if (this.#popupView) {
+      this.#popupView.element.remove();
+    }
+    this.#popupView = new PopupView({
+      movie,
+      onClosePopupClick: () => closePopup.bind(this)()
+    });
+    render(this.#popupView, this.#body);
+
+    const filmDetailsCommentsTitle = this.#popupView.element.querySelector('.film-details__comments-title');
     render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
-    const commentList = popupView.element.querySelector('.film-details__comments-list');
+    const commentList = this.#popupView.element.querySelector('.film-details__comments-list');
     movie.movie.comments.forEach((element) => {
       render(new PopupFilmCommentStructureView(element), commentList);
     });
 
     render(new PopupFilmDetailNewCommentView(), commentList);
 
-
-    const closePopup = () => {
-      popupView.element.parentElement.removeChild(popupView.element);
-      popupView.removeElement();
-      this.#body.classList.remove('hide-overflow');
-    };
-
-    popupView.element.querySelector('.film-details__close-btn').addEventListener('click', () => {
-      closePopup();
-    });
-
     const escKeydownHandler = (evt) => {
 
       if(evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
-        closePopup();
+        closePopup.bind(this)();
         document.removeEventListener('keydown', escKeydownHandler);
       }
     };
@@ -127,10 +130,12 @@ export default class BoardPresenter {
 
 
     if(this.#listMovieMovieInfo.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
-      this.#loadMoreButtonComponent = new ShowMoreButtonView();
+      this.#loadMoreButtonComponent = new ShowMoreButtonView({
+        onShowMoreClick: this.#loadMoreButtonHandler
+      });
+
       render(this.#loadMoreButtonComponent, this.#main);
 
-      this.#loadMoreButtonComponent.element.addEventListener('click', this.#loadMoreButtonHandler);
     }
 
     render(new FooterStatisticsView(), this.#footer);
