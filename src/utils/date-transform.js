@@ -20,4 +20,4 @@ function humanizeReleaseDate(releaseDate) {
 }
 
 
-export{humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate};
+export {humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate};
