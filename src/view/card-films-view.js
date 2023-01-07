@@ -1,5 +1,5 @@
-import { humanizeMovieDueDate } from '../utils.js';
-import { humanizeMovieDuration } from '../utils.js';
+import { humanizeMovieDueDate } from '../utils/date-tramsform.js';
+import { humanizeMovieDuration } from '../utils/date-tramsform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 function createCardFilmsTemplate(movie) {
   const {filmInfo, comments} = movie;

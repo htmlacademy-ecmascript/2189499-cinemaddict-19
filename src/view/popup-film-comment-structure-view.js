@@ -1,6 +1,6 @@
 
 import { mockComments } from '../mock/movies.js';
-import { humanizeReleaseDate } from '../utils.js';
+import { humanizeReleaseDate } from '../utils/date-tramsform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 function createPopupFilmCommentStructureTemplate(commentId) {
   return `<li class="film-details__comment">

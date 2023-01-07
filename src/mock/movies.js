@@ -1,4 +1,4 @@
-import { getRandomArrayElement } from '../utils';
+import { getRandomArrayElement } from '../utils/common.js';
 
 const emotions = ['smile.png', 'sleeping.png', 'puke.png', 'angry.png'];
 
