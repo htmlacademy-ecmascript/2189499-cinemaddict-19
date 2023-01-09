@@ -17,5 +17,6 @@ const mainPresenter = new BoardPresenter({
 });
 const filters = generateFilter(movieModel.movie);
 
-render(new MenuView({filters}), siteBodyElement);
+// console.log(filters);
+render(new MenuView(filters), siteBodyElement);
 mainPresenter.init();

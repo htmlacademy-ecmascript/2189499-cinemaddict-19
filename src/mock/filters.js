@@ -1,11 +1,12 @@
 import {filter} from '../utils/filter.js';
 
-function generateFilter(listMovieMovieInfo) {
+function generateFilter(movie) {
   return Object.entries(filter).map(
-    (filterName, filterMovie) => ({
+    ([filterName, filterMovie]) => ({
       name: filterName,
-      count: filterMovie(listMovieMovieInfo).length
+      count: filterMovie(movie).length
     })
   );
 }
+
 export {generateFilter};
