@@ -1,7 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-function createMenuTemplate(filter) {
-  const {name, count} = filter;
+function createMenuTemplate({name, count}) {
   return `
   <a href="#${name}" class="main-navigation__item">${name} <span class="main-navigation__item-count">${count}</span></a>
 `;

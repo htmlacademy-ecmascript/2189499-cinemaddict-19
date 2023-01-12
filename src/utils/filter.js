@@ -1,16 +1,16 @@
 import { FilterType } from '../const.js';
 
 
-function inMovieWatchlist(watched){
-  const {userDetails: {watchlist}} = watched;
+function inMovieWatchlist(movie){
+  const {userDetails: {watchlist}} = movie;
   return watchlist;
 }
-function inMovieHistory(history){
-  const {userDetails: {alreadyWatched}} = history;
+function inMovieHistory(movie){
+  const {userDetails: {alreadyWatched}} = movie;
   return alreadyWatched;
 }
-function inMovieFavorites(favorites){
-  const {userDetails: {favorite}} = favorites;
+function inMovieFavorites(movie){
+  const {userDetails: {favorite}} = movie;
   return favorite;
 }
 
