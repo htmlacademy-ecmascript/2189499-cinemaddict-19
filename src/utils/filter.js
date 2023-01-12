@@ -16,10 +16,10 @@ function isMovieFavorites(favorites){
 
 
 const filter = {
-  [FilterType.ALL]: (movie) => movie.filter((all) => all),
-  [FilterType.WATCHLIST]: (movie) => movie.filter((watched) => isMovieWatchlist(watched)),
-  [FilterType.HISTORY]: (movie) => movie.filter((alreadyWatched) => isMovieHistory(alreadyWatched)),
-  [FilterType.FAVORITES]: (movie) => movie.filter((favorite) => isMovieFavorites(favorite)),
+  [FilterType.ALL]: (movies) => movies,
+  [FilterType.WATCHLIST]: (movies) => movies.filter((watched) => isMovieWatchlist(watched)),
+  [FilterType.HISTORY]: (movies) => movies.filter((alreadyWatched) => isMovieHistory(alreadyWatched)),
+  [FilterType.FAVORITES]: (movies) => movies.filter((favorite) => isMovieFavorites(favorite)),
 };
 
 
