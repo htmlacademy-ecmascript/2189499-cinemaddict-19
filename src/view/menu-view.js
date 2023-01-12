@@ -10,7 +10,7 @@ function createMenuTemplate(filter) {
 
 function createFilterTemplate(filterItems) {
   const filterItemsTemplate = filterItems
-    .map((filter, index) => createMenuTemplate(filter, index === 0))
+    .map((filter) => createMenuTemplate(filter))
     .join('');
 
   return (
