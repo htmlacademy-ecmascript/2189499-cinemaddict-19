@@ -11,6 +11,7 @@ import PopupFilmDetailsCommentsTitleView from '../view/popup-film-details-commen
 import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-view.js';
 import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
 import NoMovieView from '../view/no-moviecard-view.js';
+import { generateFilter } from '../mock/filters.js';
 
 
 export default class BoardPresenter {
@@ -118,7 +119,8 @@ export default class BoardPresenter {
 
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
-    render(new MenuView(), this.#main);
+    const filters = generateFilter(this.#listMovieMovieInfo);
+    render(new MenuView({filters}), this.#main);
 
     if (this.#listMovieMovieInfo.length === 0) {
       render(new NoMovieView(), this.#main);
