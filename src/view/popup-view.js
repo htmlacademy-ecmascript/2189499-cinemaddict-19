@@ -1,5 +1,5 @@
-import { humanizeMovieDuration } from '../utils.js';
-import { humanizeReleaseDate } from '../utils.js';
+import { humanizeMovieDuration } from '../utils/date-transform.js';
+import { humanizeReleaseDate } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 function createPopupTemplate(movie) {
   const {movie: movieInfo} = movie;

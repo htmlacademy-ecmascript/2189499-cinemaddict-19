@@ -19,8 +19,5 @@ function humanizeReleaseDate(releaseDate) {
   return releaseDate ? dayjs(releaseDate).format(RELEASE_FORMAT) : '';
 }
 
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
 
-export{getRandomArrayElement, humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate};
+export {humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate};

@@ -1,4 +1,4 @@
-import { getRandomArrayElement } from '../utils';
+import { getRandomArrayElement } from '../utils/common.js';
 
 const emotions = ['smile.png', 'sleeping.png', 'puke.png', 'angry.png'];
 
@@ -204,7 +204,7 @@ const mockMovie = [
       description: 'Suspendisse tellus ex, tincidunt et tincidunt consectetur, egestas quis tortor. Fusce ut feugiat justo. Nullam et molestie lacus. Fusce sed elit faucibus libero elementum iaculis sit amet vitae dui. Vestibulum turpis nunc, vehicula sit amet odio sit amet, rutrum volutpat tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam luctus tincidunt interdum. Proin quis hendrerit quam, sed ultrices turpis.'
     },
     userDetails: {
-      watchlist: false,
+      watchlist: true,
       alreadyWatched: true,
       watchingDate: '2019-04-12T16:12:32.554Z',
       favorite: false
@@ -241,7 +241,7 @@ const mockMovie = [
     },
     userDetails: {
       watchlist: true,
-      alreadyWatched: true,
+      alreadyWatched: false,
       watchingDate: '2022-12-12T16:12:32.554Z',
       favorite: true
     }
@@ -277,7 +277,7 @@ const mockMovie = [
     },
     userDetails: {
       watchlist: true,
-      alreadyWatched: true,
+      alreadyWatched: false,
       watchingDate: '2021-04-12T16:12:32.554Z',
       favorite: false
     }
