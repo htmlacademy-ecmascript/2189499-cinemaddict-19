@@ -44,7 +44,7 @@ export default class BoardPresenter {
   #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
   #loadMoreButtonComponent = null;
   #menuViewComponent = null;
-
+  #noMovieViewComponent = new NoMovieView();
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -67,6 +67,10 @@ export default class BoardPresenter {
     const filters = generateFilter(this.#listMovieMovieInfo);
     this.#menuViewComponent = new MenuView({filters});
     render(this.#menuViewComponent, this.#main);
+  }
+
+  #renderNoMovieView() {
+    render(this.#noMovieViewComponent, this.#main);
   }
 
   #renderMovieList(movie) {
@@ -126,10 +130,9 @@ export default class BoardPresenter {
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
     this.#renderMovieView();
-    // render(this.#menuViewComponent, this.#main);
 
     if (this.#listMovieMovieInfo.length === 0) {
-      render(new NoMovieView(), this.#main);
+      render(this.#renderNoMovieView(), this.#main);
       return ;
     }
 
