@@ -70,8 +70,12 @@ export default class BoardPresenter {
     render(this.#menuViewComponent, this.#main);
   }
 
-  #renderNoMovieView() {
-    render(this.#noMovieViewComponent, this.#main);
+  #renderMovieViewList() {
+    if (this.#listMovieMovieInfo.length === 0) {
+      render(this.#noMovieViewComponent, this.#main);
+      return ;
+    }
+    render(this.#filmListComponent, this.#main);
   }
 
   #renderMovieList(movie) {
@@ -150,13 +154,9 @@ export default class BoardPresenter {
 
     this.#renderMovieView();
 
-    if (this.#listMovieMovieInfo.length === 0) {
-      render(this.#renderNoMovieView(), this.#main);
-      return ;
-    }
-
     render(new SortView(), this.#main);
-    render(this.#filmListComponent, this.#main);
+
+    this.#renderMovieViewList();
 
     this.#renderShowMoreButton();
 
