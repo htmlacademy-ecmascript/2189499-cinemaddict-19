@@ -139,6 +139,12 @@ export default class BoardPresenter {
     }
   }
 
+  #renderNextMoviesInList() {
+    for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
+      this.#renderMovieList(this.#listMovieMovieInfo[i]);
+    }
+  }
+
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
 
@@ -152,15 +158,11 @@ export default class BoardPresenter {
     render(new SortView(), this.#main);
     render(this.#filmListComponent, this.#main);
 
-    this.#renderShowMoreButton(); 
+    this.#renderShowMoreButton();
 
     render(new FooterStatisticsView(), this.#footer);
 
-    for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
-      this.#renderMovieList(this.#listMovieMovieInfo[i]);
-    }
-
-
+    this.#renderNextMoviesInList();
   }
 }
 
