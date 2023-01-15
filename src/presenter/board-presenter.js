@@ -25,6 +25,7 @@ export default class BoardPresenter {
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
   #popupView = null;
+
   #loadMoreButtonHandler = () => {
 
     this.#listMovieMovieInfo
@@ -127,8 +128,20 @@ export default class BoardPresenter {
     document.addEventListener('keydown', escKeydownHandler);
   }
 
+  #renderShowMoreButton() {
+    if(this.#listMovieMovieInfo.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
+      this.#loadMoreButtonComponent = new ShowMoreButtonView({
+        onShowMoreClick: this.#loadMoreButtonHandler
+      });
+
+      render(this.#loadMoreButtonComponent, this.#main);
+
+    }
+  }
+
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
+
     this.#renderMovieView();
 
     if (this.#listMovieMovieInfo.length === 0) {
@@ -139,15 +152,7 @@ export default class BoardPresenter {
     render(new SortView(), this.#main);
     render(this.#filmListComponent, this.#main);
 
-
-    if(this.#listMovieMovieInfo.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
-      this.#loadMoreButtonComponent = new ShowMoreButtonView({
-        onShowMoreClick: this.#loadMoreButtonHandler
-      });
-
-      render(this.#loadMoreButtonComponent, this.#main);
-
-    }
+    this.#renderShowMoreButton(); 
 
     render(new FooterStatisticsView(), this.#footer);
 
