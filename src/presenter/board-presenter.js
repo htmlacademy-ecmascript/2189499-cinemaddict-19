@@ -27,12 +27,8 @@ export default class BoardPresenter {
   #popupView = null;
 
   #loadMoreButtonHandler = () => {
-
-    this.#listMovieMovieInfo
-      .slice(this.#renderMovieCount, this.#renderMovieCount + BoardPresenter.MOVIE_COUNT_PER_STEP)
-      .forEach((movie) => this.#renderMovieList(movie));
-
-    this.#renderMovieCount += BoardPresenter.MOVIE_COUNT_PER_STEP;
+    
+    this.#renderMovies(this.#renderMovieCount, this.#renderMovieCount += BoardPresenter.MOVIE_COUNT_PER_STEP);
 
     if (this.#renderMovieCount >= this.#listMovieMovieInfo.length){
       this.#loadMoreButtonComponent.element.remove();
@@ -70,6 +66,7 @@ export default class BoardPresenter {
     render(this.#menuViewComponent, this.#main);
   }
 
+  
   #renderMovieViewList() {
     if (this.#listMovieMovieInfo.length === 0) {
       render(this.#noMovieViewComponent, this.#main);
@@ -78,7 +75,7 @@ export default class BoardPresenter {
     render(this.#filmListComponent, this.#main);
   }
 
-  #renderMovieList(movie) {
+  #renderMovie(movie) {
     const openPopup = () => {
       this.#renderPopup({movie});
       this.#body.classList.add('hide-overflow');
@@ -94,6 +91,12 @@ export default class BoardPresenter {
 
   }
 
+  #renderMovies(from, to) {
+  this.#listMovieMovieInfo
+    .slice(from, to)  
+    .forEach((movie) => this.#renderMovie(movie));
+
+  }
 
   #renderPopup(movie) {
     const closePopup = () => {
@@ -145,8 +148,9 @@ export default class BoardPresenter {
 
   #renderNextMoviesInList() {
     for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
-      this.#renderMovieList(this.#listMovieMovieInfo[i]);
+      this.#renderMovie(this.#listMovieMovieInfo[i]);
     }
+    this.#renderShowMoreButton();
   }
 
   #renderBoard() {
@@ -157,8 +161,6 @@ export default class BoardPresenter {
     render(new SortView(), this.#main);
 
     this.#renderMovieViewList();
-
-    this.#renderShowMoreButton();
 
     render(new FooterStatisticsView(), this.#footer);
 
