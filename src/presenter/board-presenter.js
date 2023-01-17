@@ -1,4 +1,4 @@
-import CardFilmsView from '../view/card-films-view.js';
+// import CardFilmsView from '../view/card-films-view.js';
 import FilmListView from '../view/film-list-view.js';
 import MenuView from '../view/menu-view.js';
 import { render } from '../framework/render';
@@ -12,7 +12,7 @@ import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-
 import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
 import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
-
+import MoviePresenter from './movie-presenter.js';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -76,19 +76,11 @@ export default class BoardPresenter {
   }
 
   #renderMovie(movie) {
-    const openPopup = () => {
-      this.#renderPopup({movie});
-      this.#body.classList.add('hide-overflow');
-    };
 
-    const movieCardView = new CardFilmsView({
-      movie,
-      onShowPopupClick: () => {
-        openPopup();
-      }
-    });
-    render(movieCardView, this.#filmContainer);
-
+  const moviePresenter = new MoviePresenter({
+    filmContainer: this.#filmContainer.elelement,
+  })
+  moviePresenter.init(movie);
   }
 
   #renderMovies(from, to) {
@@ -98,42 +90,42 @@ export default class BoardPresenter {
 
   }
 
-  #renderPopup(movie) {
-    const closePopup = () => {
-      this.#popupView.element.parentElement.removeChild(this.#popupView.element);
-      this.#popupView.removeElement();
-      this.#body.classList.remove('hide-overflow');
-    };
+  // #renderPopup(movie) {
+  //   const closePopup = () => {
+  //     this.#popupView.element.parentElement.removeChild(this.#popupView.element);
+  //     this.#popupView.removeElement();
+  //     this.#body.classList.remove('hide-overflow');
+  //   };
 
-    if (this.#popupView) {
-      this.#popupView.element.remove();
-    }
-    this.#popupView = new PopupView({
-      movie,
-      onClosePopupClick: () => closePopup.bind(this)()
-    });
-    render(this.#popupView, this.#body);
+  //   if (this.#popupView) {
+  //     this.#popupView.element.remove();
+  //   }
+  //   this.#popupView = new PopupView({
+  //     movie,
+  //     onClosePopupClick: () => closePopup.bind(this)()
+  //   });
+  //   render(this.#popupView, this.#body);
 
-    const filmDetailsCommentsTitle = this.#popupView.element.querySelector('.film-details__comments-title');
-    render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
-    const commentList = this.#popupView.element.querySelector('.film-details__comments-list');
-    movie.movie.comments.forEach((element) => {
-      render(new PopupFilmCommentStructureView(element), commentList);
-    });
+  //   const filmDetailsCommentsTitle = this.#popupView.element.querySelector('.film-details__comments-title');
+  //   render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
+  //   const commentList = this.#popupView.element.querySelector('.film-details__comments-list');
+  //   movie.movie.comments.forEach((element) => {
+  //     render(new PopupFilmCommentStructureView(element), commentList);
+  //   });
 
-    render(new PopupFilmDetailNewCommentView(), commentList);
+  //   render(new PopupFilmDetailNewCommentView(), commentList);
 
-    const escKeydownHandler = (evt) => {
+  //   const escKeydownHandler = (evt) => {
 
-      if(evt.key === 'Escape' || evt.key === 'Esc') {
-        evt.preventDefault();
-        closePopup.bind(this)();
-        document.removeEventListener('keydown', escKeydownHandler);
-      }
-    };
+  //     if(evt.key === 'Escape' || evt.key === 'Esc') {
+  //       evt.preventDefault();
+  //       closePopup.bind(this)();
+  //       document.removeEventListener('keydown', escKeydownHandler);
+  //     }
+  //   };
 
-    document.addEventListener('keydown', escKeydownHandler);
-  }
+  //   document.addEventListener('keydown', escKeydownHandler);
+  // }
 
   #renderShowMoreButton() {
     if(this.#listMovieMovieInfo.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
