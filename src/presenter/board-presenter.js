@@ -29,7 +29,7 @@ export default class BoardPresenter {
 
     this.#listMovieMovieInfo
       .slice(this.#renderMovieCount, this.#renderMovieCount + BoardPresenter.MOVIE_COUNT_PER_STEP)
-      .forEach((movie) => this.#renderMovieList(movie));
+      .forEach((movie) => this.#renderMovie(movie));
 
     this.#renderMovieCount += BoardPresenter.MOVIE_COUNT_PER_STEP;
 
@@ -63,36 +63,38 @@ export default class BoardPresenter {
   }
 
 
-  #renderMovieList(movie) {
-    const openPopup = () => {
-      this.#renderPopup({movie});
-      this.#body.classList.add('hide-overflow');
-    };
+  #renderMovie(movie) {
 
     const movieCardView = new CardFilmsView({
       movie,
       onShowPopupClick: () => {
-        openPopup();
+        this.#openPopup(movie);
       }
     });
     render(movieCardView, this.#filmContainer);
 
   }
 
+  #openPopup = (movie) => {
+      this.#renderPopup({movie});
+      this.#body.classList.add('hide-overflow');
+  }
 
+#closePopup = () => {
+    this.#popupView.element.parentElement.removeChild(this.#popupView.element);
+    this.#popupView.removeElement();
+    this.#body.classList.remove('hide-overflow');
+}
+  
   #renderPopup(movie) {
-    const closePopup = () => {
-      this.#popupView.element.parentElement.removeChild(this.#popupView.element);
-      this.#popupView.removeElement();
-      this.#body.classList.remove('hide-overflow');
-    };
+
 
     if (this.#popupView) {
       this.#popupView.element.remove();
     }
     this.#popupView = new PopupView({
       movie,
-      onClosePopupClick: () => closePopup.bind(this)()
+      onClosePopupClick: () => this.#closePopup.bind(this)()
     });
     render(this.#popupView, this.#body);
 
@@ -143,7 +145,7 @@ export default class BoardPresenter {
     render(new FooterStatisticsView(), this.#footer);
 
     for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
-      this.#renderMovieList(this.#listMovieMovieInfo[i]);
+      this.#renderMovie(this.#listMovieMovieInfo[i]);
     }
 
 
