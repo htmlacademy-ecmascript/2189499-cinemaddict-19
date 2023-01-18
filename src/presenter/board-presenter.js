@@ -1,4 +1,4 @@
-import CardFilmsView from '../view/card-films-view.js';
+// import CardFilmsView from '../view/card-films-view.js';
 import FilmListView from '../view/film-list-view.js';
 import MenuView from '../view/menu-view.js';
 import { render } from '../framework/render';
@@ -67,26 +67,32 @@ export default class BoardPresenter {
   #renderMovie(movie) {
    const moviePresenter = new MoviePresenter({
     filmContainer: this.#filmContainer,
+    onShowPopupClick: this.#openPopup(movie)
    });
    moviePresenter.init(movie)
+
   }
 
-  #openPopup = (movie) => {
-      this.#renderPopup({movie});
-      this.#body.classList.add('hide-overflow');
-  }
+
 
 #closePopup = () => {
     this.#popupView.element.parentElement.removeChild(this.#popupView.element);
     this.#popupView.removeElement();
     this.#body.classList.remove('hide-overflow');
 }
+
+#openPopup = (movie) => {
+  
+  this.#renderPopup({movie});
+  this.#body.classList.add('hide-overflow');
+  if (this.#popupView) {
+    this.#popupView.element.remove(); 
+  }
+}
   
   #renderPopup(movie) {
 
-    if (this.#popupView) {
-      this.#popupView.element.remove();
-    }
+
     this.#popupView = new PopupView({
       movie,
       onClosePopupClick: () => this.#closePopup.bind(this)()
