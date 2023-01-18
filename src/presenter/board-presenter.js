@@ -1,4 +1,4 @@
-import CardFilmsView from '../view/card-films-view.js';
+// import CardFilmsView from '../view/card-films-view.js';
 import FilmListView from '../view/film-list-view.js';
 import MenuView from '../view/menu-view.js';
 import { render } from '../framework/render';
@@ -12,6 +12,7 @@ import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-
 import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
 import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
+import MoviePresenter from './movie-presenter.js';
 
 
 export default class BoardPresenter {
@@ -29,7 +30,7 @@ export default class BoardPresenter {
 
     this.#listMovieMovieInfo
       .slice(this.#renderMovieCount, this.#renderMovieCount + BoardPresenter.MOVIE_COUNT_PER_STEP)
-      .forEach((movie) => this.#renderMovieList(movie));
+      .forEach((movie) => this.#renderMovie(movie));
 
     this.#renderMovieCount += BoardPresenter.MOVIE_COUNT_PER_STEP;
 
@@ -63,36 +64,38 @@ export default class BoardPresenter {
   }
 
 
-  #renderMovieList(movie) {
-    const openPopup = () => {
-      this.#renderPopup({movie});
-      this.#body.classList.add('hide-overflow');
-    };
-
-    const movieCardView = new CardFilmsView({
-      movie,
-      onShowPopupClick: () => {
-        openPopup();
-      }
-    });
-    render(movieCardView, this.#filmContainer);
+  #renderMovie(movie) {
+   const moviePresenter = new MoviePresenter({
+    filmContainer: this.#filmContainer,
+    onShowPopupClick: this.#openPopup(movie)
+   });
+   moviePresenter.init(movie)
 
   }
 
 
-  #renderPopup(movie) {
-    const closePopup = () => {
-      this.#popupView.element.parentElement.removeChild(this.#popupView.element);
-      this.#popupView.removeElement();
-      this.#body.classList.remove('hide-overflow');
-    };
 
-    if (this.#popupView) {
-      this.#popupView.element.remove();
-    }
+#closePopup = () => {
+    this.#popupView.element.parentElement.removeChild(this.#popupView.element);
+    this.#popupView.removeElement();
+    this.#body.classList.remove('hide-overflow');
+}
+
+#openPopup = (movie) => {
+  
+  this.#renderPopup({movie});
+  this.#body.classList.add('hide-overflow');
+  if (this.#popupView) {
+    this.#popupView.element.remove(); 
+  }
+}
+  
+  #renderPopup(movie) {
+
+
     this.#popupView = new PopupView({
       movie,
-      onClosePopupClick: () => closePopup.bind(this)()
+      onClosePopupClick: () => this.#closePopup.bind(this)()
     });
     render(this.#popupView, this.#body);
 
@@ -143,7 +146,7 @@ export default class BoardPresenter {
     render(new FooterStatisticsView(), this.#footer);
 
     for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
-      this.#renderMovieList(this.#listMovieMovieInfo[i]);
+      this.#renderMovie(this.#listMovieMovieInfo[i]);
     }
 
 
