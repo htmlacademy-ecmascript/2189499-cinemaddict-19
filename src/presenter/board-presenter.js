@@ -12,6 +12,7 @@ import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-
 import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
 import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
+import MoviePresenter from './movie-presenter.js';
 
 
 export default class BoardPresenter {
@@ -64,15 +65,10 @@ export default class BoardPresenter {
 
 
   #renderMovie(movie) {
-
-    const movieCardView = new CardFilmsView({
-      movie,
-      onShowPopupClick: () => {
-        this.#openPopup(movie);
-      }
-    });
-    render(movieCardView, this.#filmContainer);
-
+   const moviePresenter = new MoviePresenter({
+    filmContainer: this.#filmContainer,
+   });
+   moviePresenter.init(movie)
   }
 
   #openPopup = (movie) => {
@@ -87,7 +83,6 @@ export default class BoardPresenter {
 }
   
   #renderPopup(movie) {
-
 
     if (this.#popupView) {
       this.#popupView.element.remove();
