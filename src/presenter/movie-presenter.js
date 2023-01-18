@@ -1,5 +1,5 @@
-import CardFilmsView from "../view/card-films-view";
-import { render } from "../framework/render";
+import CardFilmsView from '../view/card-films-view';
+import { render } from '../framework/render';
 
 export default class MoviePresenter {
   #filmContainer = null;
@@ -8,27 +8,25 @@ export default class MoviePresenter {
   #movieCardComponent = null;
   #openPopup = null;
   #onShowPopupClick = null;
-    constructor({filmContainer, onShowPopupClick, openPopup}) {
-      this.#filmContainer = filmContainer;
-      this.#openPopup = openPopup;
-      this.#onShowPopupClick = onShowPopupClick;
-    }
+  constructor({filmContainer, onShowPopupClick, openPopup}) {
+    this.#filmContainer = filmContainer;
+    this.#openPopup = openPopup;
+    this.#onShowPopupClick = onShowPopupClick;
+  }
 
-    init(movie) {
-      this.movie = movie
+  init(movie) {
+    this.movie = movie;
 
-      this.#movieCardComponent = new CardFilmsView({
+    this.#movieCardComponent = new CardFilmsView({
       movie,
-      onShowPopupClick: (movie) => {
+      onShowPopupClick: () => {
         this.#openPopup(movie);
-          }
+      }
 
-      });
-      render(this.#movieCardComponent, this.#filmContainer);
-    }
-    
-
+    });
+    render(this.#movieCardComponent, this.#filmContainer);
+  }
 
 
-    }
+}
 

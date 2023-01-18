@@ -65,31 +65,30 @@ export default class BoardPresenter {
 
 
   #renderMovie(movie) {
-   const moviePresenter = new MoviePresenter({
-    filmContainer: this.#filmContainer,
-    onShowPopupClick: this.#openPopup(movie)
-   });
-   moviePresenter.init(movie)
+    const moviePresenter = new MoviePresenter({
+      filmContainer: this.#filmContainer,
+      onShowPopupClick: this.#openPopup(movie)
+    });
+    moviePresenter.init(movie);
 
   }
 
 
-
-#closePopup = () => {
+  #closePopup = () => {
     this.#popupView.element.parentElement.removeChild(this.#popupView.element);
     this.#popupView.removeElement();
     this.#body.classList.remove('hide-overflow');
-}
+  };
 
-#openPopup = (movie) => {
-  
-  this.#renderPopup({movie});
-  this.#body.classList.add('hide-overflow');
-  if (this.#popupView) {
-    this.#popupView.element.remove(); 
-  }
-}
-  
+  #openPopup = (movie) => {
+
+    this.#renderPopup({movie});
+    this.#body.classList.add('hide-overflow');
+    if (this.#popupView) {
+      this.#popupView.element.remove();
+    }
+  };
+
   #renderPopup(movie) {
 
 
