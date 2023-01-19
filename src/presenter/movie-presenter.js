@@ -1,5 +1,5 @@
 import CardFilmsView from '../view/card-films-view';
-import { render } from '../framework/render';
+import { render, replace } from '../framework/render';
 
 export default class MoviePresenter {
   #filmContainer = null;
@@ -16,12 +16,22 @@ export default class MoviePresenter {
   init(movie) {
     this.movie = movie;
 
+    const prevMovieCardComponent = this.#movieCardComponent;
     this.#movieCardComponent = new CardFilmsView({
       movie,
       onShowPopupClick: this.#onShowPopupClick,
       onClosePopupClick: this.#onClosePopupClick
 
     });
+
+    if (prevMovieCardComponent === null) {
+      render(this.#movieCardComponent, this.#filmContainer);
+      return ;
+    }
+
+    if(this.#movieCardComponent.contsains(prevMovieCardComponent.element)) {
+      replace(this.#movieCardComponent, prevMovieCardComponent);
+    }
     render(this.#movieCardComponent, this.#filmContainer);
   }
 
