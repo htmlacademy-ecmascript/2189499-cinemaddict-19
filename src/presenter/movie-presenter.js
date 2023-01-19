@@ -3,14 +3,11 @@ import { render } from '../framework/render';
 
 export default class MoviePresenter {
   #filmContainer = null;
-  // #openPopup = null;
   #movie = null;
   #movieCardComponent = null;
-  #openPopup = null;
   #onShowPopupClick = null;
-  constructor({filmContainer, onShowPopupClick, openPopup}) {
+  constructor({filmContainer, onShowPopupClick}) {
     this.#filmContainer = filmContainer;
-    this.#openPopup = openPopup;
     this.#onShowPopupClick = onShowPopupClick;
   }
 
@@ -19,9 +16,8 @@ export default class MoviePresenter {
 
     this.#movieCardComponent = new CardFilmsView({
       movie,
-      onShowPopupClick: () => {
-        this.#openPopup(movie);
-      }
+      onShowPopupClick: this.#onShowPopupClick
+
 
     });
     render(this.#movieCardComponent, this.#filmContainer);
