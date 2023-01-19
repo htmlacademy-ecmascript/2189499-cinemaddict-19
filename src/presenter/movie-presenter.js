@@ -6,9 +6,11 @@ export default class MoviePresenter {
   #movie = null;
   #movieCardComponent = null;
   #onShowPopupClick = null;
-  constructor({filmContainer, onShowPopupClick}) {
+  #onClosePopupClick = null;
+  constructor({filmContainer, onShowPopupClick, onClosePopupClick}) {
     this.#filmContainer = filmContainer;
     this.#onShowPopupClick = onShowPopupClick;
+    this.#onClosePopupClick = onClosePopupClick;
   }
 
   init(movie) {
@@ -16,8 +18,8 @@ export default class MoviePresenter {
 
     this.#movieCardComponent = new CardFilmsView({
       movie,
-      onShowPopupClick: this.#onShowPopupClick
-
+      onShowPopupClick: this.#onShowPopupClick,
+      onClosePopupClick: this.#onClosePopupClick
 
     });
     render(this.#movieCardComponent, this.#filmContainer);

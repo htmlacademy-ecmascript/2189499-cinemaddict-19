@@ -67,7 +67,8 @@ export default class BoardPresenter {
   #renderMovie(movie) {
     const moviePresenter = new MoviePresenter({
       filmContainer: this.#filmContainer,
-      onShowPopupClick: () => { this.#openPopup(movie); }
+      onShowPopupClick: () => { this.#openPopup(movie); },
+      onClosePopupClick: () => { this.#closePopup(); }
     });
     moviePresenter.init(movie);
 
@@ -112,7 +113,7 @@ export default class BoardPresenter {
 
       if(evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
-        closePopup.bind(this)();
+        this.#closePopup();
         document.removeEventListener('keydown', escKeydownHandler);
       }
     };
