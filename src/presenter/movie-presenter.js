@@ -7,10 +7,13 @@ export default class MoviePresenter {
   #movieCardComponent = null;
   #onShowPopupClick = null;
   #onClosePopupClick = null;
+
+
   constructor({filmContainer, onShowPopupClick, onClosePopupClick}) {
     this.#filmContainer = filmContainer;
     this.#onShowPopupClick = onShowPopupClick;
     this.#onClosePopupClick = onClosePopupClick;
+
   }
 
   init(movie) {

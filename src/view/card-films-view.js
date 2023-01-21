@@ -29,9 +29,16 @@ export default class CardFilmsView extends AbstractView {
   #handleShowPopupClick = null;
   #movie = null;
   #showPopupClickHandler = null;
-  constructor({movie, onShowPopupClick}) {
+
+  #hadleWatchlistClick = null;
+  #handleFavoriteClick = null;
+
+  constructor({movie, onShowPopupClick, onWatchlistClick, onFavoriteClick}) {
     super();
     this.#movie = movie;
+
+    this.#hadleWatchlistClick = onWatchlistClick;
+    this.#handleFavoriteClick = onFavoriteClick;
 
     this.#showPopupClickHandler = () => {
       this.#handleShowPopupClick();
@@ -40,11 +47,24 @@ export default class CardFilmsView extends AbstractView {
     this.element.querySelector('.film-card__link')
       .addEventListener('click', this.#showPopupClickHandler);
     this.#handleShowPopupClick = onShowPopupClick;
+
+    this.element.querySelector('.film-card__controls-item--mark-as-watched')
+      .addEventListener('click', this.#watchlistClickHandler);
+
+    this.element.querySelector('.film-card__controls-item--favorite')
+      .addEventListener('click', this.#favoriteClickHandler);
   }
 
   get template() {
     return createCardFilmsTemplate(this.#movie);
   }
 
+  #watchlistClickHandler = () => {
+    this.#hadleWatchlistClick();
+  };
+
+  #favoriteClickHandler = () => {
+    this.#handleFavoriteClick();
+  };
 }
 
