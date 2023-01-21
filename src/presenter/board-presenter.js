@@ -88,6 +88,19 @@ export default class BoardPresenter {
 
   };
 
+  #closeEscBtnPopup() {
+    const escKeydownHandler = (evt) => {
+
+      if(evt.key === 'Escape' || evt.key === 'Esc') {
+        evt.preventDefault();
+        this.#closePopup();
+        document.removeEventListener('keydown', escKeydownHandler);
+      }
+    };
+
+    document.addEventListener('keydown', escKeydownHandler);
+  }
+
   #renderPopup(movie) {
 
     if (this.#popupView) {
@@ -96,7 +109,7 @@ export default class BoardPresenter {
 
     this.#popupView = new PopupView({
       movie,
-      onClosePopupClick: () => this.#closePopup.bind(this)()
+      onClosePopupClick: () => this.#closePopup.bind(this)(),
     });
     render(this.#popupView, this.#body);
 
@@ -109,16 +122,7 @@ export default class BoardPresenter {
 
     render(new PopupFilmDetailNewCommentView(), commentList);
 
-    const escKeydownHandler = (evt) => {
-
-      if(evt.key === 'Escape' || evt.key === 'Esc') {
-        evt.preventDefault();
-        this.#closePopup();
-        document.removeEventListener('keydown', escKeydownHandler);
-      }
-    };
-
-    document.addEventListener('keydown', escKeydownHandler);
+    this.#closeEscBtnPopup();
   }
 
   #renderBoard() {
