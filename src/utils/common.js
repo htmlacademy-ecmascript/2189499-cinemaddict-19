@@ -3,4 +3,8 @@ function getRandomArrayElement(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-export {getRandomArrayElement};
+function updateMovie(movies, update) {
+  return movies.map((movie) => movie === update.movie ? update : movie);
+}
+
+export {getRandomArrayElement, updateMovie};

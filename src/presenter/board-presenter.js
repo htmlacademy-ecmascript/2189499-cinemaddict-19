@@ -13,6 +13,7 @@ import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-commen
 import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
+import { updateMovie } from '../utils/common.js';
 
 
 export default class BoardPresenter {
@@ -26,6 +27,9 @@ export default class BoardPresenter {
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
   #popupView = null;
+  // #moviePresenter = null;
+  #moviePresenter = new Map();
+
   #loadMoreButtonHandler = () => {
 
     this.#listMovieMovieInfo
@@ -68,12 +72,18 @@ export default class BoardPresenter {
     const moviePresenter = new MoviePresenter({
       filmContainer: this.#filmContainer,
       onShowPopupClick: () => { this.#openPopup(movie); },
-      onClosePopupClick: () => { this.#closePopup(); }
+      onClosePopupClick: () => { this.#closePopup(); },
+      onDataChange: this.#handleMovieChange
     });
     moviePresenter.init(movie);
-
+    this.#moviePresenter.set(movie.userDetails.watchlist, moviePresenter);
+    console.log(this.#moviePresenter);
   }
 
+  #handleMovieChange = (updatedMovie) => {
+    this.#listMovieMovieInfo = updateMovie(this.#listMovieMovieInfo, updatedMovie);
+    this.#moviePresenter.get(updatedMovie.userDetails.watchlist).init(updatedMovie);
+  };
 
   #closePopup = () => {
     this.#popupView.element.parentElement.removeChild(this.#popupView.element);

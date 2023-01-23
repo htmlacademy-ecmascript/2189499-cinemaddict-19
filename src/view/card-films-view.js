@@ -32,13 +32,21 @@ export default class CardFilmsView extends AbstractView {
 
   #hadleWatchlistClick = null;
   #handleFavoriteClick = null;
+  #handleAlreadyWatchedClick = null;
 
-  constructor({movie, onShowPopupClick, onWatchlistClick, onFavoriteClick}) {
+  #addToWatchlistBtn = null;
+  #watchedBtn = null;
+  #favoriteBtn = null;
+
+
+  constructor({movie, onShowPopupClick, onWatchlistClick, onFavoriteClick, onAlreadyWatchedClick}) {
     super();
     this.#movie = movie;
 
-    this.#hadleWatchlistClick = onWatchlistClick;
-    this.#handleFavoriteClick = onFavoriteClick;
+    this.#hadleWatchlistClick = () => onWatchlistClick;
+    this.#handleFavoriteClick = () => onFavoriteClick;
+    this.#handleAlreadyWatchedClick = () => onAlreadyWatchedClick;
+
 
     this.#showPopupClickHandler = () => {
       this.#handleShowPopupClick();
@@ -48,8 +56,12 @@ export default class CardFilmsView extends AbstractView {
       .addEventListener('click', this.#showPopupClickHandler);
     this.#handleShowPopupClick = onShowPopupClick;
 
+    this.element.querySelector('.film-card__controls-item--add-to-watchlist')
+      .addEventListener('click', this.#addToWatchlistClickHandler);
+
     this.element.querySelector('.film-card__controls-item--mark-as-watched')
-      .addEventListener('click', this.#watchlistClickHandler);
+      .addEventListener('click', this.#alreadyWatchedClickHandler);
+
 
     this.element.querySelector('.film-card__controls-item--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
@@ -59,12 +71,30 @@ export default class CardFilmsView extends AbstractView {
     return createCardFilmsTemplate(this.#movie);
   }
 
-  #watchlistClickHandler = () => {
-    this.#hadleWatchlistClick();
+  #addToWatchlistClickHandler = () => {
+    this.#addToWatchlistBtn = this.element.querySelector('.film-card__controls-item--add-to-watchlist');
+    if (this.#addToWatchlistBtn.classList.contains('film-card__controls-item--active')) {
+      return this.#addToWatchlistBtn.classList.remove('film-card__controls-item--active');
+    }
+    return this.#addToWatchlistBtn.classList.add('film-card__controls-item--active');
   };
 
+  #alreadyWatchedClickHandler = () => {
+    this.#watchedBtn = this.element.querySelector('.film-card__controls-item--mark-as-watched');
+    if (this.#watchedBtn.classList.contains('film-card__controls-item--active')) {
+      return this.#watchedBtn.classList.remove('film-card__controls-item--active');
+    }
+    return this.#watchedBtn.classList.add('film-card__controls-item--active');
+  };
+
+
   #favoriteClickHandler = () => {
-    this.#handleFavoriteClick();
+    this.#favoriteBtn = this.element.querySelector('.film-card__controls-item--favorite');
+    if (this.#favoriteBtn.classList.contains('film-card__controls-item--active')) {
+      return this.#favoriteBtn.classList.remove('film-card__controls-item--active');
+    }
+    return this.#favoriteBtn.classList.add('film-card__controls-item--active');
   };
 }
+
 

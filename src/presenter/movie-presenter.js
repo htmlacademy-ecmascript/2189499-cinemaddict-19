@@ -8,11 +8,14 @@ export default class MoviePresenter {
   #onShowPopupClick = null;
   #onClosePopupClick = null;
 
+  #handleDataChange = null;
 
-  constructor({filmContainer, onShowPopupClick, onClosePopupClick}) {
+
+  constructor({filmContainer, onShowPopupClick, onClosePopupClick, onDataChange}) {
     this.#filmContainer = filmContainer;
     this.#onShowPopupClick = onShowPopupClick;
     this.#onClosePopupClick = onClosePopupClick;
+    this.#handleDataChange = onDataChange;
 
   }
 
@@ -38,6 +41,9 @@ export default class MoviePresenter {
     render(this.#movieCardComponent, this.#filmContainer);
   }
 
+  #hadleWatchlistClick = () => {
+    this.#handleDataChange({...this.#movie, isWatchlist: !this.#movie.isWatchlist});
+  }
 
 }
 
