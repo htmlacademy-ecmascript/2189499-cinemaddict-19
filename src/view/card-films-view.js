@@ -31,8 +31,8 @@ export default class CardFilmsView extends AbstractView {
   #showPopupClickHandler = null;
 
   #hadleWatchlistClick = null;
-  #handleFavoriteClick = null;
   #handleAlreadyWatchedClick = null;
+  #handleFavoriteClick = null;
 
   #addToWatchlistBtn = null;
   #watchedBtn = null;
@@ -43,9 +43,9 @@ export default class CardFilmsView extends AbstractView {
     super();
     this.#movie = movie;
 
-    this.#hadleWatchlistClick = () => onWatchlistClick;
-    this.#handleFavoriteClick = () => onFavoriteClick;
-    this.#handleAlreadyWatchedClick = () => onAlreadyWatchedClick;
+    this.#hadleWatchlistClick = onWatchlistClick ;
+    this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
+    this.#handleFavoriteClick = onFavoriteClick;
 
 
     this.#showPopupClickHandler = () => {
@@ -72,6 +72,7 @@ export default class CardFilmsView extends AbstractView {
   }
 
   #addToWatchlistClickHandler = () => {
+    this.#hadleWatchlistClick();
     this.#addToWatchlistBtn = this.element.querySelector('.film-card__controls-item--add-to-watchlist');
     if (this.#addToWatchlistBtn.classList.contains('film-card__controls-item--active')) {
       return this.#addToWatchlistBtn.classList.remove('film-card__controls-item--active');
@@ -80,6 +81,7 @@ export default class CardFilmsView extends AbstractView {
   };
 
   #alreadyWatchedClickHandler = () => {
+    this.#handleAlreadyWatchedClick();
     this.#watchedBtn = this.element.querySelector('.film-card__controls-item--mark-as-watched');
     if (this.#watchedBtn.classList.contains('film-card__controls-item--active')) {
       return this.#watchedBtn.classList.remove('film-card__controls-item--active');
@@ -89,6 +91,7 @@ export default class CardFilmsView extends AbstractView {
 
 
   #favoriteClickHandler = () => {
+    this.#handleFavoriteClick();
     this.#favoriteBtn = this.element.querySelector('.film-card__controls-item--favorite');
     if (this.#favoriteBtn.classList.contains('film-card__controls-item--active')) {
       return this.#favoriteBtn.classList.remove('film-card__controls-item--active');

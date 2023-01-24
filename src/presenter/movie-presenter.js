@@ -17,6 +17,7 @@ export default class MoviePresenter {
     this.#onClosePopupClick = onClosePopupClick;
     this.#handleDataChange = onDataChange;
 
+
   }
 
   init(movie) {
@@ -26,8 +27,11 @@ export default class MoviePresenter {
     this.#movieCardComponent = new CardFilmsView({
       movie,
       onShowPopupClick: this.#onShowPopupClick,
-      onClosePopupClick: this.#onClosePopupClick
+      onClosePopupClick: this.#onClosePopupClick,
 
+      onWatchlistClick: () => { this.#hadleWatchlistClick(); },
+      onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(); },
+      onFavoriteClick: () => { this.#handleFavoriteClick(); },
     });
 
     if (prevMovieCardComponent === null) {
@@ -42,8 +46,15 @@ export default class MoviePresenter {
   }
 
   #hadleWatchlistClick = () => {
-    this.#handleDataChange({...this.#movie, isWatchlist: !this.#movie.isWatchlist});
-  }
+    this.#handleDataChange({...this.#movie, watchlist: !this.#movie});
+  };
 
+  #handleAlreadyWatchedClick = () => {
+    this.#handleDataChange({...this.#movie, alreadyWatched: !this.#movie});
+  };
+
+  #handleFavoriteClick = () => {
+    this.#handleDataChange({...this.#movie, favorite: !this.#movie});
+  };
 }
 

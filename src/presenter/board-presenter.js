@@ -27,8 +27,8 @@ export default class BoardPresenter {
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
   #popupView = null;
-  // #moviePresenter = null;
-  #moviePresenter = new Map();
+  #moviePresenter = [];
+  // #moviePresenter = new Map();
 
   #loadMoreButtonHandler = () => {
 
@@ -63,7 +63,6 @@ export default class BoardPresenter {
   init() {
     this.#listMovieMovieInfo = [...this.#movieModel.movie];
     this.#loadedComments = this.#movieModel.comments;
-
     this.#renderBoard();
   }
 
@@ -73,16 +72,22 @@ export default class BoardPresenter {
       filmContainer: this.#filmContainer,
       onShowPopupClick: () => { this.#openPopup(movie); },
       onClosePopupClick: () => { this.#closePopup(); },
-      onDataChange: this.#handleMovieChange
+      onDataChange: this.#handleMovieChange,
     });
     moviePresenter.init(movie);
-    this.#moviePresenter.set(movie.userDetails.watchlist, moviePresenter);
+    //пушим наши данные из каждой карточки
+    this.#moviePresenter.push({'watchlist': movie.userDetails.watchlist, 'alreadyWatched': movie.userDetails.alreadyWatched, 'favorite': movie.userDetails.favorite});
+    // console.log(this.#moviePresenter);
     console.log(this.#moviePresenter);
   }
 
   #handleMovieChange = (updatedMovie) => {
-    this.#listMovieMovieInfo = updateMovie(this.#listMovieMovieInfo, updatedMovie);
-    this.#moviePresenter.get(updatedMovie.userDetails.watchlist).init(updatedMovie);
+    // console.log( updatedMovie);
+    // console.log(this.#listMovieMovieInfo);
+    console.log(updatedMovie);
+    this.#moviePresenter = updateMovie(this.#moviePresenter, updatedMovie);
+
+    // this.#moviePresenter.get(updatedMovie).init(updatedMovie);
   };
 
   #closePopup = () => {
