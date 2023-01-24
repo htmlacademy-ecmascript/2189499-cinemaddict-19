@@ -8,20 +8,24 @@ export default class MoviePresenter {
   #onShowPopupClick = null;
   #onClosePopupClick = null;
 
-  #handleDataChange = null;
+  #handleDataChangeWatchlist = null;
+  #handleDataChangeAlreadyWatched = null;
+  #handleDataChangeFavorite = null;
 
 
-  constructor({filmContainer, onShowPopupClick, onClosePopupClick, onDataChange}) {
+  constructor({filmContainer, onShowPopupClick, onClosePopupClick, onDataChangeWatchlist, onDataChangeAlreadyWatchedClick, onDataChangeFavoriteClick}) {
     this.#filmContainer = filmContainer;
     this.#onShowPopupClick = onShowPopupClick;
     this.#onClosePopupClick = onClosePopupClick;
-    this.#handleDataChange = onDataChange;
 
+    this.#handleDataChangeWatchlist = onDataChangeWatchlist;
+    this.#handleDataChangeAlreadyWatched = onDataChangeAlreadyWatchedClick;
+    this.#handleDataChangeFavorite = onDataChangeFavoriteClick;
 
   }
 
   init(movie) {
-    this.movie = movie;
+    this.#movie = movie;
 
     const prevMovieCardComponent = this.#movieCardComponent;
     this.#movieCardComponent = new CardFilmsView({
@@ -29,9 +33,9 @@ export default class MoviePresenter {
       onShowPopupClick: this.#onShowPopupClick,
       onClosePopupClick: this.#onClosePopupClick,
 
-      onWatchlistClick: () => { this.#hadleWatchlistClick(); },
-      onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(); },
-      onFavoriteClick: () => { this.#handleFavoriteClick(); },
+      onWatchlistClick: () => { this.#hadleWatchlistClick(movie); },
+      onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
+      onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
     });
 
     if (prevMovieCardComponent === null) {
@@ -46,15 +50,15 @@ export default class MoviePresenter {
   }
 
   #hadleWatchlistClick = () => {
-    this.#handleDataChange({...this.#movie, watchlist: !this.#movie});
+    this.#handleDataChangeWatchlist({...this.#movie, userDetails: {...this.#movie.userDetails, watchlist: this.#movie.userDetails.watchlist}});
   };
 
   #handleAlreadyWatchedClick = () => {
-    this.#handleDataChange({...this.#movie, alreadyWatched: !this.#movie});
+    this.#handleDataChangeAlreadyWatched({...this.#movie, userDetails: {...this.#movie.userDetails, alreadyWatched: this.#movie.userDetails.alreadyWatched}});
   };
 
   #handleFavoriteClick = () => {
-    this.#handleDataChange({...this.#movie, favorite: !this.#movie});
+    this.#handleDataChangeFavorite({...this.#movie, userDetails: {...this.#movie.userDetails, favorite: this.#movie.userDetails.favorite}});
   };
 }
 

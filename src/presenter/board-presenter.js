@@ -72,21 +72,41 @@ export default class BoardPresenter {
       filmContainer: this.#filmContainer,
       onShowPopupClick: () => { this.#openPopup(movie); },
       onClosePopupClick: () => { this.#closePopup(); },
-      onDataChange: this.#handleMovieChange,
+      onDataChangeWatchlist: this.#handleMovieChangeWatchlist,
+      onDataChangeAlreadyWatchedClick: this.#handleMovieChangeAlreadyWatched,
+      onDataChangeFavoriteClick: this.#handleFavoriteClick,
     });
     moviePresenter.init(movie);
     //пушим наши данные из каждой карточки
     this.#moviePresenter.push({'watchlist': movie.userDetails.watchlist, 'alreadyWatched': movie.userDetails.alreadyWatched, 'favorite': movie.userDetails.favorite});
     // console.log(this.#moviePresenter);
-    console.log(this.#moviePresenter);
+    // console.log(this.#moviePresenter);
   }
 
-  #handleMovieChange = (updatedMovie) => {
+  #handleMovieChangeWatchlist = (updatedMovie) => {
     // console.log( updatedMovie);
     // console.log(this.#listMovieMovieInfo);
-    console.log(updatedMovie);
-    this.#moviePresenter = updateMovie(this.#moviePresenter, updatedMovie);
 
+    this.#moviePresenter = updateMovie(this.#moviePresenter, updatedMovie);
+    console.log(this.#moviePresenter);
+    // this.#moviePresenter.get(updatedMovie).init(updatedMovie);
+  };
+
+  #handleMovieChangeAlreadyWatched = (updatedMovie) => {
+    // console.log( updatedMovie);
+    // console.log(this.#listMovieMovieInfo);
+    
+    this.#moviePresenter = updateMovie(this.#moviePresenter, updatedMovie);
+    // console.log(this.#moviePresenter);
+    // this.#moviePresenter.get(updatedMovie).init(updatedMovie);
+  };
+
+  #handleFavoriteClick = (updatedMovie) => {
+    // console.log( updatedMovie);
+    // console.log(this.#listMovieMovieInfo);
+    
+    this.#moviePresenter = updateMovie(this.#moviePresenter, updatedMovie);
+    // console.log(this.#moviePresenter);
     // this.#moviePresenter.get(updatedMovie).init(updatedMovie);
   };
 
