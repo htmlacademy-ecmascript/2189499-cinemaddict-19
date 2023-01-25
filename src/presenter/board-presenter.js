@@ -28,6 +28,7 @@ export default class BoardPresenter {
   #loadedComments = null;
   #popupView = null;
   #moviePresenter = [];
+  #newData = null;
   // #moviePresenter = new Map();
 
   #loadMoreButtonHandler = () => {
@@ -72,43 +73,35 @@ export default class BoardPresenter {
       filmContainer: this.#filmContainer,
       onShowPopupClick: () => { this.#openPopup(movie); },
       onClosePopupClick: () => { this.#closePopup(); },
-      onDataChangeWatchlist: this.#handleMovieChangeWatchlist,
-      onDataChangeAlreadyWatchedClick: this.#handleMovieChangeAlreadyWatched,
-      onDataChangeFavoriteClick: this.#handleFavoriteClick,
+
+      onDataChange: this.#handleDataChange,
     });
     moviePresenter.init(movie);
     //пушим наши данные из каждой карточки
     this.#moviePresenter.push({'watchlist': movie.userDetails.watchlist, 'alreadyWatched': movie.userDetails.alreadyWatched, 'favorite': movie.userDetails.favorite});
-    // console.log(this.#moviePresenter);
-    // console.log(this.#moviePresenter);
   }
 
-  #handleMovieChangeWatchlist = (updatedMovie) => {
-    // console.log( updatedMovie);
-    // console.log(this.#listMovieMovieInfo);
+  #handleDataChange = (updatedMovie) => {
 
-    this.#moviePresenter = updateMovie(this.#moviePresenter, updatedMovie);
-    console.log(this.#moviePresenter);
-    // this.#moviePresenter.get(updatedMovie).init(updatedMovie);
-  };
-
-  #handleMovieChangeAlreadyWatched = (updatedMovie) => {
-    // console.log( updatedMovie);
-    // console.log(this.#listMovieMovieInfo);
-    
-    this.#moviePresenter = updateMovie(this.#moviePresenter, updatedMovie);
+    // console.log(updatedMovie.userDetails.watchlist);
+    // console.log(updatedMovie.userDetails.watchlist);
+    // console.log(updatedMovie.userDetails.alreadyWatched);
+    // console.log(updatedMovie.userDetails.favorite);
     // console.log(this.#moviePresenter);
-    // this.#moviePresenter.get(updatedMovie).init(updatedMovie);
+
+    this.#moviePresenter.forEach((movie, index) => {
+      console.log(updatedMovie.userDetails.watchlist);
+      console.log(this.#moviePresenter[index]);
+      console.log(movie);
+      // if (this.#moviePresenter[index] !== movie)
+      // console.log(updatedMovie.userDetails);
+      // if (movie !== updatedMovie.userDetails) {
+      //   return movie = updatedMovie.userDetails;
+      // }
+    });
+
   };
 
-  #handleFavoriteClick = (updatedMovie) => {
-    // console.log( updatedMovie);
-    // console.log(this.#listMovieMovieInfo);
-    
-    this.#moviePresenter = updateMovie(this.#moviePresenter, updatedMovie);
-    // console.log(this.#moviePresenter);
-    // this.#moviePresenter.get(updatedMovie).init(updatedMovie);
-  };
 
   #closePopup = () => {
     this.#popupView.element.parentElement.removeChild(this.#popupView.element);
