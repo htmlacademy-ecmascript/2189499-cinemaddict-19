@@ -27,7 +27,7 @@ export default class BoardPresenter {
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
   #popupView = null;
-  #moviePresenter = [];
+  #moviePresenter = new Map();
   #newData = null;
   // #moviePresenter = new Map();
 
@@ -71,35 +71,27 @@ export default class BoardPresenter {
   #renderMovie(movie) {
     const moviePresenter = new MoviePresenter({
       filmContainer: this.#filmContainer,
+
       onShowPopupClick: () => { this.#openPopup(movie); },
       onClosePopupClick: () => { this.#closePopup(); },
 
       onDataChange: this.#handleDataChange,
     });
     moviePresenter.init(movie);
-    //пушим наши данные из каждой карточки
-    this.#moviePresenter.push({'watchlist': movie.userDetails.watchlist, 'alreadyWatched': movie.userDetails.alreadyWatched, 'favorite': movie.userDetails.favorite});
+    this.#moviePresenter.set(movie.id, moviePresenter);
+    console.log(this.#moviePresenter);
   }
 
   #handleDataChange = (updatedMovie) => {
-
-    // console.log(updatedMovie.userDetails.watchlist);
-    // console.log(updatedMovie.userDetails.watchlist);
-    // console.log(updatedMovie.userDetails.alreadyWatched);
-    // console.log(updatedMovie.userDetails.favorite);
-    // console.log(this.#moviePresenter);
-
-    this.#moviePresenter.forEach((movie, index) => {
-      console.log(updatedMovie.userDetails.watchlist);
-      console.log(this.#moviePresenter[index]);
-      console.log(movie);
-      // if (this.#moviePresenter[index] !== movie)
-      // console.log(updatedMovie.userDetails);
-      // if (movie !== updatedMovie.userDetails) {
-      //   return movie = updatedMovie.userDetails;
-      // }
+    this.#listMovieMovieInfo = this.#listMovieMovieInfo.map((movie) => {
+      console.log(updatedMovie.id);
+      if (movie.id === updatedMovie.id) {
+        return updateMovie;
+      }
+      return movie;
     });
 
+    this.#moviePresenter.get(updatedMovie.id).init(updatedMovie);
   };
 
 

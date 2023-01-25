@@ -4,7 +4,7 @@ function getRandomArrayElement(items) {
 }
 // тут надо разобраться как надо правильно использовать функцию
 function updateMovie(movies, update) {
-  return movies.map((movie) => movie === update ? update : movie);
+  return movies.map((movie) => movie.id === update.id ? update : movie);
 }
 
 export {getRandomArrayElement, updateMovie};
