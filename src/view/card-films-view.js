@@ -3,6 +3,8 @@ import { humanizeMovieDuration } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 function createCardFilmsTemplate(movie) {
   const {filmInfo, comments} = movie;
+  console.log(movie);
+  // console.log(comments.length);
   const commentsLength = comments.length;
   return `<article class="film-card">
   <a class="film-card__link">

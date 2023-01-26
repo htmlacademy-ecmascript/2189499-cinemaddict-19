@@ -1,6 +1,6 @@
 import { getRandomMovie } from '../mock/movies';
 
-const MOVIE_COUNT = 18;
+const MOVIE_COUNT = 9;
 
 export default class MovieModel {
   #movie = Array.from({length: MOVIE_COUNT}, getRandomMovie);

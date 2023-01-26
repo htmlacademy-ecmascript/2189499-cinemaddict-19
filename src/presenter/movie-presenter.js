@@ -47,8 +47,12 @@ export default class MoviePresenter {
       replace(this.#movieCardComponent, prevMovieCardComponent);
     }
 
-    remove(prevMovieCardComponent);
+    // this.#remove(prevMovieCardComponent);
     // render(this.#movieCardComponent, this.#filmContainer);
+  }
+
+  #remove(component) {
+    remove(component);
   }
 
   #hadleWatchlistClick = () => {

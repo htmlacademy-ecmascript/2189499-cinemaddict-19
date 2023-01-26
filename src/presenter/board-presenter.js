@@ -86,7 +86,7 @@ export default class BoardPresenter {
     this.#listMovieMovieInfo = this.#listMovieMovieInfo.map((movie) => {
       console.log(updatedMovie.id);
       if (movie.id === updatedMovie.id) {
-        return updateMovie;
+        return updatedMovie;
       }
       return movie;
     });
