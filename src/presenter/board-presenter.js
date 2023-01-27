@@ -13,7 +13,6 @@ import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-commen
 import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
-import { updateMovie } from '../utils/common.js';
 
 
 export default class BoardPresenter {
@@ -29,7 +28,6 @@ export default class BoardPresenter {
   #popupView = null;
   #moviePresenter = new Map();
   #newData = null;
-  // #moviePresenter = new Map();
 
   #loadMoreButtonHandler = () => {
 
@@ -79,12 +77,10 @@ export default class BoardPresenter {
     });
     moviePresenter.init(movie);
     this.#moviePresenter.set(movie.id, moviePresenter);
-    console.log(this.#moviePresenter);
   }
 
   #handleDataChange = (updatedMovie) => {
     this.#listMovieMovieInfo = this.#listMovieMovieInfo.map((movie) => {
-      console.log(updatedMovie.id);
       if (movie.id === updatedMovie.id) {
         return updatedMovie;
       }

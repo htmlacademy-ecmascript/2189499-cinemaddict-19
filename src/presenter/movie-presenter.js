@@ -42,8 +42,6 @@ export default class MoviePresenter {
     }
 
     if(this.#filmContainer.contains(prevMovieCardComponent.element)) {
-      console.log(this.#movieCardComponent);
-      console.log(prevMovieCardComponent);
       replace(this.#movieCardComponent, prevMovieCardComponent);
     }
 
