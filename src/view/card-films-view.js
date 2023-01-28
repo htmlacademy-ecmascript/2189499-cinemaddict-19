@@ -8,15 +8,15 @@ function createCardFilmsTemplate(movie) {
 
   const isActiveWatchlist = watchlist
     ? 'film-card__controls-item--active'
-    : 'card__btn--archive';
+    : '';
 
   const isActiveAlreadyWatched = alreadyWatched
     ? 'film-card__controls-item--active'
-    : 'card__btn--archive';
+    : '';
 
   const isActiveFavorite = favorite
     ? 'film-card__controls-item--active'
-    : 'card__btn--archive';
+    : '';
 
   return `<article class="film-card">
   <a class="film-card__link">
