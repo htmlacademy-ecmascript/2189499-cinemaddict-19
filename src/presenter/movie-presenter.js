@@ -12,10 +12,10 @@ export default class MoviePresenter {
   #handleDataChange = null;
 
 
-  constructor({filmContainer, onShowPopupClick, onClosePopupClick, onDataChange}) {
+  constructor({filmContainer, onShowPopupClick, onDataChange}) {
     this.#filmContainer = filmContainer;
     this.#onShowPopupClick = onShowPopupClick;
-    this.#onClosePopupClick = onClosePopupClick;
+
 
     this.#handleDataChange = onDataChange;
 

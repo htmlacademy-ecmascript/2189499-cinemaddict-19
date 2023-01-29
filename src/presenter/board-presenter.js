@@ -13,6 +13,7 @@ import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-commen
 import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
+import PopupPresenter from './popup-presenter.js';
 
 
 export default class BoardPresenter {
@@ -71,7 +72,7 @@ export default class BoardPresenter {
       filmContainer: this.#filmContainer,
 
       onShowPopupClick: () => { this.#openPopup(movie); },
-      onClosePopupClick: () => { this.#closePopup(); },
+      
 
       onDataChange: this.#handleDataChange,
     });
@@ -92,6 +93,7 @@ export default class BoardPresenter {
 
 
   #closePopup = () => {
+    
     this.#popupView.element.parentElement.removeChild(this.#popupView.element);
     this.#popupView.removeElement();
     this.#body.classList.remove('hide-overflow');
@@ -123,20 +125,21 @@ export default class BoardPresenter {
       this.#popupView.element.remove();
     }
 
-    this.#popupView = new PopupView({
-      movie,
-      onClosePopupClick: () => this.#closePopup.bind(this)(),
-    });
-    render(this.#popupView, this.#body);
+    const popupPresenter = new PopupPresenter({
+      body: this.#body,
+      onClosePopupClick: () => { this.#closePopup(); }, 
+    })
+    // render(this.#popupView, this.#body);
 
-    const filmDetailsCommentsTitle = this.#popupView.element.querySelector('.film-details__comments-title');
-    render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
-    const commentList = this.#popupView.element.querySelector('.film-details__comments-list');
-    movie.movie.comments.forEach((element) => {
-      render(new PopupFilmCommentStructureView(element), commentList);
-    });
+    popupPresenter.init(movie);
+    // const filmDetailsCommentsTitle = this.#popupView.element.querySelector('.film-details__comments-title');
+    // render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
+    // const commentList = this.#popupView.element.querySelector('.film-details__comments-list');
+    // movie.movie.comments.forEach((element) => {
+    //   render(new PopupFilmCommentStructureView(element), commentList);
+    // });
 
-    render(new PopupFilmDetailNewCommentView(), commentList);
+    // render(new PopupFilmDetailNewCommentView(), commentList);
 
     this.#closeEscBtnPopup();
   }
