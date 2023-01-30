@@ -48,6 +48,7 @@ export default class BoardPresenter {
   #filmListComponent = new FilmListView();
   #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
   #loadMoreButtonComponent = null;
+  #popupPresenterComponent = null;
 
 
   constructor({header, main, footer, movieModel, body}) {
@@ -92,12 +93,12 @@ export default class BoardPresenter {
   };
 
 
-  #closePopup = () => {
+  // #closePopup = () => {
     
-    this.#popupView.element.parentElement.removeChild(this.#popupView.element);
-    this.#popupView.removeElement();
-    this.#body.classList.remove('hide-overflow');
-  };
+  //   this.#popupPresenterComponent.element.parentElement.removeChild(this.#popupPresenterComponent);
+  //   this.#popupPresenterComponent.removeElement();
+    
+  // };
 
   #openPopup = (movie) => {
 
@@ -106,18 +107,18 @@ export default class BoardPresenter {
 
   };
 
-  #closeEscBtnPopup() {
-    const escKeydownHandler = (evt) => {
+  // #closeEscBtnPopup() {
+  //   const escKeydownHandler = (evt) => {
 
-      if(evt.key === 'Escape' || evt.key === 'Esc') {
-        evt.preventDefault();
-        this.#closePopup();
-        document.removeEventListener('keydown', escKeydownHandler);
-      }
-    };
+  //     if(evt.key === 'Escape' || evt.key === 'Esc') {
+  //       evt.preventDefault();
+  //       this.#closePopup();
+  //       document.removeEventListener('keydown', escKeydownHandler);
+  //     }
+  //   };
 
-    document.addEventListener('keydown', escKeydownHandler);
-  }
+  //   document.addEventListener('keydown', escKeydownHandler);
+  // }
 
   #renderPopup(movie) {
 
@@ -127,8 +128,9 @@ export default class BoardPresenter {
 
     const popupPresenter = new PopupPresenter({
       body: this.#body,
-      onClosePopupClick: () => { this.#closePopup(); }, 
+      // onClosePopupClick: () => { this.#closePopup(); }, 
     })
+    this.#popupPresenterComponent = popupPresenter;
     // render(this.#popupView, this.#body);
 
     popupPresenter.init(movie);
@@ -141,7 +143,7 @@ export default class BoardPresenter {
 
     // render(new PopupFilmDetailNewCommentView(), commentList);
 
-    this.#closeEscBtnPopup();
+    // this.#closeEscBtnPopup();
   }
 
   #renderBoard() {
