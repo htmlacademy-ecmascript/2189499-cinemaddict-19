@@ -1,5 +1,5 @@
-import { remove, render } from "../framework/render";
-import PopupView from "../view/popup-view";
+import { remove, render } from '../framework/render';
+import PopupView from '../view/popup-view';
 
 export default class PopupPresenter {
   #onClosePopupClick = null;
@@ -8,25 +8,19 @@ export default class PopupPresenter {
 
   constructor({ body}) {
     this.#body = body;
-    // this.#onClosePopupClick = this.#handleClosePopupClick;
   }
 
   init(movie) {
-    const prevpopupViewComponent = this.#popupViewComponent;
     this.#popupViewComponent = new PopupView({
       movie,
       onClosePopupClick: this.#handleClosePopupClick ,
     });
-    render(this.#popupViewComponent, this.#body)
-  }
-
-  #remove(component) {
-    remove(component)
+    render(this.#popupViewComponent, this.#body);
   }
 
   #handleClosePopupClick = () => {
     console.log('close');
-    remove(this.#popupViewComponent)
+    remove(this.#popupViewComponent);
     this.#body.classList.remove('hide-overflow');
-  }
+  };
 }

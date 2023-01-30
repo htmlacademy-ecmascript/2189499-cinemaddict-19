@@ -2,19 +2,19 @@ import { humanizeMovieDuration } from '../utils/date-transform.js';
 import { humanizeReleaseDate } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 function createPopupTemplate(movie) {
-  const {movie: {filmInfo, userDetails: {watchlist, alreadyWatched, favorite}}} = movie;
+  const {movie: {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}}} = movie;
 
   const isActiveWatchlist = watchlist
-  ? 'film-details__control-button--active'
-  : '';
+    ? 'film-details__control-button--active'
+    : '';
 
-const isActiveAlreadyWatched = alreadyWatched
-  ? 'film-details__control-button--active'
-  : '';
+  const isActiveAlreadyWatched = alreadyWatched
+    ? 'film-details__control-button--active'
+    : '';
 
-const isActiveFavorite = favorite
-  ? 'film-details__control-button--active'
-  : '';
+  const isActiveFavorite = favorite
+    ? 'film-details__control-button--active'
+    : '';
 
   return `<section class="film-details">
   <div class="film-details__inner">
@@ -90,7 +90,7 @@ const isActiveFavorite = favorite
 
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
-      <h3 class="film-details__comments-title">Comments </h3>
+      <h3 class="film-details__comments-title">Comments ${comments.length}</h3>
 
         <ul class="film-details__comments-list">
         </ul>
@@ -103,6 +103,7 @@ const isActiveFavorite = favorite
 export default class PopupView extends AbstractView {
   #handleClosePopupClick = null;
   #movie = null;
+
   constructor({movie, onClosePopupClick}) {
     super();
     this.#movie = movie;
@@ -115,7 +116,7 @@ export default class PopupView extends AbstractView {
 
     this.element.querySelector('.film-details__control-button--watched')
       .addEventListener('click', this.#alreadyWatchedClickHandler);
-    
+
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
   }
@@ -128,17 +129,17 @@ export default class PopupView extends AbstractView {
     evt.preventDefault();
     this.#handleClosePopupClick();
   };
-  
+
   #addToWatchlistClickHandler() {
     console.log('some push');
   }
 
   #alreadyWatchedClickHandler() {
-    console.log('some push 1')
+    console.log('some push 1');
   }
 
   #favoriteClickHandler = () => {
-    console.log('some Push 2')
+    console.log('some Push 2');
   };
 }
 

@@ -73,7 +73,7 @@ export default class BoardPresenter {
       filmContainer: this.#filmContainer,
 
       onShowPopupClick: () => { this.#openPopup(movie); },
-      
+
 
       onDataChange: this.#handleDataChange,
     });
@@ -94,10 +94,9 @@ export default class BoardPresenter {
 
 
   // #closePopup = () => {
-    
   //   this.#popupPresenterComponent.element.parentElement.removeChild(this.#popupPresenterComponent);
   //   this.#popupPresenterComponent.removeElement();
-    
+
   // };
 
   #openPopup = (movie) => {
@@ -129,7 +128,7 @@ export default class BoardPresenter {
     const popupPresenter = new PopupPresenter({
       body: this.#body,
       // onClosePopupClick: () => { this.#closePopup(); }, 
-    })
+    });
     this.#popupPresenterComponent = popupPresenter;
     // render(this.#popupView, this.#body);
 
