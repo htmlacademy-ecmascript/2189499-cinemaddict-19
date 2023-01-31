@@ -1,6 +1,9 @@
 import { humanizeMovieDuration } from '../utils/date-transform.js';
 import { humanizeReleaseDate } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
+import PopupFilmCommentStructureView from './popup-film-comment-structure-view';
+import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view';
+import { render } from '../framework/render.js';
 function createPopupTemplate(movie) {
   const {movie: {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}}} = movie;
 
@@ -103,11 +106,12 @@ function createPopupTemplate(movie) {
 export default class PopupView extends AbstractView {
   #handleClosePopupClick = null;
   #movie = null;
-
+  #commentList = null;
   constructor({movie, onClosePopupClick}) {
     super();
     this.#movie = movie;
     this.#handleClosePopupClick = onClosePopupClick;
+    this.#commentList = this.element.querySelector('.film-details__comments-list');
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
@@ -119,6 +123,12 @@ export default class PopupView extends AbstractView {
 
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
+
+    movie.movie.comments.forEach((commentId) => {
+      render(new PopupFilmCommentStructureView(commentId), this.#commentList);
+    });
+
+    render(new PopupFilmDetailNewCommentView(), this.#commentList);
   }
 
   get template() {

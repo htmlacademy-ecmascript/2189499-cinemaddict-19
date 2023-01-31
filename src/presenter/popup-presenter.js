@@ -15,6 +15,7 @@ export default class PopupPresenter {
       movie,
       onClosePopupClick: this.#handleClosePopupClick ,
     });
+    this.#body.classList.add('hide-overflow');
     render(this.#popupViewComponent, this.#body);
   }
 

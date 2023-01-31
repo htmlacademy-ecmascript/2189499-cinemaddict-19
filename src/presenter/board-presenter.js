@@ -1,4 +1,3 @@
-// import CardFilmsView from '../view/card-films-view.js';
 import FilmListView from '../view/film-list-view.js';
 import MenuView from '../view/menu-view.js';
 import { render } from '../framework/render';
@@ -6,10 +5,6 @@ import SortView from '../view/sort-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';
 import FooterStatisticsView from '../view/footer-statistics-view.js';
-import PopupView from '../view/popup-view';
-import PopupFilmDetailsCommentsTitleView from '../view/popup-film-details-comments-title-view.js';
-import PopupFilmCommentStructureView from '../view/popup-film-comment-structure-view.js';
-import PopupFilmDetailNewCommentView from '../view/popup-film-details-new-comment-view.js';
 import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
@@ -49,7 +44,7 @@ export default class BoardPresenter {
   #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
   #loadMoreButtonComponent = null;
   #popupPresenterComponent = null;
-
+  #commentsList = null;
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -100,10 +95,7 @@ export default class BoardPresenter {
   // };
 
   #openPopup = (movie) => {
-
     this.#renderPopup({movie});
-    this.#body.classList.add('hide-overflow');
-
   };
 
   // #closeEscBtnPopup() {
@@ -127,21 +119,13 @@ export default class BoardPresenter {
 
     const popupPresenter = new PopupPresenter({
       body: this.#body,
-      // onClosePopupClick: () => { this.#closePopup(); }, 
+      commentsList: this.#commentsList,
+      // onClosePopupClick: () => { this.#closePopup(); },
     });
     this.#popupPresenterComponent = popupPresenter;
-    // render(this.#popupView, this.#body);
 
     popupPresenter.init(movie);
-    // const filmDetailsCommentsTitle = this.#popupView.element.querySelector('.film-details__comments-title');
-    // render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
-    // const commentList = this.#popupView.element.querySelector('.film-details__comments-list');
-    // movie.movie.comments.forEach((element) => {
-    //   render(new PopupFilmCommentStructureView(element), commentList);
-    // });
-
-    // render(new PopupFilmDetailNewCommentView(), commentList);
-
+    this.#commentsList = this.element.querySelector('.film-details__comments-list');
     // this.#closeEscBtnPopup();
   }
 
