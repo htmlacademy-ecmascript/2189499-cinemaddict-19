@@ -49,7 +49,7 @@ export default class BoardPresenter {
   #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
   #loadMoreButtonComponent = null;
   #popupPresenterComponent = null;
-
+  #commentsList = null;
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -128,15 +128,16 @@ export default class BoardPresenter {
 
     const popupPresenter = new PopupPresenter({
       body: this.#body,
+      commentsList: this.#commentsList,
       // onClosePopupClick: () => { this.#closePopup(); }, 
     })
     this.#popupPresenterComponent = popupPresenter;
     // render(this.#popupView, this.#body);
 
     popupPresenter.init(movie);
-    // const filmDetailsCommentsTitle = this.#popupView.element.querySelector('.film-details__comments-title');
-    // render(new PopupFilmDetailsCommentsTitleView(movie),filmDetailsCommentsTitle);
-    // const commentList = this.#popupView.element.querySelector('.film-details__comments-list');
+    this.#commentsList = this.element.querySelector('.film-details__comments-list');
+    console.log(this.#commentsList)
+    // const commentList = this.#popupPresenterComponent.element.querySelector('.film-details__comments-list');
     // movie.movie.comments.forEach((element) => {
     //   render(new PopupFilmCommentStructureView(element), commentList);
     // });
