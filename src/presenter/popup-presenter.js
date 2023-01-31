@@ -6,7 +6,7 @@ export default class PopupPresenter {
   #popupViewComponent = null;
   #body = null;
 
-  constructor({ body}) {
+  constructor({body}) {
     this.#body = body;
   }
 
@@ -15,13 +15,26 @@ export default class PopupPresenter {
       movie,
       onClosePopupClick: this.#handleClosePopupClick ,
     });
-    this.#body.classList.add('hide-overflow');
     render(this.#popupViewComponent, this.#body);
+    this.#closeEscBtnPopup();
   }
 
   #handleClosePopupClick = () => {
     console.log('close');
     remove(this.#popupViewComponent);
     this.#body.classList.remove('hide-overflow');
+  };
+
+  #closeEscBtnPopup = () => {
+    const escKeydownHandler = (evt) => {
+
+      if(evt.key === 'Escape' || evt.key === 'Esc') {
+        evt.preventDefault();
+        this.#handleClosePopupClick();
+        document.removeEventListener('keydown', escKeydownHandler);
+      }
+    };
+
+    document.addEventListener('keydown', escKeydownHandler);
   };
 }

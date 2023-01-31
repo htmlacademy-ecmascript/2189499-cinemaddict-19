@@ -95,37 +95,28 @@ export default class BoardPresenter {
   // };
 
   #openPopup = (movie) => {
+    this.#body.classList.add('hide-overflow');
     this.#renderPopup({movie});
   };
 
-  // #closeEscBtnPopup() {
-  //   const escKeydownHandler = (evt) => {
 
-  //     if(evt.key === 'Escape' || evt.key === 'Esc') {
-  //       evt.preventDefault();
-  //       this.#closePopup();
-  //       document.removeEventListener('keydown', escKeydownHandler);
-  //     }
-  //   };
-
-  //   document.addEventListener('keydown', escKeydownHandler);
-  // }
 
   #renderPopup(movie) {
 
-    if (this.#popupView) {
-      this.#popupView.element.remove();
-    }
 
     const popupPresenter = new PopupPresenter({
       body: this.#body,
       commentsList: this.#commentsList,
-      // onClosePopupClick: () => { this.#closePopup(); },
+      // onCloseEscBtnPopup: () => { this.#closeEscBtnPopup(); },
     });
+
+    // if (this.#popupPresenterComponent) {
+    //   this.#popupPresenterComponent.element.remove();
+    // }
     this.#popupPresenterComponent = popupPresenter;
 
     popupPresenter.init(movie);
-    this.#commentsList = this.element.querySelector('.film-details__comments-list');
+    // this.#commentsList = this.element.querySelector('.film-details__comments-list');
     // this.#closeEscBtnPopup();
   }
 
