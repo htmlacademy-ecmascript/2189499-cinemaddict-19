@@ -74,6 +74,7 @@ export default class BoardPresenter {
     });
     moviePresenter.init(movie);
     this.#moviePresenter.set(movie.id, moviePresenter);
+    console.log(this.#moviePresenter);
   }
 
   #handleDataChange = (updatedMovie) => {
@@ -85,6 +86,11 @@ export default class BoardPresenter {
     });
 
     this.#moviePresenter.get(updatedMovie.id).init(updatedMovie);
+
+    if (this.#popupPresenterComponent) {
+      console.log({updatedMovie});
+      this.#popupPresenterComponent.init({updatedMovie});
+    }
   };
 
 
@@ -101,7 +107,7 @@ export default class BoardPresenter {
 
 
   #renderPopup(movie) {
-
+    
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
       this.#popupPresenterComponent = null;
@@ -110,17 +116,12 @@ export default class BoardPresenter {
     const popupPresenter = new PopupPresenter({
       body: this.#body,
       commentsList: this.#commentsList,
-      // onCloseEscBtnPopup: () => { this.#closeEscBtnPopup(); },
+
+      onDataChange: this.#handleDataChange,
     });
 
-    // if (this.#popupPresenterComponent) {
-    //   this.#popupPresenterComponent.element.remove();
-    // }
     this.#popupPresenterComponent = popupPresenter;
-
     popupPresenter.init(movie);
-    // this.#commentsList = this.element.querySelector('.film-details__comments-list');
-    // this.#closeEscBtnPopup();
   }
 
   #renderBoard() {

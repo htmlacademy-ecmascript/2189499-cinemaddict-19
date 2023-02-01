@@ -107,16 +107,21 @@ export default class PopupView extends AbstractView {
   #handleClosePopupClick = null;
   #movie = null;
   #commentList = null;
-  constructor({movie, onClosePopupClick}) {
+
+  #hadleWatchlistPopupClick = null;
+
+  constructor({movie, onClosePopupClick, onWatchlistPopupClick}) {
     super();
     this.#movie = movie;
+
+    this.#hadleWatchlistPopupClick = onWatchlistPopupClick ;
     this.#handleClosePopupClick = onClosePopupClick;
     this.#commentList = this.element.querySelector('.film-details__comments-list');
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
     this.element.querySelector('.film-details__control-button--watchlist')
-      .addEventListener('click', this.#addToWatchlistClickHandler);
+      .addEventListener('click', this.#addToWatchlistPopupClickHandler);
 
     this.element.querySelector('.film-details__control-button--watched')
       .addEventListener('click', this.#alreadyWatchedClickHandler);
@@ -140,9 +145,9 @@ export default class PopupView extends AbstractView {
     this.#handleClosePopupClick();
   };
 
-  #addToWatchlistClickHandler() {
-    console.log('some push');
-  }
+  #addToWatchlistPopupClickHandler = () => {
+    this.#hadleWatchlistPopupClick();
+  };
 
   #alreadyWatchedClickHandler() {
     console.log('some push 1');

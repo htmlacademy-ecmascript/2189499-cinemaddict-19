@@ -45,8 +45,6 @@ export default class MoviePresenter {
       replace(this.#movieCardComponent, prevMovieCardComponent);
     }
 
-    // this.#remove(prevMovieCardComponent);
-    // render(this.#movieCardComponent, this.#filmContainer);
   }
 
   #remove(component) {
