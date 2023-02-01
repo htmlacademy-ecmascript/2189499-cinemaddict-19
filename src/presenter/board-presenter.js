@@ -74,7 +74,6 @@ export default class BoardPresenter {
     });
     moviePresenter.init(movie);
     this.#moviePresenter.set(movie.id, moviePresenter);
-    console.log(this.#moviePresenter);
   }
 
   #handleDataChange = (updatedMovie) => {
@@ -88,17 +87,12 @@ export default class BoardPresenter {
     this.#moviePresenter.get(updatedMovie.id).init(updatedMovie);
 
     if (this.#popupPresenterComponent) {
-      console.log({updatedMovie});
-      this.#popupPresenterComponent.init({updatedMovie});
+      this.#popupPresenterComponent.destroy();
+      this.#popupPresenterComponent.init({ movie: updatedMovie });
+
     }
   };
 
-
-  // #closePopup = () => {
-  //   this.#popupPresenterComponent.element.parentElement.removeChild(this.#popupPresenterComponent);
-  //   this.#popupPresenterComponent.removeElement();
-
-  // };
 
   #openPopup = (movie) => {
     this.#body.classList.add('hide-overflow');
@@ -107,7 +101,6 @@ export default class BoardPresenter {
 
 
   #renderPopup(movie) {
-    
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
       this.#popupPresenterComponent = null;

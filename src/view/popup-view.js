@@ -5,7 +5,7 @@ import PopupFilmCommentStructureView from './popup-film-comment-structure-view';
 import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view';
 import { render } from '../framework/render.js';
 function createPopupTemplate(movie) {
-  const {movie: {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}}} = movie;
+  const {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
 
   const isActiveWatchlist = watchlist
     ? 'film-details__control-button--active'
@@ -108,13 +108,18 @@ export default class PopupView extends AbstractView {
   #movie = null;
   #commentList = null;
 
-  #hadleWatchlistPopupClick = null;
+  #hadleWatchlistClick = null;
+  #handleAlreadyWatchedClick = null;
+  #handleFavoriteClick = null;
 
-  constructor({movie, onClosePopupClick, onWatchlistPopupClick}) {
+  constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick}) {
     super();
-    this.#movie = movie;
+    this.#movie = movie.movie;
 
-    this.#hadleWatchlistPopupClick = onWatchlistPopupClick ;
+    this.#hadleWatchlistClick = onWatchlistPopupClick ;
+    this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
+    this.#handleFavoriteClick = onFavoriteClick;
+
     this.#handleClosePopupClick = onClosePopupClick;
     this.#commentList = this.element.querySelector('.film-details__comments-list');
     this.element.querySelector('.film-details__close-btn')
@@ -146,15 +151,15 @@ export default class PopupView extends AbstractView {
   };
 
   #addToWatchlistPopupClickHandler = () => {
-    this.#hadleWatchlistPopupClick();
+    this.#hadleWatchlistClick();
   };
 
-  #alreadyWatchedClickHandler() {
-    console.log('some push 1');
-  }
+  #alreadyWatchedClickHandler = () => {
+    this.#handleAlreadyWatchedClick();
+  };
 
   #favoriteClickHandler = () => {
-    console.log('some Push 2');
+    this.#handleFavoriteClick();
   };
 }
 

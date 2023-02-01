@@ -3,7 +3,6 @@ import { humanizeMovieDuration } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 function createCardFilmsTemplate(movie) {
   const {filmInfo, comments, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
-  // console.log(comments.length);
   const commentsLength = comments.length;
 
   const isActiveWatchlist = watchlist

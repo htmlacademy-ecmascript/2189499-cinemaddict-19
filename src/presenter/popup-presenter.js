@@ -15,19 +15,20 @@ export default class PopupPresenter {
   }
 
   init(movie) {
-
     this.#movie = movie.movie;
     this.#popupViewComponent = new PopupView({
       movie,
       onClosePopupClick: this.#handleClosePopupClick,
+
       onWatchlistPopupClick: () => { this.#hadleWatchlistClick(movie); },
+      onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
+      onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
   }
 
   #handleClosePopupClick = () => {
-    console.log('close');
     remove(this.#popupViewComponent);
     this.#body.classList.remove('hide-overflow');
   };
@@ -46,10 +47,15 @@ export default class PopupPresenter {
   };
 
   #hadleWatchlistClick = () => {
-    debugger;
-    console.log('presenter');
-    console.log(this.#movie.movie);
     this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, watchlist: !this.#movie.userDetails.watchlist}});
+  };
+
+  #handleAlreadyWatchedClick = () => {
+    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, alreadyWatched: !this.#movie.userDetails.alreadyWatched}});
+  };
+
+  #handleFavoriteClick = () => {
+    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, favorite: !this.#movie.userDetails.favorite}});
   };
 
   destroy() {
