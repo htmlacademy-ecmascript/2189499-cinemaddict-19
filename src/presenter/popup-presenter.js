@@ -37,4 +37,9 @@ export default class PopupPresenter {
 
     document.addEventListener('keydown', escKeydownHandler);
   };
+
+
+  destroy() {
+    this.#popupViewComponent.element.remove();
+  }
 }

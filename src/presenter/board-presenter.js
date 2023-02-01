@@ -100,9 +100,12 @@ export default class BoardPresenter {
   };
 
 
-
   #renderPopup(movie) {
 
+    if (this.#popupPresenterComponent) {
+      this.#popupPresenterComponent.destroy();
+      this.#popupPresenterComponent = null;
+    }
 
     const popupPresenter = new PopupPresenter({
       body: this.#body,
