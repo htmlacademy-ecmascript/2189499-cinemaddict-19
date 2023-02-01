@@ -389,7 +389,152 @@ const mockMovie = [
       watchingDate: '2012-12-12T16:12:32.554Z',
       favorite: false
     }
-  }
+  },
+
+  {
+    id: 6,
+    comments: [
+      2,1
+    ],
+    filmInfo: {
+      title: 'Santa Claus Conquers The Martrians',
+      alternativeTitle: 'Laziness Who Sold Themselves',
+      totalRating: 5.1,
+      poster: 'santa-claus-conquers-the-martians.jpg',
+      ageRating: 12,
+      director: 'Tom Ford',
+      writers: [
+        'Leonardo Dicapro'
+      ],
+      actors: [
+        'Ohjelina Jholy'
+      ],
+      release: {
+        date: '2014-05-11T00:00:00.000Z',
+        releaseCountry: 'India'
+      },
+      duration: 77,
+      genre: [
+        'Action'
+      ],
+      description: 'Oscar-winning film, a war drama about two young people, from the creators of timeless classic "Nu, Pogodi!" and "Alice in Wonderland", with the best fight scenes since Bruce Lee.'
+    },
+    userDetails: {
+      watchlist: false,
+      alreadyWatched: true,
+      watchingDate: '2012-12-12T16:12:32.554Z',
+      favorite: false
+    }
+  },
+
+  {
+    id: 7,
+    comments: [
+      3,6
+    ],
+    filmInfo: {
+      title: 'Sagebrush Trail',
+      alternativeTitle: 'Laziness Who Sold Themselves',
+      totalRating: 9.3,
+      poster: 'sagebrush-trail.jpg',
+      ageRating: 3,
+      director: 'Oscar Uald',
+      writers: [
+        'Howard Lovecraft'
+      ],
+      actors: [
+        'Young Lean'
+      ],
+      release: {
+        date: '2003-01-01T00:00:00.000Z',
+        releaseCountry: 'Sweden'
+      },
+      duration: 110,
+      genre: [
+        'Arthouse'
+      ],
+      description: 'Oscar-winning film, a war drama about two young people, from the creators of timeless classic "Nu, Pogodi!" and "Alice in Wonderland", with the best fight scenes since Bruce Lee.'
+    },
+    userDetails: {
+      watchlist: false,
+      alreadyWatched: true,
+      watchingDate: '2003-04-12T16:12:32.554Z',
+      favorite: false
+    }
+  },
+
+  {
+    id: 8,
+    comments: [
+      3,1
+    ],
+    filmInfo: {
+      title: 'The Great Flamrion',
+      alternativeTitle: 'Laziness Who Sold Themselves',
+      totalRating: 7.7,
+      poster: 'the-great-flamarion.jpg',
+      ageRating: 18,
+      director: 'Aphex Twin',
+      writers: [
+        'Rodger Whaters'
+      ],
+      actors: [
+        'Pink Floyd'
+      ],
+      release: {
+        date: '2007-05-11T00:00:00.000Z',
+        releaseCountry: 'Mexico'
+      },
+      duration: 78,
+      genre: [
+        'Historical'
+      ],
+      description: 'Oscar-winning film, a war drama about two young people, from the creators of timeless classic "Nu, Pogodi!" and "Alice in Wonderland", with the best fight scenes since Bruce Lee.'
+    },
+    userDetails: {
+      watchlist: false,
+      alreadyWatched: true,
+      watchingDate: '2019-04-12T16:12:32.554Z',
+      favorite: false
+    }
+  },
+
+  {
+    id: 9,
+    comments: [
+      1
+    ],
+    filmInfo: {
+      title: 'The Man With Golden Arm',
+      alternativeTitle: 'Laziness Who Sold Themselves',
+      totalRating: 10,
+      poster: 'the-man-with-the-golden-arm.jpg',
+      ageRating: 6,
+      director: 'Tom Ford',
+      writers: [
+        'Takeshi Kitano'
+      ],
+      actors: [
+        'Morgan Freeman'
+      ],
+      release: {
+        date: '2019-05-11T00:00:00.000Z',
+        releaseCountry: 'Finland'
+      },
+      duration: 77,
+      genre: [
+        'Comedy'
+      ],
+      description: 'Suspendisse tellus ex, tincidunt et tincidunt consectetur, egestas quis tortor. Fusce ut feugiat justo. Nullam et molestie lacus. Fusce sed elit faucibus libero elementum iaculis sit amet vitae dui. Vestibulum turpis nunc, vehicula sit amet odio sit amet, rutrum volutpat tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam luctus tincidunt interdum. Proin quis hendrerit quam, sed ultrices turpis.'
+    },
+    userDetails: {
+      watchlist: true,
+      alreadyWatched: true,
+      watchingDate: '2019-04-12T16:12:32.554Z',
+      favorite: false
+    }
+  },
+
 ];
 
 function getRandomMovie() {
