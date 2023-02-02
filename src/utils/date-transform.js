@@ -20,12 +20,12 @@ function humanizeReleaseDate(releaseDate) {
 }
 
 
-function sortTaskDate(taskA, taskB) {
-  return dayjs(taskA.filmInfo.release.date).diff(dayjs(taskB.filmInfo.release.date));
+function sortMovieDate(movieA, movieB) {
+  return dayjs(movieA.filmInfo.release.date).diff(dayjs(movieB.filmInfo.release.date));
 }
 
-function sortTaskRating(taskA, taskB) {
-  return dayjs(taskA.filmInfo.totalRating).diff(dayjs(taskB.filmInfo.totalRating));
+function sortMovieRating(movieA, movieB) {
+  return dayjs(movieA.filmInfo.totalRating).diff(dayjs(movieB.filmInfo.totalRating));
 }
 
-export {humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate, sortTaskDate, sortTaskRating};
+export {humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate, sortMovieDate, sortMovieRating};

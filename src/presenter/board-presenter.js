@@ -10,7 +10,7 @@ import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
 import { SortType } from '../const.js';
-import {sortTaskDate, sortTaskRating} from '../utils/date-transform';
+import {sortMovieDate, sortMovieRating} from '../utils/date-transform';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -133,13 +133,13 @@ export default class BoardPresenter {
   }
 
 
-  #sortTasks(sortType) {
+  #sortMovies(sortType) {
     switch(sortType){
       case SortType.DATE:
-        this.#listMovieMovieInfo.sort(sortTaskDate);
+        this.#listMovieMovieInfo.sort(sortMovieDate);
         break;
       case SortType.RATING:
-        this.#listMovieMovieInfo.sort(sortTaskRating);
+        this.#listMovieMovieInfo.sort(sortMovieRating);
         break;
       default:
         this.#listMovieMovieInfo = [...this.#sourcedfilmContainer];
@@ -154,7 +154,7 @@ export default class BoardPresenter {
       return;
     }
 
-    this.#sortTasks(sortType);
+    this.#sortMovies(sortType);
     this.#clearMovieList();
     this.#renderMovieList();
   };
