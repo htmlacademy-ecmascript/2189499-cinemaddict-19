@@ -10,7 +10,6 @@ import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
 import { SortType } from '../const.js';
-import { updateMovie } from '../utils/common.js';
 import {sortTaskDate, sortTaskRating} from '../utils/date-transform';
 
 export default class BoardPresenter {
@@ -63,7 +62,6 @@ export default class BoardPresenter {
 
   init() {
     this.#listMovieMovieInfo = [...this.#movieModel.movie];
-    console.log(this.#listMovieMovieInfo);
     this.#sourcedfilmContainer = [...this.#movieModel.movie];
     this.#loadedComments = this.#movieModel.comments;
     this.#renderBoard();
@@ -114,6 +112,7 @@ export default class BoardPresenter {
     this.#moviePresenter.clear();
     this.#renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
     remove(this.#loadMoreButtonComponent);
+    this.#renderShowMoreBtn();
   }
 
   #renderPopup(movie) {
@@ -137,32 +136,26 @@ export default class BoardPresenter {
   #sortTasks(sortType) {
     switch(sortType){
       case SortType.DATE:
-        this.#listMovieMovieInfo.sort(sortTaskDate());
-        console.log('date');
+        this.#listMovieMovieInfo.sort(sortTaskDate);
         break;
       case SortType.RATING:
         this.#listMovieMovieInfo.sort(sortTaskRating);
-        console.log('123');
         break;
       default:
         this.#listMovieMovieInfo = [...this.#sourcedfilmContainer];
-        console.log('11');
     }
-    console.log(this.#listMovieMovieInfo);
+
     this.#currentSortType = sortType;
-    console.log(sortType);
+
   }
 
   #handleSortTypeChange = (sortType) => {
-    debugger;
     if (this.#currentSortType === sortType){
-      console.log('остались старые');
       return;
     }
 
     this.#sortTasks(sortType);
     this.#clearMovieList();
-    // this.#renderSort();
     this.#renderMovieList();
   };
 
@@ -171,10 +164,9 @@ export default class BoardPresenter {
 
       onSortTypeChange: this.#handleSortTypeChange,
     });
-
-
     render(this.#sortComponent, this.#main);
   }
+
 
   #renderMovieList() {
     for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
@@ -197,7 +189,13 @@ export default class BoardPresenter {
 
     this.#renderMovieList();
 
+    this.#renderShowMoreBtn();
 
+    render(new FooterStatisticsView(), this.#footer);
+
+  }
+
+  #renderShowMoreBtn() {
     if(this.#listMovieMovieInfo.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
       this.#loadMoreButtonComponent = new ShowMoreButtonView({
         onShowMoreClick: this.#loadMoreButtonHandler
@@ -206,14 +204,6 @@ export default class BoardPresenter {
       render(this.#loadMoreButtonComponent, this.#main);
 
     }
-
-
-
-    render(new FooterStatisticsView(), this.#footer);
-
-
-
-
   }
 }
 
