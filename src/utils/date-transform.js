@@ -20,4 +20,12 @@ function humanizeReleaseDate(releaseDate) {
 }
 
 
-export {humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate};
+function sortMovieDate(movieA, movieB) {
+  return dayjs(movieA.filmInfo.release.date).diff(dayjs(movieB.filmInfo.release.date));
+}
+
+function sortMovieRating(movieA, movieB) {
+  return dayjs(movieA.filmInfo.totalRating).diff(dayjs(movieB.filmInfo.totalRating));
+}
+
+export {humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate, sortMovieDate, sortMovieRating};

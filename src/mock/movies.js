@@ -541,4 +541,4 @@ function getRandomMovie() {
   return (getRandomArrayElement(mockMovie));
 }
 
-export {getRandomMovie, mockComments};
+export {getRandomMovie, mockComments, mockMovie};
