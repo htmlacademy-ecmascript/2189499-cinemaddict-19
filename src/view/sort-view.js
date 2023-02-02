@@ -28,9 +28,8 @@ export default class SortView extends AbstractView {
     if(evt.target.tagName !== 'A') {
       return;
     }
-    debugger;
     evt.preventDefault();
     this.#handleSortTypeChange(evt.target.dataset.sortType);
   };
 }
-// sort__button--active
+
