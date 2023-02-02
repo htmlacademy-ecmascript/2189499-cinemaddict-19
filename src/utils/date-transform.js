@@ -20,4 +20,33 @@ function humanizeReleaseDate(releaseDate) {
 }
 
 
-export {humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate};
+function getWeightForNullDate(dateA, dateB){
+  if (dateA === null && dateB === null) {
+    return 0;
+  }
+
+  if(dateA === null) {
+    return 1;
+  }
+
+  if (dateB === null) {
+    return -1;
+  }
+
+  return null;
+
+}
+
+function sortTaskDate(taskA, taskB) {
+  const weight = getWeightForNullDate(taskA.dueDate, taskB.dueDate);
+  console.log(taskA);
+  return weight ?? dayjs(taskA.dueDate).diff(dayjs(taskB.dueDate));
+}
+
+function sortTaskRating(taskA, taskB) {
+  const weight = getWeightForNullDate(taskA.dueDate, taskB.dueDate);
+
+  return weight ?? dayjs(taskA.dueDate).diff(dayjs(taskB.dueDate));
+}
+
+export {humanizeMovieDueDate, humanizeMovieDuration, humanizeReleaseDate, getWeightForNullDate, sortTaskDate, sortTaskRating};

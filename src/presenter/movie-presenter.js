@@ -62,5 +62,9 @@ export default class MoviePresenter {
   #handleFavoriteClick = () => {
     this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, favorite: !this.#movie.userDetails.favorite}});
   };
+
+  destroy() {
+    this.#movieCardComponent.element.remove();
+  }
 }
 

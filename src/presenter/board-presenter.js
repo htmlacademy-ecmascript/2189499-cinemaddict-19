@@ -1,6 +1,6 @@
 import FilmListView from '../view/film-list-view.js';
 import MenuView from '../view/menu-view.js';
-import { render } from '../framework/render';
+import { remove, render } from '../framework/render';
 import SortView from '../view/sort-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';
@@ -9,7 +9,9 @@ import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
-
+import { SortType } from '../const.js';
+import { updateMovie } from '../utils/common.js';
+import {sortTaskDate, sortTaskRating} from '../utils/date-transform';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -44,7 +46,10 @@ export default class BoardPresenter {
   #filmContainer = this.#filmListComponent.element.querySelector('.films-list__container');
   #loadMoreButtonComponent = null;
   #popupPresenterComponent = null;
+  #sortComponent = null;
   #commentsList = null;
+  #currentSortType = SortType.DEFAULT;
+  #sourcedfilmContainer = [];
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -58,6 +63,8 @@ export default class BoardPresenter {
 
   init() {
     this.#listMovieMovieInfo = [...this.#movieModel.movie];
+    console.log(this.#listMovieMovieInfo);
+    this.#sourcedfilmContainer = [...this.#movieModel.movie];
     this.#loadedComments = this.#movieModel.comments;
     this.#renderBoard();
   }
@@ -84,7 +91,9 @@ export default class BoardPresenter {
       return movie;
     });
 
+
     this.#moviePresenter.get(updatedMovie.id).init(updatedMovie);
+
 
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
@@ -99,6 +108,13 @@ export default class BoardPresenter {
     this.#renderPopup({movie});
   };
 
+
+  #clearMovieList() {
+    this.#moviePresenter.forEach((presenter) => presenter.destroy());
+    this.#moviePresenter.clear();
+    this.#renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
+    remove(this.#loadMoreButtonComponent);
+  }
 
   #renderPopup(movie) {
     if (this.#popupPresenterComponent) {
@@ -117,6 +133,55 @@ export default class BoardPresenter {
     popupPresenter.init(movie);
   }
 
+
+  #sortTasks(sortType) {
+    switch(sortType){
+      case SortType.DATE:
+        this.#listMovieMovieInfo.sort(sortTaskDate());
+        console.log('date');
+        break;
+      case SortType.RATING:
+        this.#listMovieMovieInfo.sort(sortTaskRating);
+        console.log('123');
+        break;
+      default:
+        this.#listMovieMovieInfo = [...this.#sourcedfilmContainer];
+        console.log('11');
+    }
+    console.log(this.#listMovieMovieInfo);
+    this.#currentSortType = sortType;
+    console.log(sortType);
+  }
+
+  #handleSortTypeChange = (sortType) => {
+    debugger;
+    if (this.#currentSortType === sortType){
+      console.log('остались старые');
+      return;
+    }
+
+    this.#sortTasks(sortType);
+    this.#clearMovieList();
+    // this.#renderSort();
+    this.#renderMovieList();
+  };
+
+  #renderSort() {
+    this.#sortComponent = new SortView({
+
+      onSortTypeChange: this.#handleSortTypeChange,
+    });
+
+
+    render(this.#sortComponent, this.#main);
+  }
+
+  #renderMovieList() {
+    for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
+      this.#renderMovie(this.#listMovieMovieInfo[i]);
+    }
+  }
+
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
     const filters = generateFilter(this.#listMovieMovieInfo);
@@ -127,8 +192,10 @@ export default class BoardPresenter {
       return ;
     }
 
-    render(new SortView(), this.#main);
+    this.#renderSort();
     render(this.#filmListComponent, this.#main);
+
+    this.#renderMovieList();
 
 
     if(this.#listMovieMovieInfo.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
@@ -140,11 +207,11 @@ export default class BoardPresenter {
 
     }
 
+
+
     render(new FooterStatisticsView(), this.#footer);
 
-    for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
-      this.#renderMovie(this.#listMovieMovieInfo[i]);
-    }
+
 
 
   }
