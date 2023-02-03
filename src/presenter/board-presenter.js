@@ -96,10 +96,13 @@ export default class BoardPresenter {
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
       this.#popupPresenterComponent.init({ movie: updatedMovie });
-
     }
   };
 
+
+  #removePopupPresenterComponent() {
+    this.#popupPresenterComponent = null;
+  }
 
   #openPopup = (movie) => {
     this.#body.classList.add('hide-overflow');
@@ -123,6 +126,7 @@ export default class BoardPresenter {
 
     const popupPresenter = new PopupPresenter({
       body: this.#body,
+      removePopupPresenterComponent: () => { this.#removePopupPresenterComponent(); },
       commentsList: this.#commentsList,
 
       onDataChange: this.#handleDataChange,
@@ -130,6 +134,7 @@ export default class BoardPresenter {
 
 
     popupPresenter.init(movie);
+
     this.#popupPresenterComponent = popupPresenter;
   }
 
