@@ -112,6 +112,8 @@ export default class PopupView extends AbstractView {
   #handleAlreadyWatchedClick = null;
   #handleFavoriteClick = null;
 
+  #popupFilmDetailNewCommentView = null;
+
   constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick}) {
     super();
     this.#movie = movie.movie;
@@ -119,6 +121,8 @@ export default class PopupView extends AbstractView {
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
+
+    this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
 
     this.#handleClosePopupClick = onClosePopupClick;
     this.#commentList = this.element.querySelector('.film-details__comments-list');
@@ -138,7 +142,8 @@ export default class PopupView extends AbstractView {
       render(new PopupFilmCommentStructureView(commentId), this.#commentList);
     });
 
-    render(new PopupFilmDetailNewCommentView(), this.#commentList);
+
+    render(this.#popupFilmDetailNewCommentView, this.#commentList);
   }
 
   get template() {
@@ -161,5 +166,9 @@ export default class PopupView extends AbstractView {
   #favoriteClickHandler = () => {
     this.#handleFavoriteClick();
   };
+
+  resetpopupFilmDetailNewCommentView() {
+    this.#popupFilmDetailNewCommentView.reset();
+  }
 }
 
