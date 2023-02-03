@@ -1,7 +1,9 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { SortType } from '../const.js';
 
+
 function createSortViewTemplate() {
+
   return (`<ul class="sort">
   <li><a href="#" class="sort__button" data-sort-type="${SortType.DEFAULT}">Sort by default</a></li>
   <li><a href="#" class="sort__button" data-sort-type="${SortType.DATE}">Sort by date</a></li>
@@ -11,9 +13,10 @@ function createSortViewTemplate() {
 
 export default class SortView extends AbstractView {
   #handleSortTypeChange = null;
-
-  constructor({onSortTypeChange}){
+  sortfilter = null;
+  constructor({onSortTypeChange, sortfilter}){
     super();
+    this.sortfilter = sortfilter;
     this.#handleSortTypeChange = onSortTypeChange;
 
 
@@ -21,7 +24,7 @@ export default class SortView extends AbstractView {
   }
 
   get template() {
-    return createSortViewTemplate();
+    return createSortViewTemplate(this.sortfilter);
   }
 
   #sortTypeChangeHandler = (evt) => {
@@ -30,6 +33,7 @@ export default class SortView extends AbstractView {
     }
     evt.preventDefault();
     this.#handleSortTypeChange(evt.target.dataset.sortType);
+    this.sortfilter = evt.target.dataset.sortType;
   };
 }
 

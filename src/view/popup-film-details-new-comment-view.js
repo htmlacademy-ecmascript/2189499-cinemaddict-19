@@ -1,4 +1,4 @@
-import AbstractStatefulView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 function createPopupFilmDetailsNewCommentTemplate({emoji, comment}) {
   return (`<form class="film-details__new-comment" action="" method="get">

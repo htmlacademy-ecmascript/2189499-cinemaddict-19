@@ -128,8 +128,9 @@ export default class BoardPresenter {
       onDataChange: this.#handleDataChange,
     });
 
-    this.#popupPresenterComponent = popupPresenter;
+
     popupPresenter.init(movie);
+    this.#popupPresenterComponent = popupPresenter;
   }
 
 
