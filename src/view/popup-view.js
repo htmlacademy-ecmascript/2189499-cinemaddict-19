@@ -142,7 +142,6 @@ export default class PopupView extends AbstractView {
       render(new PopupFilmCommentStructureView(commentId), this.#commentList);
     });
 
-    // this.resetpopupFilmDetailNewCommentView();
 
     render(this.#popupFilmDetailNewCommentView, this.#commentList);
   }
@@ -153,6 +152,7 @@ export default class PopupView extends AbstractView {
 
   #closePopupClickHandler = (evt) => {
     evt.preventDefault();
+    this.resetpopupFilmDetailNewCommentView();
     this.#handleClosePopupClick();
   };
 

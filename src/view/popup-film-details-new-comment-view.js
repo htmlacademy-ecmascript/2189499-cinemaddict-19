@@ -43,6 +43,7 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
   constructor() {
     super();
     this._setState(this.#initialState);
+    
     this._restoreHandlers();
   }
 
@@ -69,5 +70,6 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
       emoji: evt.target.src,
       comment: document.querySelector('.film-details__comment-input').value,
     });
+    console.log(this._state);
   };
 }
