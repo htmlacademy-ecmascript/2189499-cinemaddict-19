@@ -2,7 +2,7 @@ import { humanizeMovieDuration } from '../utils/date-transform.js';
 import { humanizeReleaseDate } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 import PopupFilmCommentStructureView from './popup-film-comment-structure-view';
-import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view';
+import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view.js';
 import { render } from '../framework/render.js';
 function createPopupTemplate(movie) {
   const {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
@@ -142,6 +142,7 @@ export default class PopupView extends AbstractView {
       render(new PopupFilmCommentStructureView(commentId), this.#commentList);
     });
 
+    // this.resetpopupFilmDetailNewCommentView();
 
     render(this.#popupFilmDetailNewCommentView, this.#commentList);
   }

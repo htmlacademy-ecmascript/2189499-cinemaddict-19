@@ -126,6 +126,7 @@ export default class BoardPresenter {
       commentsList: this.#commentsList,
 
       onDataChange: this.#handleDataChange,
+
     });
 
     this.#popupPresenterComponent = popupPresenter;

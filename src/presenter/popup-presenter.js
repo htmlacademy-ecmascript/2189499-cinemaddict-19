@@ -29,7 +29,9 @@ export default class PopupPresenter {
   }
 
   #handleClosePopupClick = () => {
+    debugger;
     remove(this.#popupViewComponent);
+    this.#popupViewComponent.resetpopupFilmDetailNewCommentView();
     this.#body.classList.remove('hide-overflow');
   };
 
