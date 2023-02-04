@@ -117,7 +117,6 @@ export default class BoardPresenter {
   #clearMovieList() {
     this.#moviePresenter.forEach((presenter) => presenter.destroy());
     this.#moviePresenter.clear();
-    this.#renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
     remove(this.#loadMoreButtonComponent);
     this.#renderShowMoreBtn();
   }
