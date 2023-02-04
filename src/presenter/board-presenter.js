@@ -19,7 +19,6 @@ export default class BoardPresenter {
   #footer = null;
   #movieModel = null;
   #body = null;
-  #listMovieMovieInfo = [];
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
   #loadedComments = null;
   #popupView = null;
@@ -28,7 +27,7 @@ export default class BoardPresenter {
 
   #loadMoreButtonHandler = () => {
 
-    this.#listMovieMovieInfo
+    this.#movieModel.movie
       .slice(this.#renderMovieCount, this.#renderMovieCount + BoardPresenter.MOVIE_COUNT_PER_STEP)
       .forEach((movie) => this.#renderMovie(movie));
 
@@ -48,7 +47,10 @@ export default class BoardPresenter {
   #sortComponent = null;
   #commentsList = null;
   #currentSortType = SortType.DEFAULT;
-  #sourcedfilmContainer = [];
+
+//избавились от ранее созданных
+  // #sourcedfilmContainer = [];
+  // #listMovieMovieInfo = [];
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -60,12 +62,20 @@ export default class BoardPresenter {
   }
 
   get movie() {
+    debugger;
+    switch (this.#currentSortType) {
+      case SortType.DATE:
+        return [...this.this.#movieModel.movie].sort(sortMovieDate);
+      case SortType.RATING:
+        return [...this.#this.#movieModel.movie].sort(sortMovieRating);
+    }
+
     return this.#movieModel.movie;
   }
 
   init() {
-    this.#listMovieMovieInfo = [...this.#movieModel.movie];
-    this.#sourcedfilmContainer = [...this.#movieModel.movie];
+    // this.#listMovieMovieInfo = [...this.#movieModel.movie];
+    // this.#sourcedfilmContainer = [...this.#movieModel.movie];
     this.#loadedComments = this.#movieModel.comments;
     this.#renderBoard();
   }
@@ -91,11 +101,7 @@ export default class BoardPresenter {
       }
       return movie;
     });
-
-
     this.#moviePresenter.get(updatedMovie.id).init(updatedMovie);
-
-
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
       this.#popupPresenterComponent.init({ movie: updatedMovie });
