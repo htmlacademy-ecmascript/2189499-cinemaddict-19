@@ -1,6 +1,7 @@
+import Observable from '../framework/observable.js';
 import { getRandomMovie, mockMovie } from '../mock/movies';
 
-export default class MovieModel {
+export default class MovieModel extends Observable {
   #movie = mockMovie;
   #comments = getRandomMovie().comments;
 

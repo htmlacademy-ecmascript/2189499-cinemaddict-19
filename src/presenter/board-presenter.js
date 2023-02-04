@@ -59,6 +59,9 @@ export default class BoardPresenter {
 
   }
 
+  get movie() {
+    return this.#movieModel.movie;
+  }
 
   init() {
     this.#listMovieMovieInfo = [...this.#movieModel.movie];
