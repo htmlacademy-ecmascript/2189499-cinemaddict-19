@@ -4,8 +4,8 @@ dayjs.extend(duration);
 
 
 const DATE_FORMAT = 'YYYY';
-const DURATION_FORMAT = 'H:mm';
-const RELEASE_FORMAT = 'DD MMMM YYYY';
+const DURATION_FORMAT = 'H[h] mm';
+const RELEASE_FORMAT = 'YYYY MMMM DD HH:mm';
 
 function humanizeMovieDueDate(dueDate) {
   return dueDate ? dayjs(dueDate).format(DATE_FORMAT) : '';
