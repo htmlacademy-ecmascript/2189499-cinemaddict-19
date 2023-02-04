@@ -1,6 +1,6 @@
 
 import { mockComments } from '../mock/movies.js';
-import { humanizeReleaseDate } from '../utils/date-transform.js';
+import { humanizeCommentDate } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 function createPopupFilmCommentStructureTemplate(commentId) {
   return `<li class="film-details__comment">
@@ -11,7 +11,7 @@ function createPopupFilmCommentStructureTemplate(commentId) {
     <p class="film-details__comment-text">${mockComments[commentId].comment}</p>
     <p class="film-details__comment-info">
       <span class="film-details__comment-author">${mockComments[commentId].author}</span>
-      <span class="film-details__comment-day">${humanizeReleaseDate(mockComments[commentId].date)}</span>
+      <span class="film-details__comment-day">${humanizeCommentDate(mockComments[commentId].date)}</span>
       <button class="film-details__comment-delete">Delete</button>
     </p>
   </div>

@@ -63,7 +63,7 @@ function createPopupTemplate(movie) {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Duration</td>
-              <td class="film-details__cell">${humanizeMovieDuration(filmInfo.duration)}</td>
+              <td class="film-details__cell">${humanizeMovieDuration(filmInfo.duration)}m</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
