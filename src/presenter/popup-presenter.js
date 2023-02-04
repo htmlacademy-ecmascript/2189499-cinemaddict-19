@@ -7,10 +7,10 @@ export default class PopupPresenter {
   #handleDataChange = null;
   #body = null;
   #movie = null;
-
-  constructor({body, onDataChange}) {
+  #removePopupPresenterComponentHandler = null;
+  constructor({body, onDataChange, removePopupPresenterComponent}) {
     this.#body = body;
-
+    this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
     this.#handleDataChange = onDataChange;
   }
 
@@ -30,6 +30,7 @@ export default class PopupPresenter {
 
   #handleClosePopupClick = () => {
     remove(this.#popupViewComponent);
+    this.#removePopupPresenterComponentHandler();
     this.#body.classList.remove('hide-overflow');
   };
 

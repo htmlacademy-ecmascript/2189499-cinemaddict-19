@@ -72,7 +72,7 @@ export default class BoardPresenter {
     const moviePresenter = new MoviePresenter({
       filmContainer: this.#filmContainer,
 
-      onShowPopupClick: () => { this.#openPopup(movie); },
+      onShowPopupClick: this.#openPopup,
 
 
       onDataChange: this.#handleDataChange,
@@ -96,10 +96,13 @@ export default class BoardPresenter {
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
       this.#popupPresenterComponent.init({ movie: updatedMovie });
-
     }
   };
 
+
+  #removePopupPresenterComponent() {
+    this.#popupPresenterComponent = null;
+  }
 
   #openPopup = (movie) => {
     this.#body.classList.add('hide-overflow');
@@ -123,13 +126,16 @@ export default class BoardPresenter {
 
     const popupPresenter = new PopupPresenter({
       body: this.#body,
+      removePopupPresenterComponent: () => { this.#removePopupPresenterComponent(); },
       commentsList: this.#commentsList,
 
       onDataChange: this.#handleDataChange,
     });
 
-    this.#popupPresenterComponent = popupPresenter;
+
     popupPresenter.init(movie);
+
+    this.#popupPresenterComponent = popupPresenter;
   }
 
 
@@ -161,7 +167,6 @@ export default class BoardPresenter {
 
   #renderSort() {
     this.#sortComponent = new SortView({
-
       onSortTypeChange: this.#handleSortTypeChange,
     });
     render(this.#sortComponent, this.#main);
