@@ -72,7 +72,7 @@ export default class BoardPresenter {
     const moviePresenter = new MoviePresenter({
       filmContainer: this.#filmContainer,
 
-      onShowPopupClick: () => { this.#openPopup(movie); },
+      onShowPopupClick: this.#openPopup,
 
 
       onDataChange: this.#handleDataChange,

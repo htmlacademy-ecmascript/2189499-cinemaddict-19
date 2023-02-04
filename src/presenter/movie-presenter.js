@@ -12,7 +12,7 @@ export default class MoviePresenter {
   #handleDataChange = null;
 
 
-  constructor({filmContainer, onShowPopupClick, onDataChange}) {
+  constructor({filmContainer, onDataChange, onShowPopupClick}) {
     this.#filmContainer = filmContainer;
     this.#onShowPopupClick = onShowPopupClick;
 
@@ -28,7 +28,7 @@ export default class MoviePresenter {
     const prevMovieCardComponent = this.#movieCardComponent;
     this.#movieCardComponent = new CardFilmsView({
       movie,
-      onShowPopupClick: this.#onShowPopupClick,
+      onShowPopupClick: () => { this.#onShowPopupClick(movie); },
       onClosePopupClick: this.#onClosePopupClick,
 
       onWatchlistClick: () => { this.#hadleWatchlistClick(movie); },
