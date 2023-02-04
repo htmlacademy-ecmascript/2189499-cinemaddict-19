@@ -47,9 +47,6 @@ export default class BoardPresenter {
   #commentsList = null;
   #currentSortType = SortType.DEFAULT;
 
-  //избавились от ранее созданных
-  // #sourcedfilmContainer = [];
-  // #listMovieMovieInfo = [];
 
   constructor({header, main, footer, movieModel, body}) {
     this.#header = header;
@@ -76,7 +73,6 @@ export default class BoardPresenter {
   }
 
   init() {
-    // this.#loadedComments = this.#movieModel.comments;
     this.#renderBoard();
   }
 
