@@ -20,7 +20,6 @@ export default class BoardPresenter {
   #movieModel = null;
   #body = null;
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
-  #loadedComments = null;
   #popupView = null;
   #moviePresenter = new Map();
 
@@ -72,8 +71,12 @@ export default class BoardPresenter {
     return this.#movieModel.movie;
   }
 
+  get comments() {
+    return this.#movieModel.comments;
+  }
+
   init() {
-    this.#loadedComments = this.#movieModel.comments;
+    // this.#loadedComments = this.#movieModel.comments;
     this.#renderBoard();
   }
 
