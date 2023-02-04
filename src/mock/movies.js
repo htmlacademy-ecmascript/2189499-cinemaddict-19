@@ -502,38 +502,111 @@ const mockMovie = [
   {
     id: 9,
     comments: [
-      1
+      3,1
     ],
     filmInfo: {
-      title: 'The Man With Golden Arm',
+      title: 'The Great Flamrion',
       alternativeTitle: 'Laziness Who Sold Themselves',
-      totalRating: 10,
-      poster: 'the-man-with-the-golden-arm.jpg',
-      ageRating: 6,
-      director: 'Tom Ford',
+      totalRating: 7.7,
+      poster: 'the-great-flamarion.jpg',
+      ageRating: 18,
+      director: 'Aphex Twin',
       writers: [
-        'Takeshi Kitano'
+        'Rodger Whaters'
       ],
       actors: [
-        'Morgan Freeman'
+        'Pink Floyd'
       ],
       release: {
-        date: '2019-05-11T00:00:00.000Z',
-        releaseCountry: 'Finland'
+        date: '2007-05-11T00:00:00.000Z',
+        releaseCountry: 'Mexico'
       },
-      duration: 77,
+      duration: 78,
       genre: [
-        'Comedy'
+        'Historical'
       ],
-      description: 'Suspendisse tellus ex, tincidunt et tincidunt consectetur, egestas quis tortor. Fusce ut feugiat justo. Nullam et molestie lacus. Fusce sed elit faucibus libero elementum iaculis sit amet vitae dui. Vestibulum turpis nunc, vehicula sit amet odio sit amet, rutrum volutpat tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam luctus tincidunt interdum. Proin quis hendrerit quam, sed ultrices turpis.'
+      description: 'Oscar-winning film, a war drama about two young people, from the creators of timeless classic "Nu, Pogodi!" and "Alice in Wonderland", with the best fight scenes since Bruce Lee.'
     },
     userDetails: {
-      watchlist: true,
+      watchlist: false,
       alreadyWatched: true,
       watchingDate: '2019-04-12T16:12:32.554Z',
       favorite: false
     }
   },
+
+  {
+    id: 10,
+    comments: [
+      3,1
+    ],
+    filmInfo: {
+      title: 'The Great Flamrion',
+      alternativeTitle: 'Laziness Who Sold Themselves',
+      totalRating: 7.7,
+      poster: 'the-great-flamarion.jpg',
+      ageRating: 18,
+      director: 'Aphex Twin',
+      writers: [
+        'Rodger Whaters'
+      ],
+      actors: [
+        'Pink Floyd'
+      ],
+      release: {
+        date: '2007-05-11T00:00:00.000Z',
+        releaseCountry: 'Mexico'
+      },
+      duration: 78,
+      genre: [
+        'Historical'
+      ],
+      description: 'Oscar-winning film, a war drama about two young people, from the creators of timeless classic "Nu, Pogodi!" and "Alice in Wonderland", with the best fight scenes since Bruce Lee.'
+    },
+    userDetails: {
+      watchlist: false,
+      alreadyWatched: true,
+      watchingDate: '2019-04-12T16:12:32.554Z',
+      favorite: false
+    }
+  },
+
+  {
+    id: 11,
+    comments: [
+      3,1
+    ],
+    filmInfo: {
+      title: 'The Great Flamrion',
+      alternativeTitle: 'Laziness Who Sold Themselves',
+      totalRating: 7.7,
+      poster: 'the-great-flamarion.jpg',
+      ageRating: 18,
+      director: 'Aphex Twin',
+      writers: [
+        'Rodger Whaters'
+      ],
+      actors: [
+        'Pink Floyd'
+      ],
+      release: {
+        date: '2007-05-11T00:00:00.000Z',
+        releaseCountry: 'Mexico'
+      },
+      duration: 78,
+      genre: [
+        'Historical'
+      ],
+      description: 'Oscar-winning film, a war drama about two young people, from the creators of timeless classic "Nu, Pogodi!" and "Alice in Wonderland", with the best fight scenes since Bruce Lee.'
+    },
+    userDetails: {
+      watchlist: false,
+      alreadyWatched: true,
+      watchingDate: '2019-04-12T16:12:32.554Z',
+      favorite: false
+    }
+  },
+
 
 ];
 

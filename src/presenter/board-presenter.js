@@ -26,14 +26,15 @@ export default class BoardPresenter {
   #newData = null;
 
   #loadMoreButtonHandler = () => {
+    const movieCount = this.movie.length;
 
-    this.#movieModel.movie
+    this.movie
       .slice(this.#renderMovieCount, this.#renderMovieCount + BoardPresenter.MOVIE_COUNT_PER_STEP)
       .forEach((movie) => this.#renderMovie(movie));
 
     this.#renderMovieCount += BoardPresenter.MOVIE_COUNT_PER_STEP;
 
-    if (this.#renderMovieCount >= this.#listMovieMovieInfo.length){
+    if (this.#renderMovieCount >= movieCount){
       this.#loadMoreButtonComponent.element.remove();
       this.#loadMoreButtonComponent.removeElement();
     }
@@ -48,7 +49,7 @@ export default class BoardPresenter {
   #commentsList = null;
   #currentSortType = SortType.DEFAULT;
 
-//избавились от ранее созданных
+  //избавились от ранее созданных
   // #sourcedfilmContainer = [];
   // #listMovieMovieInfo = [];
 
@@ -62,12 +63,11 @@ export default class BoardPresenter {
   }
 
   get movie() {
-    debugger;
     switch (this.#currentSortType) {
       case SortType.DATE:
         return [...this.this.#movieModel.movie].sort(sortMovieDate);
       case SortType.RATING:
-        return [...this.#this.#movieModel.movie].sort(sortMovieRating);
+        return [...this.#movieModel.movie].sort(sortMovieRating);
     }
 
     return this.#movieModel.movie;
@@ -95,7 +95,7 @@ export default class BoardPresenter {
   }
 
   #handleDataChange = (updatedMovie) => {
-    this.#listMovieMovieInfo = this.#listMovieMovieInfo.map((movie) => {
+    this.#movieModel.movie = this.#movieModel.movie.map((movie) => {
       if (movie.id === updatedMovie.id) {
         return updatedMovie;
       }
@@ -151,13 +151,13 @@ export default class BoardPresenter {
   #sortMovies(sortType) {
     switch(sortType){
       case SortType.DATE:
-        this.#listMovieMovieInfo.sort(sortMovieDate);
+        this.#movieModel.movie.sort(sortMovieDate);
         break;
       case SortType.RATING:
-        this.#listMovieMovieInfo.sort(sortMovieRating);
+        this.#movieModel.movie.sort(sortMovieRating);
         break;
       default:
-        this.#listMovieMovieInfo = [...this.#sourcedfilmContainer];
+        this.#movieModel.movie = [...this.#movieModel.movie];
     }
 
     this.#currentSortType = sortType;
@@ -184,16 +184,16 @@ export default class BoardPresenter {
 
   #renderMovieList() {
     for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
-      this.#renderMovie(this.#listMovieMovieInfo[i]);
+      this.#renderMovie(this.#movieModel.movie[i]);
     }
   }
 
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
-    const filters = generateFilter(this.#listMovieMovieInfo);
+    const filters = generateFilter(this.#movieModel.movie);
     render(new MenuView({filters}), this.#main);
 
-    if (this.#listMovieMovieInfo.length === 0) {
+    if (this.#movieModel.movie.length === 0) {
       render(new NoMovieView(), this.#main);
       return ;
     }
@@ -210,7 +210,7 @@ export default class BoardPresenter {
   }
 
   #renderShowMoreBtn() {
-    if(this.#listMovieMovieInfo.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
+    if(this.#movieModel.movie.length > BoardPresenter.MOVIE_COUNT_PER_STEP) {
       this.#loadMoreButtonComponent = new ShowMoreButtonView({
         onShowMoreClick: this.#loadMoreButtonHandler
       });
