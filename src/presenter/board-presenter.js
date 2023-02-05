@@ -178,6 +178,7 @@ export default class BoardPresenter {
     // const filters = generateFilter(this.#movieModel.movie);
     // render(new MenuView({filters}), this.#main);
     const filterMoviePresenter = new FilterMoviePresenter({
+      movie: this.#movieModel,
       main: this.#main,
       filterModel: this.#filterModel
     });
