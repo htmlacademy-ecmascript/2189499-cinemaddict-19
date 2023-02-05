@@ -22,11 +22,13 @@ function createFilterTemplate(filterItems) {
 
 export default class MenuView extends AbstractView{
   #filters = null;
-
-  constructor({filters}) {
+  #onClick = null;
+  #currentFilterType = null;
+  constructor({filters, onClick, filterType}) {
     super();
     this.#filters = filters;
-
+    this.#onClick = () => { onClick(); };
+    this.#currentFilterType = filterType;
     this.element.querySelectorAll('.main-navigation__item').forEach((element) => element.addEventListener('click', this.#onClickFilter));
   }
 
@@ -34,7 +36,23 @@ export default class MenuView extends AbstractView{
     return createFilterTemplate(this.#filters);
   }
 
-  #onClickFilter = () => {
+  #onClickFilter = (evt) => {
+    evt.preventDefault();
+    this.#onClick(evt.target.dataset.filterType);
+    if(this.#currentFilterType === evt.target.dataset.filterType) {
+      return;
+    }
+    this.currentFilterType = evt.target.dataset.filterType;
     console.log('some push');
   }
+  setActiveFilterControl = () => {
+    this.element.querySelectorAll('a')
+      .forEach((element) => {
+        if(element.dataset.filterType !== this.#currentFilterType) {
+          element.classList.remove('main-navigation__item--active');
+        } else {
+          element.classList.add('main-navigation__item--active');
+        }
+      });
+  };
 }
