@@ -9,8 +9,9 @@ import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
-import { SortType } from '../const.js';
+import { SortType, UpdateType } from '../const.js';
 import {sortMovieDate, sortMovieRating} from '../utils/date-transform';
+import FiltrPresenter from './filtr-presenter.js';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -46,15 +47,17 @@ export default class BoardPresenter {
   #sortComponent = null;
   #commentsList = null;
   #currentSortType = SortType.DEFAULT;
+  #filterModel = null;
 
-
-  constructor({header, main, footer, movieModel, body}) {
+  constructor({header, main, footer, movieModel, body, filterModel}) {
     this.#header = header;
     this.#main = main;
     this.#footer = footer;
     this.#movieModel = movieModel;
     this.#body = body;
+    this.#filterModel = filterModel;
 
+    this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
   get movie() {
@@ -140,6 +143,21 @@ export default class BoardPresenter {
     this.#popupPresenterComponent = popupPresenter;
   }
 
+  #handleModelEvent = (updateType, data) => {
+    switch (updateType) {
+      case UpdateType.PATCH:
+        this.#moviePresenter.get(data.id).init(data, this.comments);
+        break;
+      case UpdateType.MINOR:
+        this.clearMovieList();
+        this.#renderMovieList();
+        break;
+      case UpdateType.MAJOR:
+        this.#clearMovieList({resetSortType: true});
+        this.#renderMovie();
+        break;
+    }
+  };
 
   #handleSortTypeChange = (sortType) => {
     if (this.#currentSortType === sortType){
@@ -165,11 +183,21 @@ export default class BoardPresenter {
     }
   }
 
+  #renderFiltrMenu() {
+    const filtrPresenter = new FiltrPresenter({
+      main: this.#main,
+      filterModel: this.#handleModelEvent,
+    });
+
+    filtrPresenter.init();
+  }
+
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
-    const filters = generateFilter(this.#movieModel.movie);
-    render(new MenuView({filters}), this.#main);
+    // const filters = generateFilter(this.#movieModel.movie);
+    // render(new MenuView({filters}), this.#main);
 
+    this.#renderFiltrMenu();
     if (this.#movieModel.movie.length === 0) {
       render(new NoMovieView(), this.#main);
       return ;
