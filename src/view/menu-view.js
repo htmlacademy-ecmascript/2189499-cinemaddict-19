@@ -26,9 +26,15 @@ export default class MenuView extends AbstractView{
   constructor({filters}) {
     super();
     this.#filters = filters;
+
+    this.element.querySelectorAll('.main-navigation__item').forEach((element) => element.addEventListener('click', this.#onClickFilter));
   }
 
   get template() {
     return createFilterTemplate(this.#filters);
+  }
+
+  #onClickFilter = () => {
+    console.log('some push');
   }
 }
