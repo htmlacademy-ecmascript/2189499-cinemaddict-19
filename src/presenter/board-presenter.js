@@ -11,6 +11,7 @@ import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
 import { SortType } from '../const.js';
 import {sortMovieDate, sortMovieRating} from '../utils/date-transform';
+import FilterMoviePresenter from '../presenter/filter-presenter.js';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -46,14 +47,16 @@ export default class BoardPresenter {
   #sortComponent = null;
   #commentsList = null;
   #currentSortType = SortType.DEFAULT;
+  #filterModel = null;
 
 
-  constructor({header, main, footer, movieModel, body}) {
+  constructor({header, main, footer, movieModel, body, filterModel}) {
     this.#header = header;
     this.#main = main;
     this.#footer = footer;
     this.#movieModel = movieModel;
     this.#body = body;
+    this.#filterModel = filterModel;
 
   }
 
@@ -72,7 +75,12 @@ export default class BoardPresenter {
     return this.#movieModel.comments;
   }
 
+  get filters() {
+    return this.#filterModel.filters;
+  }
+
   init() {
+    console.log(this.#filterModel);
     this.#renderBoard();
   }
 
@@ -167,8 +175,13 @@ export default class BoardPresenter {
 
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
-    const filters = generateFilter(this.#movieModel.movie);
-    render(new MenuView({filters}), this.#main);
+    // const filters = generateFilter(this.#movieModel.movie);
+    // render(new MenuView({filters}), this.#main);
+    const filterMoviePresenter = new FilterMoviePresenter({
+      main: this.#main,
+      filterModel: this.#filterModel
+    });
+    filterMoviePresenter.init();
 
     if (this.#movieModel.movie.length === 0) {
       render(new NoMovieView(), this.#main);

@@ -1,24 +1,18 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-function createMenuTemplate({name, count}, isSelected) {
+function createMenuTemplate() {
   return `
-  <a href="#${name}" class="main-navigation__item ${isSelected ? 'main-navigation__item--active' : ''} ${count === 0 ? 'main-navigation__item' : ''}">${name} <span class="main-navigation__item-count">${count}</span></a>
+  <nav class="main-navigation">
+  <a href="#all" class="main-navigation__item main-navigation__item--active" data-filter-type="all">All movies</a>
+  <a href="#watchlist" class="main-navigation__item" data-filter-type="watchlist">Watchlist <span class="main-navigation__item-count"></span></a>
+  <a href="#history" class="main-navigation__item" data-filter-type="watched">History <span class="main-navigation__item-count"></span></a>
+  <a href="#favorites" class="main-navigation__item" data-filter-type="favorite">Favorites <span class="main-navigation__item-count"></span></a>
+</nav>
 `;
 }
 
 
-function createFilterTemplate(filterItems) {
-  const filterItemsTemplate = filterItems
-    .map((filter, index) => createMenuTemplate(filter, index === 0))
-    .join('');
 
-  return (
-    `<nav class="main-navigation">
-    <a href="#all" class="main-navigation__item">All movies</a>
-      ${filterItemsTemplate}
-        </nav>`
-  );
-}
 
 export default class MenuView extends AbstractView{
   #filters = null;
@@ -33,7 +27,7 @@ export default class MenuView extends AbstractView{
   }
 
   get template() {
-    return createFilterTemplate(this.#filters);
+    return createMenuTemplate(this.#filters);
   }
 
   #onClickFilter = (evt) => {
