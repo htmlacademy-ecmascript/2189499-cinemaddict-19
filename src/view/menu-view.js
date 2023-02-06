@@ -16,11 +16,15 @@ export default class MenuView extends AbstractView{
   #filters = null;
   #onClick = null;
   #currentFilterType = null;
+  #onClickHandler = null;
+
   constructor({filters, onClick, filterType}) {
     super();
+
     this.#filters = filters;
-    // this.#onClick = () => { onClick(); };
+    this.#onClickHandler = onClick;
     this.#currentFilterType = filterType;
+
     this.element.querySelectorAll('.main-navigation__item').forEach((element) => element.addEventListener('click', this.#onClickFilter));
   }
 
@@ -31,15 +35,17 @@ export default class MenuView extends AbstractView{
   #onClickFilter = (evt) => {
     debugger;
     evt.preventDefault();
-    // this.#onClick(evt.target.dataset.filterType);
+    
+    this.#onClickHandler(evt.target.dataset.filterType);
     if(this.#currentFilterType === evt.target.dataset.filterType) {
       return;
     }
-    this.currentFilterType = evt.target.dataset.filterType;
+    this.#currentFilterType = evt.target.dataset.filterType;
+    this.#setActiveFilterControl(this.currentFilterType);
     console.log('some push');
   };
 
-  setActiveFilterControl = () => {
+  #setActiveFilterControl = () => {
     this.element.querySelectorAll('a')
       .forEach((element) => {
         if(element.dataset.filterType !== this.#currentFilterType) {

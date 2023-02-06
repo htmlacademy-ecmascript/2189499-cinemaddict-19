@@ -83,6 +83,7 @@ export default class BoardPresenter {
     return this.#filterModel.filters;
   }
 
+
   init() {
     console.log(this.#filterModel);
     this.#renderBoard();
@@ -193,7 +194,8 @@ export default class BoardPresenter {
     const filterMoviePresenter = new FilterMoviePresenter({
       movie: this.#movieModel,
       main: this.#main,
-      filterModel: this.#filterModel
+      filterModel: this.#filterModel,
+      handleModelUpdate: () => { this.#handleModelEvent(); },
     });
     filterMoviePresenter.init();
 

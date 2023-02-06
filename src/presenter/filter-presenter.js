@@ -1,6 +1,6 @@
 import MenuView from '../view/menu-view';
 import { render } from '../framework/render';
-import {UpdateType} from '../const.js';
+import {UpdateType, UserAction} from '../const.js';
 
 export default class FilterMoviePresenter {
   #filterComponentContainer = null;
@@ -13,13 +13,15 @@ export default class FilterMoviePresenter {
   #watched = null;
   #watchlist = null;
   #filterModel = null;
-  constructor({listFilterContainer, main, filterModel, movie}){
+  #handleModelUpdate = null;
+  constructor({listFilterContainer, main, filterModel, movie, handleModelUpdate}){
     this.#filterComponentContainer = listFilterContainer;
     this.#main = main;
     this.#filterModel = filterModel;
     this.#movieModel = movie;
     this.#all = [...this.#movieModel.movie];
-
+    this.#handleModelUpdate = handleModelUpdate;
+    
     // this.#filmFiltersModel.addObserver(this.#handleModelUpdate);
 
   }
@@ -67,14 +69,16 @@ export default class FilterMoviePresenter {
   }
 
   init() {
+    const movie = this.#movieModel.movie;
     console.log(this.#movieModel)
     this.#filterComponent = new MenuView({
-
+      onClick: () => { this.#handleModelUpdateHandler(); },
     });
     render(this.#filterComponent, this.#main);
   }
 
-  #handleModelUpdate = (updateType, userFilters) => {
-    this.update(userFilters);
+  #handleModelUpdateHandler = () => {
+    this.#handleModelUpdate(this.updateFilter);
+    // this.updateFilter();
   };
 }

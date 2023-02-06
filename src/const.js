@@ -17,4 +17,8 @@ const UpdateType = {
   MAJOR: 'MAJOR',
 };
 
+const UserAction = {
+  
+};
+
 export {FilterType, SortType, UpdateType};
