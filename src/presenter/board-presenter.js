@@ -9,9 +9,10 @@ import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
-import { SortType } from '../const.js';
+import { SortType, UpdateType } from '../const.js';
 import {sortMovieDate, sortMovieRating} from '../utils/date-transform';
 import FilterMoviePresenter from '../presenter/filter-presenter.js';
+
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -58,6 +59,9 @@ export default class BoardPresenter {
     this.#body = body;
     this.#filterModel = filterModel;
 
+    this.#movieModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
+
   }
 
   get movie() {
@@ -97,6 +101,15 @@ export default class BoardPresenter {
     moviePresenter.init(movie);
     this.#moviePresenter.set(movie.id, moviePresenter);
   }
+
+  #handleModelEvent = (actionType, updateType, update) => {
+    console.log(actionType, updateType, update);
+  };
+
+  #handleViewAction = (updateType, data) => {
+    console.log(updateType, data);
+  };
+
 
   #handleDataChange = (updatedMovie) => {
     //здесь вызывается обновление модели
@@ -176,7 +189,7 @@ export default class BoardPresenter {
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
     // const filters = generateFilter(this.#movieModel.movie);
-    // render(new MenuView({filters}), this.#main);
+
     const filterMoviePresenter = new FilterMoviePresenter({
       movie: this.#movieModel,
       main: this.#main,

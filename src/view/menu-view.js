@@ -19,7 +19,7 @@ export default class MenuView extends AbstractView{
   constructor({filters, onClick, filterType}) {
     super();
     this.#filters = filters;
-    this.#onClick = () => { onClick(); };
+    // this.#onClick = () => { onClick(); };
     this.#currentFilterType = filterType;
     this.element.querySelectorAll('.main-navigation__item').forEach((element) => element.addEventListener('click', this.#onClickFilter));
   }
@@ -29,14 +29,16 @@ export default class MenuView extends AbstractView{
   }
 
   #onClickFilter = (evt) => {
+    debugger;
     evt.preventDefault();
-    this.#onClick(evt.target.dataset.filterType);
+    // this.#onClick(evt.target.dataset.filterType);
     if(this.#currentFilterType === evt.target.dataset.filterType) {
       return;
     }
     this.currentFilterType = evt.target.dataset.filterType;
     console.log('some push');
-  }
+  };
+
   setActiveFilterControl = () => {
     this.element.querySelectorAll('a')
       .forEach((element) => {

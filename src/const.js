@@ -11,4 +11,10 @@ const SortType = {
   RATING: 'rating',
 };
 
-export {FilterType, SortType};
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+};
+
+export {FilterType, SortType, UpdateType};
