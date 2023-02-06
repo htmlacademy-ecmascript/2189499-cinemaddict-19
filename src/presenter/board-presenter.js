@@ -9,7 +9,7 @@ import NoMovieView from '../view/no-moviecard-view.js';
 import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
-import { SortType, UpdateType } from '../const.js';
+import { SortType, UpdateType, UserAction } from '../const.js';
 import {sortMovieDate, sortMovieRating} from '../utils/date-transform';
 import FilterMoviePresenter from '../presenter/filter-presenter.js';
 
@@ -103,12 +103,22 @@ export default class BoardPresenter {
     this.#moviePresenter.set(movie.id, moviePresenter);
   }
 
-  #handleModelEvent = (actionType, updateType, update) => {
+  #handleViewAction = (actionType, updateType, update) => {
     console.log(actionType, updateType, update);
+    switch(actionType) {
+      case UserAction.SORT_MOVIE:
+        // eslint-disable-next-line no-unused-expressions
+        () => this.#movieModel.updateType(updateType, update);
+        break;
+    }
   };
 
-  #handleViewAction = (updateType, data) => {
+  #handleModelEvent = (updateType, data) => {
     console.log(updateType, data);
+    switch(updateType) {
+      case UpdateType.PATCH:
+        this.#moviePresenter.get(data.id).init(data);
+    }
   };
 
 
@@ -195,7 +205,7 @@ export default class BoardPresenter {
       movie: this.#movieModel,
       main: this.#main,
       filterModel: this.#filterModel,
-      handleModelUpdate: () => { this.#handleModelEvent(); },
+      handleModelUpdate: this.#handleViewAction ,
     });
     filterMoviePresenter.init();
 

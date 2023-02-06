@@ -78,7 +78,12 @@ export default class FilterMoviePresenter {
   }
 
   #handleModelUpdateHandler = () => {
-    this.#handleModelUpdate(this.updateFilter);
+    this.#handleModelUpdate(
+      UserAction.SORT_MOVIE,
+      UpdateType.MINOR,
+      this.#currentFilterType
+    );
+    console.log(this.#currentFilterType);
     // this.updateFilter();
   };
 }

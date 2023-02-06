@@ -33,7 +33,6 @@ export default class MenuView extends AbstractView{
   }
 
   #onClickFilter = (evt) => {
-    debugger;
     evt.preventDefault();
     
     this.#onClickHandler(evt.target.dataset.filterType);
@@ -42,7 +41,6 @@ export default class MenuView extends AbstractView{
     }
     this.#currentFilterType = evt.target.dataset.filterType;
     this.#setActiveFilterControl(this.currentFilterType);
-    console.log('some push');
   };
 
   #setActiveFilterControl = () => {
