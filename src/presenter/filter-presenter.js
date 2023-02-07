@@ -11,7 +11,7 @@ const filters = [
 ]
 export default class FilterMoviePresenter {
   #filterComponentContainer = null;
-  #currentFilterType = 'all';
+  #currentFilterType = 'All';
   #filterComponent = null;
   #main = null;
   #movieModel = null;
@@ -60,28 +60,28 @@ export default class FilterMoviePresenter {
     ]
   }
 
-  updateFilter(updateType, update) {
-    this.currentFilterType = update;
-    this._notify(updateType, update);
-  }
+  // updateFilter(updateType, update) {
+  //   this.currentFilterType = update;
+  //   this._notify(updateType, update);
+  // }
 
-  updateData(updateType, films) {
-    switch (updateType) {
-      case UpdateType.PATCH:
-        break;
-      case UpdateType.MINOR:
-        this.#all = [...films];
-        this.userFilters = {
-          watchlist: this.watchlist.length,
-          watched: this.watched.length,
-          favorite: this.favorite.length,
-        };
-        this._notify(updateType, this.userFilters);
-        break;
-      case UpdateType.MAJOR:
-        break;
-    }
-  }
+  // updateData(updateType, films) {
+  //   switch (updateType) {
+  //     case UpdateType.PATCH:
+  //       break;
+  //     case UpdateType.MINOR:
+  //       this.#all = [...films];
+  //       this.userFilters = {
+  //         watchlist: this.watchlist.length,
+  //         watched: this.watched.length,
+  //         favorite: this.favorite.length,
+  //       };
+  //       this._notify(updateType, this.userFilters);
+  //       break;
+  //     case UpdateType.MAJOR:
+  //       break;
+  //   }
+  // }
 
   init() {
     const filters = this.filters;

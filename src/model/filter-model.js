@@ -10,15 +10,6 @@ export default class FilterModel extends Observable {
   #watched = null;
   #watchlist = null;
 
-  currentFilterType = 'all';
-
-  filters = {
-    all: 0,
-    watchlist: 0,
-    watched: 0,
-    favorite: 0,
-  };
-
 
   get filter() {
     return this.#filter;
