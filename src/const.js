@@ -19,7 +19,7 @@ const UpdateType = {
 
 const UserAction = {
   SORT_MOVIE: 'SORT_MOVIE',
-
+  UPDATE_MOVIE: 'UPDATE_MOVIE',
 };
 
 export {FilterType, SortType, UpdateType, UserAction};

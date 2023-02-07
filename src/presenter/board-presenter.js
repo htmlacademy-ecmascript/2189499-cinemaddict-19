@@ -102,7 +102,7 @@ export default class BoardPresenter {
       onShowPopupClick: this.#openPopup,
 
 
-      onDataChange: this.#handleDataChange,
+      onDataChange: this.#handleViewAction,
     });
     moviePresenter.init(movie);
     this.#moviePresenter.set(movie.id, moviePresenter);
@@ -115,6 +115,9 @@ export default class BoardPresenter {
         // eslint-disable-next-line no-unused-expressions
         () => this.#movieModel.updateType(updateType, update);
         break;
+      case UserAction.UPDATE_MOVIE:
+        this.#movieModel.updateMovie(updateType, update);
+        break;
     }
   };
 
@@ -123,6 +126,15 @@ export default class BoardPresenter {
     switch(updateType) {
       case UpdateType.PATCH:
         this.#moviePresenter.get(data.id).init(data);
+        break;
+      case UpdateType.MINOR:
+        this.#clearMovieList();
+        this.#renderMovieList();
+
+        break;
+      case UpdateType.MAJOR:
+
+        break;
     }
   };
 

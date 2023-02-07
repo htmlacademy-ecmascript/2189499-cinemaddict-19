@@ -1,5 +1,6 @@
 import CardFilmsView from '../view/card-films-view';
 import { remove, render, replace } from '../framework/render';
+import { UpdateType, UserAction } from '../const';
 
 export default class MoviePresenter {
   #filmContainer = null;
@@ -52,15 +53,24 @@ export default class MoviePresenter {
   }
 
   #hadleWatchlistClick = () => {
-    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, watchlist: !this.#movie.userDetails.watchlist}});
+    this.#handleDataChange(
+      UserAction.UPDATE_MOVIE,
+      UpdateType.MINOR,
+      {...this.#movie, userDetails: {...this.#movie.userDetails, watchlist: !this.#movie.userDetails.watchlist}});
   };
 
   #handleAlreadyWatchedClick = () => {
-    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, alreadyWatched: !this.#movie.userDetails.alreadyWatched}});
+    this.#handleDataChange(
+      UserAction.UPDATE_MOVIE,
+      UpdateType.MINOR,
+      {...this.#movie, userDetails: {...this.#movie.userDetails, alreadyWatched: !this.#movie.userDetails.alreadyWatched}});
   };
 
   #handleFavoriteClick = () => {
-    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, favorite: !this.#movie.userDetails.favorite}});
+    this.#handleDataChange(
+      UserAction.UPDATE_MOVIE,
+      UpdateType.MINOR,
+      {...this.#movie, userDetails: {...this.#movie.userDetails, favorite: !this.#movie.userDetails.favorite}});
   };
 
   destroy() {
