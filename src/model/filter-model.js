@@ -12,7 +12,7 @@ export default class FilterModel extends Observable {
 
   currentFilterType = 'all';
 
-  userFilters = {
+  filters = {
     all: 0,
     watchlist: 0,
     watched: 0,

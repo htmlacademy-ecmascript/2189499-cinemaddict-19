@@ -1,7 +1,14 @@
 import MenuView from '../view/menu-view';
-import { render } from '../framework/render';
-import {UpdateType, UserAction} from '../const.js';
-
+import { render, replace, remove } from '../framework/render';
+import {FilterType, UpdateType, UserAction} from '../const.js';
+import { filter } from '../utils/filter';
+const filters = [
+  {
+    type: 'all',
+    name: 'ALL',
+    count: 0
+  }
+]
 export default class FilterMoviePresenter {
   #filterComponentContainer = null;
   #currentFilterType = 'all';
@@ -13,36 +20,44 @@ export default class FilterMoviePresenter {
   #watched = null;
   #watchlist = null;
   #filterModel = null;
-  #handleModelUpdate = null;
+  // #handleModelUpdate = null;
   constructor({listFilterContainer, main, filterModel, movie, handleModelUpdate}){
-    this.#filterComponentContainer = listFilterContainer;
+    // this.#filterComponentContainer = listFilterContainer;
     this.#main = main;
     this.#filterModel = filterModel;
     this.#movieModel = movie;
     this.#all = [...this.#movieModel.movie];
-    this.#handleModelUpdate = handleModelUpdate;
+    // this.#handleModelUpdate = handleModelUpdate;
     
-    // this.#filmFiltersModel.addObserver(this.#handleModelUpdate);
-
+    this.#movieModel.addObserver(this.#handleModelUpdate);
+    this.#filterModel.addObserver(this.#handleModelUpdate);
   }
 
-  get all() { 
-    return this.#all;
-  }
+  get filters() {
+    const movie = this.#movieModel.movie;
 
-  get favorite() {
-    this.#favorite = this.#all.filter((film) => film.userDetails.favorite);
-    return this.#favorite;
-  }
-
-  get watched() {
-    this.#watched = this.#all.filter((film) => film.userDetails.alreadyWatched);
-    return this.#watched;
-  }
-
-  get watchlist() {
-    this.#watchlist = this.#all.filter((film) => film.userDetails.watchlist);
-    return this.#watchlist;
+    return [
+      {
+        type: FilterType.ALL,
+        name: 'All',
+        count: filter[FilterType.ALL](movie).length,
+      },
+      {
+        type: FilterType.WATCHLIST,
+        name: 'Watchlist',
+        count: filter[FilterType.WATCHLIST](movie).length,
+      },
+      {
+        type: FilterType.HISTORY,
+        name: 'History',
+        count: filter[FilterType.HISTORY](movie).length,
+      },
+      {
+        type: FilterType.FAVORITES,
+        name: 'Favorites',
+        count: filter[FilterType.FAVORITES](movie).length,
+      },
+    ]
   }
 
   updateFilter(updateType, update) {
@@ -69,21 +84,47 @@ export default class FilterMoviePresenter {
   }
 
   init() {
+    const filters = this.filters;
+    const prevFilterComponent = this.#filterComponent;
     const movie = this.#movieModel.movie;
+
     console.log(this.#movieModel)
+
     this.#filterComponent = new MenuView({
-      onClick: () => { this.#handleModelUpdateHandler(); },
+      filters,
+      currentFilterType: this.#filterModel.filter,
+      onFilterTypeChange: () => {this.#filterTypeChange(); },
+      // onClick: () => { this.#handleModelUpdateHandler(); },
     });
-    render(this.#filterComponent, this.#main);
+
+    if (prevFilterComponent === null) {
+      render(this.#filterComponent, this.#main);
+      return;
+    }
+
+    replace(this.#filterComponent, prevFilterComponent);
+    remove(prevFilterComponent);
+    
   }
 
-  #handleModelUpdateHandler = () => {
-    this.#handleModelUpdate(
-      UserAction.SORT_MOVIE,
-      UpdateType.MINOR,
-      this.#currentFilterType
-    );
-    console.log(this.#currentFilterType);
-    // this.updateFilter();
+  #handleModelUpdate = () => {
+    this.init();
+  }
+
+  #filterTypeChange = (filterType) => {
+    if (this.#filterModel.filter === filterType) {
+      return;
+    }
+
+    this.#filterModel.setFilter(UpdateType.MAJOR, filterType)
   };
+  // #handleModelUpdateHandler = () => {
+  //   this.#handleModelUpdate(
+  //     UserAction.SORT_MOVIE,
+  //     UpdateType.MINOR,
+  //     this.#currentFilterType
+  //   );
+  //   console.log(this.#currentFilterType);
+  //   // this.updateFilter();
+  // };
 }

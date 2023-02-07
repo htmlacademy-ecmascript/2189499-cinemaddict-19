@@ -198,6 +198,7 @@ export default class BoardPresenter {
   }
 
   #renderBoard() {
+    const movie = this.#movieModel.movie;
     render(new UserNameStatusView(), this.#header);
     // const filters = generateFilter(this.#movieModel.movie);
 
@@ -205,11 +206,11 @@ export default class BoardPresenter {
       movie: this.#movieModel,
       main: this.#main,
       filterModel: this.#filterModel,
-      handleModelUpdate: this.#handleViewAction ,
+      handleModelUpdate: this.#handleViewAction,
     });
     filterMoviePresenter.init();
 
-    if (this.#movieModel.movie.length === 0) {
+    if (movie === 0) {
       render(new NoMovieView(), this.#main);
       return ;
     }

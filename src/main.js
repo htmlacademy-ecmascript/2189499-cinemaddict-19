@@ -2,6 +2,7 @@ import BoardPresenter from './presenter/board-presenter';
 import MovieModel from './model/movies-model';
 import FilterModel from './model/filter-model';
 
+
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 const siteFooterElement = document.querySelector('.footer');
