@@ -26,7 +26,7 @@ export default class MenuView extends AbstractView{
     this.#filters = filters;
     this.#onClickHandler = onClick;
     this.#currentFilterType = currentFilterType;
-    this.#handleFilterTypeChange = () => { onFilterTypeChange(); };
+    this.#handleFilterTypeChange = onFilterTypeChange;
 
     this.element.querySelectorAll('.main-navigation__item').forEach((element) => element.addEventListener('click', this.#filterTypeChangeHandler));
   }
@@ -42,9 +42,9 @@ export default class MenuView extends AbstractView{
     // if(this.#currentFilterType === evt.target.dataset.filterType) {
     //   return;
     // }
-
+    debugger;
     this.#currentFilterType = evt.target.dataset.filterType;
-    this.#setActiveFilterControl(this.currentFilterType);
+    this.#setActiveFilterControl(this.#currentFilterType);
 
     this.#handleFilterTypeChange(evt.target.dataset.filterType);
   };

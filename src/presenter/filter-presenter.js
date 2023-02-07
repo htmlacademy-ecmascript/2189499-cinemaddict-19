@@ -93,7 +93,7 @@ export default class FilterMoviePresenter {
     this.#filterComponent = new MenuView({
       filters,
       currentFilterType: this.#filterModel.filter,
-      onFilterTypeChange: () => {this.#filterTypeChange(); },
+      onFilterTypeChange: () => {this.#filterTypeChange(this.#currentFilterType); },
       // onClick: () => { this.#handleModelUpdateHandler(); },
     });
 

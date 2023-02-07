@@ -133,7 +133,8 @@ export default class BoardPresenter {
 
         break;
       case UpdateType.MAJOR:
-
+        this.#clearMovieList();
+        this.#renderMovieList();
         break;
     }
   };
