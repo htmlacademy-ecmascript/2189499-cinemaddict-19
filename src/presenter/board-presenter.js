@@ -12,7 +12,7 @@ import PopupPresenter from './popup-presenter.js';
 import { SortType, UpdateType, UserAction } from '../const.js';
 import {sortMovieDate, sortMovieRating} from '../utils/date-transform';
 import FilterMoviePresenter from '../presenter/filter-presenter.js';
-
+import { filter } from '../utils/filter.js';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -65,14 +65,19 @@ export default class BoardPresenter {
   }
 
   get movie() {
+
+
+    const filterType = this.#filterModel.filter;
+    const movie = this.#movieModel.movie;
+    const filteredMovie = filter[filterType](movie);
     switch (this.#currentSortType) {
       case SortType.DATE:
-        return [...this.#movieModel.movie].sort(sortMovieDate);
+        return filteredMovie.sort(sortMovieDate);
       case SortType.RATING:
-        return [...this.#movieModel.movie].sort(sortMovieRating);
+        return filteredMovie.sort(sortMovieRating);
     }
 
-    return this.#movieModel.movie;
+    return filteredMovie;
   }
 
   get comments() {
