@@ -67,6 +67,7 @@ export default class BoardPresenter {
     const filterType = this.#filterModel.filter;
     const movie = this.#movieModel.movie;
     const filteredMovie = filter[filterType](movie);
+
     switch (this.#currentSortType) {
       case SortType.DATE:
         return filteredMovie.sort(sortMovieDate);
