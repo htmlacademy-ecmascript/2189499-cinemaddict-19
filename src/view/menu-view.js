@@ -8,9 +8,9 @@ function createMenuTemplate(currentFilterType, filters) {
   return `
   <nav class="main-navigation">
   <a href="#all" class="main-navigation__item main-navigation__item--active" data-filter-type="all">All movies ${currentFilterType[0].count}</a>
-  <a href="#watchlist" class="main-navigation__item" data-filter-type="watchlist">Watchlist <span class="main-navigation__item-count">${currentFilterType[1].count}</span></a>
-  <a href="#history" class="main-navigation__item" data-filter-type="watched">History <span class="main-navigation__item-count">${currentFilterType[2].count}</span></a>
-  <a href="#favorites" class="main-navigation__item" data-filter-type="favorite">Favorites <span class="main-navigation__item-count">${currentFilterType[3].count}</span></a>
+  <a href="#watchlist" class="main-navigation__item" data-filter-type="Watchlist">Watchlist <span class="main-navigation__item-count">${currentFilterType[1].count}</span></a>
+  <a href="#history" class="main-navigation__item" data-filter-type="History">History <span class="main-navigation__item-count">${currentFilterType[2].count}</span></a>
+  <a href="#favorites" class="main-navigation__item" data-filter-type="Favorites">Favorites <span class="main-navigation__item-count">${currentFilterType[3].count}</span></a>
 </nav>
 `;
 }
@@ -45,7 +45,7 @@ export default class MenuView extends AbstractView{
     // if(this.#currentFilterType === evt.target.dataset.filterType) {
     //   return;
     // }
-    
+
     this.#currentFilterType = evt.target.dataset.filterType;
     this.#setActiveFilterControl(this.#currentFilterType);
 

@@ -125,7 +125,7 @@ export default class BoardPresenter {
     console.log(updateType, data);
     switch(updateType) {
       case UpdateType.PATCH:
-        this.#moviePresenter.get(data.id).init(data);
+        this.#moviePresenter.get(data).init(data);
         break;
       case UpdateType.MINOR:
         this.#clearMovieList();
