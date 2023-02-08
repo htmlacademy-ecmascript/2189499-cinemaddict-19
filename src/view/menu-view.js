@@ -1,13 +1,10 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-function createMenuTemplate(currentFilterType, filters) {
-  console.log(currentFilterType);
-  // console.log(currentFilterType);
-  const {name, count} = currentFilterType;
-  console.log(currentFilterType[0].count);
+function createMenuTemplate(currentFilterType) {
+
   return `
   <nav class="main-navigation">
-  <a href="#all" class="main-navigation__item main-navigation__item--active" data-filter-type="all">All movies ${currentFilterType[0].count}</a>
+  <a href="#all" class="main-navigation__item main-navigation__item--active" data-filter-type="All">All movies ${currentFilterType[0].count}</a>
   <a href="#watchlist" class="main-navigation__item" data-filter-type="Watchlist">Watchlist <span class="main-navigation__item-count">${currentFilterType[1].count}</span></a>
   <a href="#history" class="main-navigation__item" data-filter-type="History">History <span class="main-navigation__item-count">${currentFilterType[2].count}</span></a>
   <a href="#favorites" class="main-navigation__item" data-filter-type="Favorites">Favorites <span class="main-navigation__item-count">${currentFilterType[3].count}</span></a>
@@ -40,11 +37,6 @@ export default class MenuView extends AbstractView{
 
   #filterTypeChangeHandler = (evt) => {
     evt.preventDefault();
-
-    // this.#onClickHandler(evt.target.dataset.filterType);
-    // if(this.#currentFilterType === evt.target.dataset.filterType) {
-    //   return;
-    // }
 
     this.#currentFilterType = evt.target.dataset.filterType;
     this.#setActiveFilterControl(this.#currentFilterType);

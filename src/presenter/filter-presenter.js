@@ -2,6 +2,7 @@ import MenuView from '../view/menu-view';
 import { render, replace, remove } from '../framework/render';
 import {FilterType, UpdateType, UserAction} from '../const.js';
 import { filter } from '../utils/filter';
+
 const filters = [
   {
     type: 'all',
@@ -22,15 +23,11 @@ export default class FilterMoviePresenter {
   #watchlist = null;
   #filterModel = null;
   #filterContainer = null;
-  // #handleModelUpdate = null;
-  constructor({listFilterContainer, main, filterModel, movieModel, handleModelUpdate, filterContainer}){
-    // this.#filterComponentContainer = listFilterContainer;
+  constructor({ main, filterModel, movieModel, filterContainer}){
     this.#filterContainer = filterContainer;
     this.#main = main;
     this.#filterModel = filterModel;
     this.#movieModel = movieModel;
-    // this.#all = [...this.#movieModel.movie];?????????
-    // this.#handleModelUpdate = handleModelUpdate;
 
     this.#movieModel.addObserver(this.#handleModelUpdate);
     this.#filterModel.addObserver(this.#handleModelUpdate);
@@ -63,10 +60,6 @@ export default class FilterMoviePresenter {
     ];
   }
 
-  // updateFilter(updateType, update) {
-  //   this.currentFilterType = update;
-  //   this._notify(updateType, update);
-  // }
 
   // updateData(updateType, films) {
   //   switch (updateType) {
@@ -96,7 +89,6 @@ export default class FilterMoviePresenter {
       filters,
       currentFilterType: this.#filterModel.filter,
       onFilterTypeChange: this.#filterTypeChange,
-      // onClick: () => { this.#handleModelUpdateHandler(); },
     });
 
     if (prevFilterComponent === null) {
@@ -117,16 +109,8 @@ export default class FilterMoviePresenter {
     if (this.#filterModel.filter === filterType) {
       return;
     }
-    debugger;
+
     this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   };
-  // #handleModelUpdateHandler = () => {
-  //   this.#handleModelUpdate(
-  //     UserAction.SORT_MOVIE,
-  //     UpdateType.MINOR,
-  //     this.#currentFilterType
-  //   );
-  //   console.log(this.#currentFilterType);
-  //   // this.updateFilter();
-  // };
+
 }

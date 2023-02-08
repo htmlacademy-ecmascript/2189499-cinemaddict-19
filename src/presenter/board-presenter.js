@@ -1,17 +1,14 @@
 import FilmListView from '../view/film-list-view.js';
-import MenuView from '../view/menu-view.js';
 import { remove, render } from '../framework/render';
 import SortView from '../view/sort-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';
 import FooterStatisticsView from '../view/footer-statistics-view.js';
 import NoMovieView from '../view/no-moviecard-view.js';
-import { generateFilter } from '../mock/filters.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
 import { SortType, UpdateType, UserAction } from '../const.js';
 import {sortMovieDate, sortMovieRating} from '../utils/date-transform';
-import FilterMoviePresenter from '../presenter/filter-presenter.js';
 import { filter } from '../utils/filter.js';
 
 export default class BoardPresenter {
@@ -90,7 +87,7 @@ export default class BoardPresenter {
 
 
   init() {
-    console.log(this.#filterModel);
+
     this.#renderBoard();
   }
 
@@ -218,15 +215,7 @@ export default class BoardPresenter {
   #renderBoard() {
     const movie = this.#movieModel.movie;
     render(new UserNameStatusView(), this.#header);
-    // const filters = generateFilter(this.#movieModel.movie);
 
-    // const filterMoviePresenter = new FilterMoviePresenter({
-    //   movie: this.#movieModel,
-    //   main: this.#main,
-    //   filterModel: this.#filterModel,
-    //   handleModelUpdate: this.#handleViewAction,
-    // });
-    // filterMoviePresenter.init();
 
     if (movie === 0) {
       render(new NoMovieView(), this.#main);
