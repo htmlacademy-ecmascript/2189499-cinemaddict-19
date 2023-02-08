@@ -45,7 +45,7 @@ export default class MenuView extends AbstractView{
     // if(this.#currentFilterType === evt.target.dataset.filterType) {
     //   return;
     // }
-    debugger;
+    
     this.#currentFilterType = evt.target.dataset.filterType;
     this.#setActiveFilterControl(this.#currentFilterType);
 

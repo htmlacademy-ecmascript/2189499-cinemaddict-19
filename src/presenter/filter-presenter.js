@@ -8,7 +8,8 @@ const filters = [
     name: 'ALL',
     count: 0
   }
-]
+];
+
 export default class FilterMoviePresenter {
   #filterComponentContainer = null;
   #currentFilterType = 'All';
@@ -20,15 +21,17 @@ export default class FilterMoviePresenter {
   #watched = null;
   #watchlist = null;
   #filterModel = null;
+  #filterContainer = null;
   // #handleModelUpdate = null;
-  constructor({listFilterContainer, main, filterModel, movie, handleModelUpdate}){
+  constructor({listFilterContainer, main, filterModel, movieModel, handleModelUpdate, filterContainer}){
     // this.#filterComponentContainer = listFilterContainer;
+    this.#filterContainer = filterContainer;
     this.#main = main;
     this.#filterModel = filterModel;
-    this.#movieModel = movie;
-    this.#all = [...this.#movieModel.movie];
+    this.#movieModel = movieModel;
+    // this.#all = [...this.#movieModel.movie];?????????
     // this.#handleModelUpdate = handleModelUpdate;
-    
+
     this.#movieModel.addObserver(this.#handleModelUpdate);
     this.#filterModel.addObserver(this.#handleModelUpdate);
   }
@@ -57,7 +60,7 @@ export default class FilterMoviePresenter {
         name: 'Favorites',
         count: filter[FilterType.FAVORITES](movie).length,
       },
-    ]
+    ];
   }
 
   // updateFilter(updateType, update) {
@@ -88,35 +91,34 @@ export default class FilterMoviePresenter {
     const prevFilterComponent = this.#filterComponent;
     const movie = this.#movieModel.movie;
 
-    console.log(this.#movieModel)
 
     this.#filterComponent = new MenuView({
       filters,
       currentFilterType: this.#filterModel.filter,
-      onFilterTypeChange: () => {this.#filterTypeChange(this.#currentFilterType); },
+      onFilterTypeChange: this.#filterTypeChange,
       // onClick: () => { this.#handleModelUpdateHandler(); },
     });
 
     if (prevFilterComponent === null) {
-      render(this.#filterComponent, this.#main);
+      render(this.#filterComponent, this.#filterContainer);
       return;
     }
 
     replace(this.#filterComponent, prevFilterComponent);
     remove(prevFilterComponent);
-    
+
   }
 
   #handleModelUpdate = () => {
     this.init();
-  }
+  };
 
   #filterTypeChange = (filterType) => {
     if (this.#filterModel.filter === filterType) {
       return;
     }
-
-    this.#filterModel.setFilter(UpdateType.MAJOR, filterType)
+    debugger;
+    this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   };
   // #handleModelUpdateHandler = () => {
   //   this.#handleModelUpdate(

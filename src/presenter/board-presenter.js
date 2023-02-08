@@ -220,13 +220,13 @@ export default class BoardPresenter {
     render(new UserNameStatusView(), this.#header);
     // const filters = generateFilter(this.#movieModel.movie);
 
-    const filterMoviePresenter = new FilterMoviePresenter({
-      movie: this.#movieModel,
-      main: this.#main,
-      filterModel: this.#filterModel,
-      handleModelUpdate: this.#handleViewAction,
-    });
-    filterMoviePresenter.init();
+    // const filterMoviePresenter = new FilterMoviePresenter({
+    //   movie: this.#movieModel,
+    //   main: this.#main,
+    //   filterModel: this.#filterModel,
+    //   handleModelUpdate: this.#handleViewAction,
+    // });
+    // filterMoviePresenter.init();
 
     if (movie === 0) {
       render(new NoMovieView(), this.#main);
