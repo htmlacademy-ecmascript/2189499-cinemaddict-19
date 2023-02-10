@@ -1,12 +1,31 @@
 import AbstractView from '../framework/view/abstract-view.js';
+import { FilterType } from '../const.js';
 
-function createNoMovieTemplate() {
-  return '<h2 class="films-list__title">There are no movies in our database</h2>';
+const NoMovieTextType = {
+  [FilterType.ALL]: 'There are no movies in our database',
+  [FilterType.WATCHLIST]: 'There are no movies to watch now',
+  [FilterType.HISTORY]: 'There are no watched movies now',
+  [FilterType.FAVORITES]: 'There are no favorite movies now',
+};
+
+function createNoMovieTemplate(filterType) {
+  console.log(filterType);
+  const noMovieTextValue = NoMovieTextType[filterType];
+  console.log(filterType);
+  return `<h2 class="films-list__title">${noMovieTextValue}</h2>`;
 }
 
+
 export default class NoMovieView extends AbstractView{
+  #filterType = null;
+
+  constructor({filterType}){
+    super();
+
+    this.#filterType = filterType;
+  }
 
   get template() {
-    return createNoMovieTemplate();
+    return createNoMovieTemplate(this.#filterType);
   }
 }

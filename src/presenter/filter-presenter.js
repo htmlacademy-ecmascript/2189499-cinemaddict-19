@@ -61,24 +61,6 @@ export default class FilterMoviePresenter {
   }
 
 
-  // updateData(updateType, films) {
-  //   switch (updateType) {
-  //     case UpdateType.PATCH:
-  //       break;
-  //     case UpdateType.MINOR:
-  //       this.#all = [...films];
-  //       this.userFilters = {
-  //         watchlist: this.watchlist.length,
-  //         watched: this.watched.length,
-  //         favorite: this.favorite.length,
-  //       };
-  //       this._notify(updateType, this.userFilters);
-  //       break;
-  //     case UpdateType.MAJOR:
-  //       break;
-  //   }
-  // }
-
   init() {
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
@@ -96,8 +78,8 @@ export default class FilterMoviePresenter {
       return;
     }
 
-    replace(this.#filterComponent, prevFilterComponent);
-    remove(prevFilterComponent);
+    // replace(this.#filterComponent, prevFilterComponent);
+    // remove(prevFilterComponent);
 
   }
 

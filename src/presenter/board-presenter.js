@@ -19,7 +19,6 @@ export default class BoardPresenter {
   #movieModel = null;
   #body = null;
   #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
-  #popupView = null;
   #moviePresenter = new Map();
 
 
@@ -46,6 +45,8 @@ export default class BoardPresenter {
   #commentsList = null;
   #currentSortType = SortType.DEFAULT;
   #filterModel = null;
+  #noMovieComponent = null;
+  #filterType = null;
 
 
   constructor({header, main, footer, movieModel, body, filterModel}) {
@@ -58,15 +59,13 @@ export default class BoardPresenter {
 
     this.#movieModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
-
   }
 
   get movie() {
-
-
-    const filterType = this.#filterModel.filter;
+    this.#filterType = this.#filterModel.filter;
+    // const filterType = this.#filterModel.filter;
     const movie = this.#movieModel.movie;
-    const filteredMovie = filter[filterType](movie);
+    const filteredMovie = filter[this.#filterType](movie);
 
     switch (this.#currentSortType) {
       case SortType.DATE:
@@ -88,10 +87,8 @@ export default class BoardPresenter {
 
 
   init() {
-
     this.#renderBoard();
   }
-
 
   #renderMovie(movie) {
     const moviePresenter = new MoviePresenter({
@@ -135,25 +132,21 @@ export default class BoardPresenter {
         }
         break;
       case UpdateType.MAJOR:
+        this.#renderNoMovie(data);
         this.#clearMovieList();
-        // this.#renderMovie();
         this.#renderMovieList(data);
         break;
     }
   };
 
 
-  #handleDataChange = (updatedMovie) => {
-    //здесь вызывается обновление модели
-
-
-    this.#moviePresenter.get(updatedMovie.id).init(updatedMovie);
-
-    if (this.#popupPresenterComponent) {
-      this.#popupPresenterComponent.destroy();
-      this.#popupPresenterComponent.init({ movie: updatedMovie });
-    }
-  };
+  // #handleDataChange = (updatedMovie) => {
+  //   this.#moviePresenter.get(updatedMovie.id).init(updatedMovie);
+  //   if (this.#popupPresenterComponent) {
+  //     this.#popupPresenterComponent.destroy();
+  //     this.#popupPresenterComponent.init({ movie: updatedMovie });
+  //   }
+  // };
 
 
   #removePopupPresenterComponent() {
@@ -186,13 +179,9 @@ export default class BoardPresenter {
       body: this.#body,
       removePopupPresenterComponent: () => { this.#removePopupPresenterComponent(); },
       commentsList: this.#commentsList,
-
       onDataChange: this.#handleViewAction,
     });
-
-
     popupPresenter.init(movie);
-
     this.#popupPresenterComponent = popupPresenter;
   }
 
@@ -214,27 +203,30 @@ export default class BoardPresenter {
     render(this.#sortComponent, this.#main);
   }
 
-//выход из цикла непраильный типа или меньше 5 или меньше кол-ва фильмов!!!
+
   #renderMovieList() {
-    debugger;
     for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++){
       if (i === this.movie.length){
         return;
       }
-      console.log(this.movie.length);
       this.#renderMovie(this.movie[i]);
     }
   }
 
+  #renderNoMovie(filterType) {
+    // добваить удаление при отсутствии фильмов
+    this.#noMovieComponent = new NoMovieView({
+      filterType: this.#filterType,
+    });
+
+    this.#filterType = filterType;
+    render(this.#noMovieComponent, this.#main);
+  }
+
   #renderBoard() {
-    const movie = this.#movieModel.movie;
+
     render(new UserNameStatusView(), this.#header);
 
-
-    if (movie === 0) {
-      render(new NoMovieView(), this.#main);
-      return ;
-    }
 
     this.#renderSort();
     render(this.#filmListComponent, this.#main);

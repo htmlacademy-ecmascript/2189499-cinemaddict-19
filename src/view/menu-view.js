@@ -45,6 +45,7 @@ export default class MenuView extends AbstractView{
   };
 
   #setActiveFilterControl = () => {
+    debugger;
     this.element.querySelectorAll('a')
       .forEach((element) => {
         if(element.dataset.filterType !== this.#currentFilterType) {
