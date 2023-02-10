@@ -1,15 +1,31 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-function createMenuTemplate(currentFilterType) {
+function createMenuTemplate(currentFilterType, filters) {
 
-  return `
+  const isAll = ('All' === filters)
+    ? 'main-navigation__item--active'
+    : '';
+
+  const isWatchlist = ('Watchlist' === filters)
+    ? 'main-navigation__item--active'
+    : '';
+
+  const isHistory = ('History' === filters)
+    ? 'main-navigation__item--active'
+    : '';
+
+  const isFavorite = ('Favorite' === filters)
+    ? 'main-navigation__item--active'
+    : '';
+
+  return (`
   <nav class="main-navigation">
-  <a href="#all" class="main-navigation__item main-navigation__item--active" data-filter-type="All">All movies ${currentFilterType[0].count}</a>
-  <a href="#watchlist" class="main-navigation__item" data-filter-type="Watchlist">Watchlist <span class="main-navigation__item-count">${currentFilterType[1].count}</span></a>
-  <a href="#history" class="main-navigation__item" data-filter-type="History">History <span class="main-navigation__item-count">${currentFilterType[2].count}</span></a>
-  <a href="#favorites" class="main-navigation__item" data-filter-type="Favorites">Favorites <span class="main-navigation__item-count">${currentFilterType[3].count}</span></a>
+  <a href="#all" class="main-navigation__item ${isAll}" data-filter-type="All">All movies ${currentFilterType[0].count}</a>
+  <a href="#watchlist" class="main-navigation__item ${isWatchlist}" data-filter-type="Watchlist">Watchlist <span class="main-navigation__item-count">${currentFilterType[1].count}</span></a>
+  <a href="#history" class="main-navigation__item ${isHistory}" data-filter-type="History">History <span class="main-navigation__item-count">${currentFilterType[2].count}</span></a>
+  <a href="#favorites" class="main-navigation__item ${isFavorite}" data-filter-type="Favorites">Favorites <span class="main-navigation__item-count">${currentFilterType[3].count}</span></a>
 </nav>
-`;
+`);
 }
 
 
@@ -39,20 +55,8 @@ export default class MenuView extends AbstractView{
     evt.preventDefault();
 
     this.#currentFilterType = evt.target.dataset.filterType;
-    this.#setActiveFilterControl(this.#currentFilterType);
 
     this.#handleFilterTypeChange(evt.target.dataset.filterType);
   };
 
-  #setActiveFilterControl = () => {
-    debugger;
-    this.element.querySelectorAll('a')
-      .forEach((element) => {
-        if(element.dataset.filterType !== this.#currentFilterType) {
-          element.classList.remove('main-navigation__item--active');
-        } else {
-          element.classList.add('main-navigation__item--active');
-        }
-      });
-  };
 }

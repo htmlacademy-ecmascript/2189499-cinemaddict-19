@@ -140,15 +140,6 @@ export default class BoardPresenter {
   };
 
 
-  // #handleDataChange = (updatedMovie) => {
-  //   this.#moviePresenter.get(updatedMovie.id).init(updatedMovie);
-  //   if (this.#popupPresenterComponent) {
-  //     this.#popupPresenterComponent.destroy();
-  //     this.#popupPresenterComponent.init({ movie: updatedMovie });
-  //   }
-  // };
-
-
   #removePopupPresenterComponent() {
     this.#popupPresenterComponent = null;
   }
@@ -214,13 +205,14 @@ export default class BoardPresenter {
   }
 
   #renderNoMovie(filterType) {
-    // добваить удаление при отсутствии фильмов
+
     this.#noMovieComponent = new NoMovieView({
       filterType: this.#filterType,
     });
 
     this.#filterType = filterType;
     render(this.#noMovieComponent, this.#main);
+
   }
 
   #renderBoard() {

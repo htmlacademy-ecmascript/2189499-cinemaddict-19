@@ -66,7 +66,6 @@ export default class FilterMoviePresenter {
     const prevFilterComponent = this.#filterComponent;
     const movie = this.#movieModel.movie;
 
-
     this.#filterComponent = new MenuView({
       filters,
       currentFilterType: this.#filterModel.filter,
@@ -78,8 +77,8 @@ export default class FilterMoviePresenter {
       return;
     }
 
-    // replace(this.#filterComponent, prevFilterComponent);
-    // remove(prevFilterComponent);
+    replace(this.#filterComponent, prevFilterComponent);
+    remove(prevFilterComponent);
 
   }
 
