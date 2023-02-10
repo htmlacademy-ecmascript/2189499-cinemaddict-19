@@ -136,7 +136,8 @@ export default class BoardPresenter {
         break;
       case UpdateType.MAJOR:
         this.#clearMovieList();
-        this.#renderMovieList();
+        // this.#renderMovie();
+        this.#renderMovieList(data);
         break;
     }
   };
@@ -172,12 +173,6 @@ export default class BoardPresenter {
     this.#renderShowMoreBtn();
   }
 
-  #clearPopup() {
-    if (this.#popupPresenterComponent) {
-      this.#popupPresenterComponent.destroy();
-      // this.#popupPresenterComponent = null;
-    }
-  }
 
   #renderPopup(movie) {
 
@@ -219,9 +214,14 @@ export default class BoardPresenter {
     render(this.#sortComponent, this.#main);
   }
 
-
+//выход из цикла непраильный типа или меньше 5 или меньше кол-ва фильмов!!!
   #renderMovieList() {
-    for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP; i++){
+    debugger;
+    for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++){
+      if (i === this.movie.length){
+        return;
+      }
+      console.log(this.movie.length);
       this.#renderMovie(this.movie[i]);
     }
   }
