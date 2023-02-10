@@ -5,6 +5,7 @@ import PopupFilmCommentStructureView from './popup-film-comment-structure-view';
 import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view';
 import { render } from '../framework/render.js';
 function createPopupTemplate(movie) {
+  console.log(movie);
   const {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
 
   const isActiveWatchlist = watchlist

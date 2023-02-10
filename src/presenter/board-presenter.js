@@ -110,10 +110,12 @@ export default class BoardPresenter {
     console.log(actionType, updateType, update);
     switch(actionType) {
       case UserAction.SORT_MOVIE:
-        // eslint-disable-next-line no-unused-expressions
-        () => this.#movieModel.updateType(updateType, update);
+        this.#movieModel.updateType(updateType, update);
         break;
       case UserAction.UPDATE_MOVIE:
+        this.#movieModel.updateMovie(updateType, update);
+        break;
+      case UserAction.UPDATE_POPUP:
         this.#movieModel.updateMovie(updateType, update);
         break;
     }
@@ -123,12 +125,14 @@ export default class BoardPresenter {
     console.log(updateType, data);
     switch(updateType) {
       case UpdateType.PATCH:
-        this.#moviePresenter.get(data).init(data);
+        this.#moviePresenter.get(data.id).init(data);
         break;
       case UpdateType.MINOR:
         this.#clearMovieList();
         this.#renderMovieList();
-
+        if (this.#popupPresenterComponent) {
+          this.#renderPopup({ movie: data });
+        }
         break;
       case UpdateType.MAJOR:
         this.#clearMovieList();
@@ -168,18 +172,27 @@ export default class BoardPresenter {
     this.#renderShowMoreBtn();
   }
 
+  #clearPopup() {
+    if (this.#popupPresenterComponent) {
+      this.#popupPresenterComponent.destroy();
+      // this.#popupPresenterComponent = null;
+    }
+  }
+
   #renderPopup(movie) {
+
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
       this.#popupPresenterComponent = null;
     }
 
     const popupPresenter = new PopupPresenter({
+      movie: this.#movieModel.movie,
       body: this.#body,
       removePopupPresenterComponent: () => { this.#removePopupPresenterComponent(); },
       commentsList: this.#commentsList,
 
-      onDataChange: this.#handleDataChange,
+      onDataChange: this.#handleViewAction,
     });
 
 

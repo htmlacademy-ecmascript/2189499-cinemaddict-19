@@ -33,5 +33,6 @@ export default class MovieModel extends Observable {
 
     this._notify(updatedType, update);
   }
+
 }
 

@@ -20,6 +20,8 @@ const UpdateType = {
 const UserAction = {
   SORT_MOVIE: 'SORT_MOVIE',
   UPDATE_MOVIE: 'UPDATE_MOVIE',
+  UPDATE_POPUP: 'UPDATE_POPUP',
+  MINOR_POPUP: 'MINOR_POPUP',
 };
 
 export {FilterType, SortType, UpdateType, UserAction};

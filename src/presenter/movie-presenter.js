@@ -25,7 +25,6 @@ export default class MoviePresenter {
 
   init(movie) {
     this.#movie = movie;
-
     const prevMovieCardComponent = this.#movieCardComponent;
     this.#movieCardComponent = new CardFilmsView({
       movie,

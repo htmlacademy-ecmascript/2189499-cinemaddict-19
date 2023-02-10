@@ -1,6 +1,6 @@
 import { remove, render } from '../framework/render';
 import PopupView from '../view/popup-view';
-
+import { UserAction,UpdateType } from '../const';
 export default class PopupPresenter {
   #onClosePopupClick = null;
   #popupViewComponent = null;
@@ -15,6 +15,7 @@ export default class PopupPresenter {
   }
 
   init(movie) {
+    console.log(movie);
     this.#movie = movie.movie;
     this.#popupViewComponent = new PopupView({
       movie,
@@ -48,15 +49,24 @@ export default class PopupPresenter {
   };
 
   #hadleWatchlistClick = () => {
-    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, watchlist: !this.#movie.userDetails.watchlist}});
+    this.#handleDataChange(
+      UserAction.UPDATE_POPUP,
+      UpdateType.MINOR,
+      {...this.#movie, userDetails: {...this.#movie.userDetails, watchlist: !this.#movie.userDetails.watchlist}});
   };
 
   #handleAlreadyWatchedClick = () => {
-    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, alreadyWatched: !this.#movie.userDetails.alreadyWatched}});
+    this.#handleDataChange(
+      UserAction.UPDATE_POPUP,
+      UpdateType.MINOR,
+      {...this.#movie, userDetails: {...this.#movie.userDetails, alreadyWatched: !this.#movie.userDetails.alreadyWatched}});
   };
 
   #handleFavoriteClick = () => {
-    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, favorite: !this.#movie.userDetails.favorite}});
+    this.#handleDataChange(
+      UserAction.UPDATE_POPUP,
+      UpdateType.MINOR,
+      {...this.#movie, userDetails: {...this.#movie.userDetails, favorite: !this.#movie.userDetails.favorite}});
   };
 
   destroy() {
