@@ -200,6 +200,9 @@ export default class BoardPresenter {
   #renderMovieList() {
     const movie = this.movie;
     const movieCount = movie.length;
+    if(movieCount <= 5) {
+      remove(this.#loadMoreButtonComponent);
+    }
     if (movieCount === 0) {
       this.#renderNoMovie();
     }
