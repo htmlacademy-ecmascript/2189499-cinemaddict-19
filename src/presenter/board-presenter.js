@@ -132,7 +132,6 @@ export default class BoardPresenter {
         }
         break;
       case UpdateType.MAJOR:
-        this.#renderNoMovie(data);
         this.#clearMovieList();
         this.#renderMovieList(data);
         break;
@@ -155,6 +154,9 @@ export default class BoardPresenter {
     this.#moviePresenter.clear();
     remove(this.#loadMoreButtonComponent);
     this.#renderShowMoreBtn();
+    if (this.#noMovieComponent) {
+      remove(this.#noMovieComponent);
+    }
   }
 
 
@@ -196,6 +198,11 @@ export default class BoardPresenter {
 
 
   #renderMovieList() {
+    const movie = this.movie;
+    const movieCount = movie.length;
+    if (movieCount === 0) {
+      this.#renderNoMovie();
+    }
     for(let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++){
       if (i === this.movie.length){
         return;
@@ -205,7 +212,6 @@ export default class BoardPresenter {
   }
 
   #renderNoMovie(filterType) {
-
     this.#noMovieComponent = new NoMovieView({
       filterType: this.#filterType,
     });
@@ -224,6 +230,7 @@ export default class BoardPresenter {
     render(this.#filmListComponent, this.#main);
 
     this.#renderMovieList();
+
 
     this.#renderShowMoreBtn();
 

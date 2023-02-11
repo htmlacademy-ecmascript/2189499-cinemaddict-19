@@ -14,7 +14,7 @@ function createMenuTemplate(currentFilterType, filters) {
     ? 'main-navigation__item--active'
     : '';
 
-  const isFavorite = ('Favorite' === filters)
+  const isFavorite = ('Favorites' === filters)
     ? 'main-navigation__item--active'
     : '';
 
