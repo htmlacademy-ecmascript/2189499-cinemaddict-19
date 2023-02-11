@@ -47,15 +47,16 @@ export default class BoardPresenter {
   #filterModel = null;
   #noMovieComponent = null;
   #filterType = null;
+  #commentsModel = null;
 
-
-  constructor({header, main, footer, movieModel, body, filterModel}) {
+  constructor({header, main, footer, movieModel, body, filterModel, commentsModel}) {
     this.#header = header;
     this.#main = main;
     this.#footer = footer;
     this.#movieModel = movieModel;
     this.#body = body;
     this.#filterModel = filterModel;
+    this.#commentsModel = commentsModel;
 
     this.#movieModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
@@ -63,7 +64,6 @@ export default class BoardPresenter {
 
   get movie() {
     this.#filterType = this.#filterModel.filter;
-    // const filterType = this.#filterModel.filter;
     const movie = this.#movieModel.movie;
     const filteredMovie = filter[this.#filterType](movie);
 
@@ -78,7 +78,7 @@ export default class BoardPresenter {
   }
 
   get comments() {
-    return this.#movieModel.comments;
+    return this.#commentsModel;
   }
 
   get filters() {

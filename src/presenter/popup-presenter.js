@@ -15,7 +15,6 @@ export default class PopupPresenter {
   }
 
   init(movie) {
-    console.log(movie);
     this.#movie = movie.movie;
     this.#popupViewComponent = new PopupView({
       movie,
