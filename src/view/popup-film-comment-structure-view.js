@@ -20,13 +20,23 @@ function createPopupFilmCommentStructureTemplate(commentId) {
 
 export default class PopupFilmCommentStructureView extends AbstractView {
   #commentId = null;
-  constructor(commentId) {
+  #hadleDeleteCommet = null;
+  constructor(commentId, hadleDeleteCommet) {
     super();
     this.#commentId = commentId;
+
+    this.#hadleDeleteCommet = hadleDeleteCommet;
+
+    this.element.querySelector('.film-details__comment-delete')
+      .addEventListener('click', this.#daleteCommentHandler);
   }
 
   get template() {
     return createPopupFilmCommentStructureTemplate(this.#commentId);
+  }
+
+  #daleteCommentHandler() {
+    this.#hadleDeleteCommet();
   }
 
 }
