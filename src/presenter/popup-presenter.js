@@ -7,11 +7,13 @@ export default class PopupPresenter {
   #handleDataChange = null;
   #body = null;
   #movie = null;
+  #commentList = null;
   #removePopupPresenterComponentHandler = null;
   constructor({body, onDataChange, removePopupPresenterComponent}) {
     this.#body = body;
     this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
     this.#handleDataChange = onDataChange;
+    // this.#commentList = commnetList;
   }
 
   init(movie) {
@@ -23,9 +25,12 @@ export default class PopupPresenter {
       onWatchlistPopupClick: () => { this.#hadleWatchlistClick(movie); },
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
+      onCloseComment: () => { this.#closeCommentHandle(); }
+      // commnetList: this.#commentList,
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
+    console.log(this.#commentList);
   }
 
   #handleClosePopupClick = () => {
@@ -45,6 +50,12 @@ export default class PopupPresenter {
     };
 
     document.addEventListener('keydown', escKeydownHandler);
+  };
+
+  #closeCommentHandle = () => {
+    this.#handleDataChange(
+      UserAction.UPDATE_POPUP,
+    );
   };
 
   #hadleWatchlistClick = () => {

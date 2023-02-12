@@ -113,8 +113,9 @@ export default class PopupView extends AbstractView {
   #handleFavoriteClick = null;
 
   #popupFilmDetailNewCommentView = null;
-
-  constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick}) {
+  #popupFilmCommentStructureView = null;
+  #handleDeleteComment = null;
+  constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment}) {
     super();
     this.#movie = movie.movie;
 
@@ -125,7 +126,13 @@ export default class PopupView extends AbstractView {
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
 
     this.#handleClosePopupClick = onClosePopupClick;
+
+    this.#handleDeleteComment = onCloseComment;
+
     this.#commentList = this.element.querySelector('.film-details__comments-list');
+
+    // this.#commentList = commnetList;
+
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
@@ -138,8 +145,15 @@ export default class PopupView extends AbstractView {
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
 
+
+    // this.#popupFilmCommentStructureView = new PopupFilmCommentStructureView();
+
     movie.movie.comments.forEach((commentId) => {
-      render(new PopupFilmCommentStructureView(commentId), this.#commentList);
+      const popupFilmCommentStructureView = new PopupFilmCommentStructureView(commentId, {
+        hadleDeleteCommet: () => { this.#deleteCommentHandler(); },
+      });
+      render(popupFilmCommentStructureView, this.#commentList);
+      // render(new PopupFilmCommentStructureView(commentId), this.#commentList);
     });
 
 
@@ -149,6 +163,10 @@ export default class PopupView extends AbstractView {
   get template() {
     return createPopupTemplate(this.#movie);
   }
+
+  #deleteCommentHandler = () => {
+    this.#handleDeleteComment();
+  };
 
   #closePopupClickHandler = (evt) => {
     evt.preventDefault();

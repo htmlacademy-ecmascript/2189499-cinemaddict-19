@@ -174,6 +174,7 @@ export default class BoardPresenter {
       commentsList: this.#commentsList,
       onDataChange: this.#handleViewAction,
     });
+    console.log(this.#commentsList);
     popupPresenter.init(movie);
     this.#popupPresenterComponent = popupPresenter;
   }
