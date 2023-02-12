@@ -22,6 +22,7 @@ const UserAction = {
   UPDATE_MOVIE: 'UPDATE_MOVIE',
   UPDATE_POPUP: 'UPDATE_POPUP',
   MINOR_POPUP: 'MINOR_POPUP',
+  DELETE_COMMENT: 'DELETE_COMMENT',
 };
 
 export {FilterType, SortType, UpdateType, UserAction};

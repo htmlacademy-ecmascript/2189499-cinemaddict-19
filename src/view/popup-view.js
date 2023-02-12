@@ -153,6 +153,7 @@ export default class PopupView extends AbstractView {
         hadleDeleteCommet: () => { this.#deleteCommentHandler(); },
       });
       render(popupFilmCommentStructureView, this.#commentList);
+      this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
       // render(new PopupFilmCommentStructureView(commentId), this.#commentList);
     });
 
@@ -165,7 +166,7 @@ export default class PopupView extends AbstractView {
   }
 
   #deleteCommentHandler = () => {
-    this.#handleDeleteComment();
+    this.#handleDeleteComment(this.#popupFilmCommentStructureView);
   };
 
   #closePopupClickHandler = (evt) => {

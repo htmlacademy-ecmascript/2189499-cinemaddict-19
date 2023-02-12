@@ -43,7 +43,6 @@ export default class MenuView extends AbstractView{
     this.#onClickHandler = onClick;
     this.#currentFilterType = currentFilterType;
     this.#handleFilterTypeChange = onFilterTypeChange;
-
     this.element.querySelectorAll('.main-navigation__item').forEach((element) => element.addEventListener('click', this.#filterTypeChangeHandler));
   }
 

@@ -1,32 +1,36 @@
 import Observable from '../framework/observable.js';
-import { mockComments } from '../mock/movies';
+import { mockComments } from '../mock/movies.js';
 
-export default class CommentsModel extends Observable {
+
+export default class CommentModel extends Observable {
   #comments = mockComments;
 
   get comments() {
     return this.#comments;
   }
 
-  set comments(comments) {
-    this.#comments = comments;
+
+  addСomment (updateType, update) {
+    this.#comments = [
+      ...this.#comments,
+      update
+    ];
+
+    this._notify(updateType, update);
   }
 
-
-  updateMovie(updatedType, update) {
-    const index = this.#comments.findIndex((comment) => comment.id === update.id);
+  deleteСomment (updateType, update) {
+    const index = this.#comments.findIndex((comment) => comment.id === update);
 
     if (index === -1) {
-      throw new Error('Can\'t update unexisting film');
+      throw new Error('Can\'t delete unexisting comment');
     }
 
     this.#comments = [
       ...this.#comments.slice(0, index),
-      update,
-      ...this.#comments.slice(index + 1)
+      ...this.#comments.slice(index + 1),
     ];
 
-    this._notify(updatedType, update);
+    this._notify(updateType);
   }
-
 }

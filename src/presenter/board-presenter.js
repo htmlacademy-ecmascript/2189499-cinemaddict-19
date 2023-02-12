@@ -60,6 +60,7 @@ export default class BoardPresenter {
 
     this.#movieModel.addObserver(this.#handleModelEvent);
     this.#filterModel.addObserver(this.#handleModelEvent);
+    this.#commentsModel.addObserver(this.#handleModelEvent);
   }
 
   get movie() {
@@ -87,6 +88,7 @@ export default class BoardPresenter {
 
 
   init() {
+    console.log(this.#commentsModel.comments);
     this.#renderBoard();
   }
 
@@ -115,6 +117,8 @@ export default class BoardPresenter {
       case UserAction.UPDATE_POPUP:
         this.#movieModel.updateMovie(updateType, update);
         break;
+      case UserAction.DELETE_COMMENT:
+        this.#commentsModel.deleteСomment(updateType, update);
     }
   };
 
@@ -130,6 +134,7 @@ export default class BoardPresenter {
         if (this.#popupPresenterComponent) {
           this.#renderPopup({ movie: data });
         }
+
         break;
       case UpdateType.MAJOR:
         this.#clearMovieList();

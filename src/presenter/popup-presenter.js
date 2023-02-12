@@ -25,7 +25,7 @@ export default class PopupPresenter {
       onWatchlistPopupClick: () => { this.#hadleWatchlistClick(movie); },
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
-      onCloseComment: () => { this.#closeCommentHandle(); }
+      onCloseComment: this.#closeCommentHandle,
       // commnetList: this.#commentList,
     });
     render(this.#popupViewComponent, this.#body);
@@ -52,9 +52,12 @@ export default class PopupPresenter {
     document.addEventListener('keydown', escKeydownHandler);
   };
 
-  #closeCommentHandle = () => {
+  #closeCommentHandle = (comment) => {
+    //тут передаем наш комментарий, который мы должны удалить
     this.#handleDataChange(
-      UserAction.UPDATE_POPUP,
+      UserAction.DELETE_COMMENT,
+      UpdateType.MINOR,
+      comment,
     );
   };
 
