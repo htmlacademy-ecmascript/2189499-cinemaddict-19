@@ -52,12 +52,15 @@ export default class PopupPresenter {
     document.addEventListener('keydown', escKeydownHandler);
   };
 
-  #closeCommentHandle = (comment) => {
+  #closeCommentHandle = (commentId) => {
+    const movie = this.#movie;
+    debugger;
     //тут передаем наш комментарий, который мы должны удалить
     this.#handleDataChange(
       UserAction.DELETE_COMMENT,
-      UpdateType.MINOR,
-      comment,
+      UpdateType.COMMENT,
+      {commentId, movie}
+      // this.#movie
     );
   };
 

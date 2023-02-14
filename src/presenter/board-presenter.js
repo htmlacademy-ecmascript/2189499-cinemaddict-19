@@ -69,6 +69,8 @@ export default class BoardPresenter {
     const filteredMovie = filter[this.#filterType](movie);
 
     switch (this.#currentSortType) {
+      case SortType.DEFAULT:
+        return filteredMovie;
       case SortType.DATE:
         return filteredMovie.sort(sortMovieDate);
       case SortType.RATING:
@@ -88,7 +90,6 @@ export default class BoardPresenter {
 
 
   init() {
-    console.log(this.#commentsModel.comments);
     this.#renderBoard();
   }
 
@@ -140,6 +141,9 @@ export default class BoardPresenter {
         this.#clearMovieList();
         this.#renderMovieList(data);
         break;
+
+      case UpdateType.COMMENT:
+        this.#removeComment(data.movie.comments);
     }
   };
 
@@ -153,6 +157,9 @@ export default class BoardPresenter {
     this.#renderPopup({movie});
   };
 
+  #removeComment(comment) {
+    remove(comment);
+  }
 
   #clearMovieList() {
     this.#moviePresenter.forEach((presenter) => presenter.destroy());

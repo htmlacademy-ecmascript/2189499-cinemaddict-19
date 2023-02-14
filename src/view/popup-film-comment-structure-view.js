@@ -41,7 +41,7 @@ export default class PopupFilmCommentStructureView extends AbstractView {
   }
 
   #daleteCommentHandler = () => {
-    this.#hadleDeleteCommet();
+    this.#hadleDeleteCommet(this.#commentId);
   };
 
 }
