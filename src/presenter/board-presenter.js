@@ -91,7 +91,6 @@ export default class BoardPresenter {
 
   init() {
     this.#renderBoard();
-    console.log(this.#commentsModel);
   }
 
   #renderMovie(movie) {
@@ -108,7 +107,6 @@ export default class BoardPresenter {
   }
 
   #handleViewAction = (actionType, updateType, update) => {
-    console.log(actionType, updateType, update);
     switch(actionType) {
       case UserAction.SORT_MOVIE:
         this.#movieModel.updateType(updateType, update);
@@ -125,7 +123,6 @@ export default class BoardPresenter {
   };
 
   #handleModelEvent = (updateType, data) => {
-    console.log(updateType, data);
     switch(updateType) {
       case UpdateType.PATCH:
         this.#moviePresenter.get(data.id).init(data);
@@ -187,7 +184,6 @@ export default class BoardPresenter {
       commentsList: this.#commentsList,
       onDataChange: this.#handleViewAction,
     });
-    console.log(this.#commentsList);
     popupPresenter.init(movie);
     this.#popupPresenterComponent = popupPresenter;
   }
