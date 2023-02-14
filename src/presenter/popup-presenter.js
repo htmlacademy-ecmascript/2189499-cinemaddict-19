@@ -54,13 +54,15 @@ export default class PopupPresenter {
 
   #closeCommentHandle = (commentId) => {
     const movie = this.#movie;
-    debugger;
+    // debugger;
+    console.log(movie);
+    this.#movie.comments = this.#movie.comments.filter((value) => value !== Number(commentId));
     //тут передаем наш комментарий, который мы должны удалить
     this.#handleDataChange(
-      UserAction.DELETE_COMMENT,
-      UpdateType.COMMENT,
-      {commentId, movie}
-      // this.#movie
+      UserAction.UPDATE_POPUP,
+      UpdateType.MINOR,
+      // {commentId, movie}
+      movie
     );
   };
 

@@ -77,7 +77,7 @@ export default class BoardPresenter {
         return filteredMovie.sort(sortMovieRating);
     }
 
-    return filteredMovie;
+    return this.#movieModel.movie;
   }
 
   get comments() {
@@ -91,6 +91,7 @@ export default class BoardPresenter {
 
   init() {
     this.#renderBoard();
+    console.log(this.#commentsModel);
   }
 
   #renderMovie(movie) {
