@@ -13,7 +13,6 @@ export default class PopupPresenter {
     this.#body = body;
     this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
     this.#handleDataChange = onDataChange;
-    // this.#commentList = commnetList;
   }
 
   init(movie) {
@@ -26,11 +25,9 @@ export default class PopupPresenter {
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
       onCloseComment: this.#closeCommentHandle,
-      // commnetList: this.#commentList,
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
-    console.log(this.#commentList);
   }
 
   #handleClosePopupClick = () => {
@@ -54,14 +51,10 @@ export default class PopupPresenter {
 
   #closeCommentHandle = (commentId) => {
     const movie = this.#movie;
-    // debugger;
-    console.log(movie);
     this.#movie.comments = this.#movie.comments.filter((value) => value !== Number(commentId));
-    //тут передаем наш комментарий, который мы должны удалить
     this.#handleDataChange(
       UserAction.UPDATE_POPUP,
       UpdateType.MINOR,
-      // {commentId, movie}
       movie
     );
   };
