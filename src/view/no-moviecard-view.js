@@ -9,9 +9,7 @@ const NoMovieTextType = {
 };
 
 function createNoMovieTemplate(filterType) {
-  console.log(filterType);
   const noMovieTextValue = NoMovieTextType[filterType];
-  console.log(filterType);
   return `<h2 class="films-list__title">${noMovieTextValue}</h2>`;
 }
 

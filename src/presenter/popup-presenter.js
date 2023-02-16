@@ -50,8 +50,10 @@ export default class PopupPresenter {
   };
 
   #closeCommentHandle = (commentId) => {
-    const movie = this.#movie;
-    this.#movie.comments = this.#movie.comments.filter((value) => value !== Number(commentId));
+    const movie = {
+      ...this.#movie,
+      comments: this.#movie.comments.filter((value) =>value !== Number(commentId)),
+    };
     this.#handleDataChange(
       UserAction.UPDATE_POPUP,
       UpdateType.MINOR,

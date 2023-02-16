@@ -1,15 +1,15 @@
 import MenuView from '../view/menu-view';
 import { render, replace, remove } from '../framework/render';
-import {FilterType, UpdateType, UserAction} from '../const.js';
+import {FilterType, UpdateType} from '../const.js';
 import { filter } from '../utils/filter';
 
-const filters = [
-  {
-    type: 'all',
-    name: 'ALL',
-    count: 0
-  }
-];
+// const filters = [
+//   {
+//     type: 'all',
+//     name: 'ALL',
+//     count: 0
+//   }
+// ];
 
 export default class FilterMoviePresenter {
   #filterComponentContainer = null;
@@ -17,10 +17,6 @@ export default class FilterMoviePresenter {
   #filterComponent = null;
   #main = null;
   #movieModel = null;
-  #all = null;
-  #favorite = null;
-  #watched = null;
-  #watchlist = null;
   #filterModel = null;
   #filterContainer = null;
   constructor({ main, filterModel, movieModel, filterContainer}){
@@ -64,7 +60,6 @@ export default class FilterMoviePresenter {
   init() {
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
-    const movie = this.#movieModel.movie;
 
     this.#filterComponent = new MenuView({
       filters,
