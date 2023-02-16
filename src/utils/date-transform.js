@@ -33,4 +33,8 @@ function sortMovieRating(movieA, movieB) {
   return dayjs(movieA.filmInfo.totalRating).diff(dayjs(movieB.filmInfo.totalRating));
 }
 
-export {humanizeMovieDueDate, humanizeMovieDuration, humanizeCommentDate, sortMovieDate, sortMovieRating, humanizeReleaseDate};
+function sortMovieDefault(movieA, movieB){
+  return movieA.id - movieB.id;
+}
+
+export {humanizeMovieDueDate, humanizeMovieDuration, humanizeCommentDate, sortMovieDate, sortMovieRating, humanizeReleaseDate, sortMovieDefault};

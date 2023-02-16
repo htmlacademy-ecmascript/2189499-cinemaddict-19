@@ -8,7 +8,7 @@ import NoMovieView from '../view/no-moviecard-view.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
 import { SortType, UpdateType, UserAction } from '../const.js';
-import {sortMovieDate, sortMovieRating} from '../utils/date-transform';
+import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-transform';
 import { filter } from '../utils/filter.js';
 
 export default class BoardPresenter {
@@ -67,17 +67,14 @@ export default class BoardPresenter {
     this.#filterType = this.#filterModel.filter;
     const movie = this.#movieModel.movie;
     const filteredMovie = filter[this.#filterType](movie);
-
     switch (this.#currentSortType) {
-      case SortType.DEFAULT:
-        return filteredMovie;
       case SortType.DATE:
         return filteredMovie.sort(sortMovieDate);
       case SortType.RATING:
         return filteredMovie.sort(sortMovieRating);
     }
 
-    return this.#movieModel.movie;
+    return filteredMovie.sort(sortMovieDefault);
   }
 
   get comments() {
