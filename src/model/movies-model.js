@@ -10,7 +10,7 @@ export default class MovieModel extends Observable {
     this.#movieApiService = movieApiService;
 
     this.#movieApiService.movie.then((movie) => {
-      console.log(movie);
+      console.log(movie.map(this.#adaptToClient));
     });
   }
 
@@ -36,6 +36,33 @@ export default class MovieModel extends Observable {
     ];
 
     this._notify(updatedType, update);
+  }
+
+  #adaptToClient(movie){
+    const adaptedMovie = {...movie,
+      filmInfo: {...movie['film_info'],
+        alternativeTitle: movie['film_info'].alternative_title,
+        ageRating: movie['film_info'].age_rating,
+        totalRating: movie['film_info'].total_rating,
+        release: {...movie['film_info'].release,
+          releaseCountry: movie['film_info'].release.release_country},
+      },
+      userDetails: {...movie['user_details'],
+        alreadyWatched: movie['user_details'].already_watched,
+        watchingDate: movie['user_details'].watching_date,
+      },
+    };
+
+    delete adaptedMovie['film_info'];
+    delete adaptedMovie['user_details'];
+    delete adaptedMovie.filmInfo.total_rating;
+    delete adaptedMovie.filmInfo.age_rating;
+    delete adaptedMovie.filmInfo.alternative_title;
+    delete adaptedMovie.filmInfo.release.release_country;
+    delete adaptedMovie.userDetails.already_watched;
+    delete adaptedMovie.userDetails.watching_date;
+
+    return adaptedMovie;
   }
 
 }
