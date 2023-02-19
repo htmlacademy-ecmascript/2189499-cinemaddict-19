@@ -1,6 +1,5 @@
 import { UpdateType } from '../const.js';
 import Observable from '../framework/observable.js';
-// import { mockMovie } from '../mock/movies';
 
 export default class MovieModel extends Observable {
   #movieApiService = null;
