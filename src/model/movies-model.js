@@ -65,7 +65,8 @@ export default class MovieModel extends Observable {
       },
       userDetails: {...movie['user_details'],
         alreadyWatched: movie['user_details'].already_watched,
-        watchingDate: movie['user_details'].watching_date,
+        watchingDate: movie['user_details'].watching_date !== null
+          ? new Date(movie['user_details'].watching_date) : movie['user_details'].watching_date,
       },
     };
 
