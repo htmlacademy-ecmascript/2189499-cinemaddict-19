@@ -2,7 +2,7 @@ import Observable from '../framework/observable.js';
 import { mockComments } from '../mock/movies.js';
 
 
-export default class CommentModel extends Observable {
+export default class CommentsModel extends Observable {
   #comments = mockComments;
 
   get comments() {

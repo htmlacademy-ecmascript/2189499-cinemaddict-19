@@ -27,4 +27,9 @@ const UserAction = {
   DELETE_COMMENT: 'DELETE_COMMENT',
 };
 
-export {FilterType, SortType, UpdateType, UserAction};
+const Method = {
+  GET: 'GET',
+  PUT: 'PUT'
+};
+
+export {FilterType, SortType, UpdateType, UserAction, Method};
