@@ -120,6 +120,7 @@ export default class BoardPresenter {
   };
 
   #handleModelEvent = (updateType, data) => {
+    debugger;
     switch(updateType) {
       case UpdateType.PATCH:
         this.#moviePresenter.get(data.id).init(data);
@@ -139,6 +140,11 @@ export default class BoardPresenter {
 
       case UpdateType.COMMENT:
         this.#removeComment(data.movie.comments);
+        break;
+        debugger;
+      case UpdateType.INIT:
+        this.#renderMovieList(data);
+        break;
     }
   };
 

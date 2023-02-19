@@ -1,9 +1,10 @@
+import { UpdateType } from '../const.js';
 import Observable from '../framework/observable.js';
-import { mockMovie } from '../mock/movies';
+// import { mockMovie } from '../mock/movies';
 
 export default class MovieModel extends Observable {
   #movieApiService = null;
-  #movie = mockMovie;
+  #movie = [];
 
   constructor({movieApiService}){
     super();
@@ -20,6 +21,18 @@ export default class MovieModel extends Observable {
 
   set movie(movie) {
     this.#movie = movie;
+  }
+
+  async init() {
+    debugger;
+    try {
+      const movie = await this.#movieApiService.movie;
+      this.#movie = movie.map(this.#adaptToClient);
+      console.log(this.#movie);
+    } catch(err) {
+      this.#movie = [];
+    }
+    this._notify(UpdateType.INIT);
   }
 
   updateMovie(updatedType, update) {

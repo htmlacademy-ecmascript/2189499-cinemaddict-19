@@ -23,6 +23,7 @@ export default class MovieApiService extends ApiService {
     return parsedResponse;
   }
 
+
   #adaptToServer(movie){
     const adaptedMovie = {...movie,
       'film_info': movie.filmInfo,
@@ -34,8 +35,9 @@ export default class MovieApiService extends ApiService {
       'already_watched': movie.userDetails.alreadyWatched,
       'watching_date': movie.userDetails.watchingDate,
     };
-    console.log(adaptedMovie);
+
     return adaptedMovie;
+
   }
 
 }
