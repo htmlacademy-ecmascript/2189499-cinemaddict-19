@@ -58,7 +58,10 @@ export default class MovieModel extends Observable {
         ageRating: movie['film_info'].age_rating,
         totalRating: movie['film_info'].total_rating,
         release: {...movie['film_info'].release,
-          releaseCountry: movie['film_info'].release.release_country},
+          releaseCountry: movie['film_info'].release.release_country,
+          date: movie['film_info'].release.date !== null
+            ? new Date(movie['film_info'].release.date) : movie['film_info'].release.date,
+        },
       },
       userDetails: {...movie['user_details'],
         alreadyWatched: movie['user_details'].already_watched,
