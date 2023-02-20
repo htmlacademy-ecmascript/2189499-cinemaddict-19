@@ -23,11 +23,9 @@ export default class MovieModel extends Observable {
   }
 
   async init() {
-    debugger;
     try {
       const movie = await this.#movieApiService.movie;
       this.#movie = movie.map(this.#adaptToClient);
-      console.log(this.#movie);
     } catch(err) {
       this.#movie = [];
     }
