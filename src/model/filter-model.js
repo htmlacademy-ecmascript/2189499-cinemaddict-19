@@ -8,7 +8,7 @@ export default class FilterModel extends Observable {
     return this.#filter;
   }
 
-  constructor(){
+  constructor() {
     super();
   }
 

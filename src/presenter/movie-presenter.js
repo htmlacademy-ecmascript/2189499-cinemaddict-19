@@ -3,15 +3,15 @@ import { render, replace } from '../framework/render';
 import { UpdateType, UserAction } from '../const';
 
 export default class MoviePresenter {
-  #filmContainer = null;
+  #filmContainerElement = null;
   #movie = null;
   #movieCardComponent = null;
   #onShowPopupClick = null;
   #onClosePopupClick = null;
   #handleDataChange = null;
 
-  constructor({filmContainer, onDataChange, onShowPopupClick}) {
-    this.#filmContainer = filmContainer;
+  constructor({filmContainerElement, onDataChange, onShowPopupClick}) {
+    this.#filmContainerElement = filmContainerElement;
     this.#onShowPopupClick = onShowPopupClick;
     this.#handleDataChange = onDataChange;
   }
@@ -28,10 +28,10 @@ export default class MoviePresenter {
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
     });
     if (prevMovieCardComponent === null) {
-      render(this.#movieCardComponent, this.#filmContainer);
+      render(this.#movieCardComponent, this.#filmContainerElement);
       return ;
     }
-    if(this.#filmContainer.contains(prevMovieCardComponent.element)) {
+    if (this.#filmContainerElement.contains(prevMovieCardComponent.element)) {
       replace(this.#movieCardComponent, prevMovieCardComponent);
     }
   }

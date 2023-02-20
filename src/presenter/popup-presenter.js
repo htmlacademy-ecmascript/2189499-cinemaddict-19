@@ -37,7 +37,7 @@ export default class PopupPresenter {
 
   #closeEscBtnPopup = () => {
     const escKeydownHandler = (evt) => {
-      if(evt.key === 'Escape' || evt.key === 'Esc') {
+      if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
         this.#handleClosePopupClick();
         document.removeEventListener('keydown', escKeydownHandler);

@@ -32,7 +32,7 @@ function sortMovieRating(movieA, movieB) {
   return dayjs(movieA.filmInfo.totalRating).diff(dayjs(movieB.filmInfo.totalRating));
 }
 
-function sortMovieDefault(movieA, movieB){
+function sortMovieDefault(movieA, movieB) {
   return movieA.id - movieB.id;
 }
 

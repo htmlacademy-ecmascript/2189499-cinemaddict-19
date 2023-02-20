@@ -606,8 +606,6 @@ const mockMovie = [
       favorite: false
     }
   },
-
-
 ];
 
 function getRandomMovie() {

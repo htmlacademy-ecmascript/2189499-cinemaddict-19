@@ -28,7 +28,7 @@ function createMenuTemplate(currentFilterType, filters) {
 `);
 }
 
-export default class MenuView extends AbstractView{
+export default class MenuView extends AbstractView {
   #filters = null;
   #onClick = null;
   #currentFilterType = null;

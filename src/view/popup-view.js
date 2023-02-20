@@ -132,8 +132,6 @@ export default class PopupView extends AbstractView {
 
     this.#commentList = this.element.querySelector('.film-details__comments-list');
 
-    // this.#commentList = commnetList;
-
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
@@ -146,19 +144,13 @@ export default class PopupView extends AbstractView {
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
 
-
-    // this.#popupFilmCommentStructureView = new PopupFilmCommentStructureView();
-
     movie.movie.comments.forEach((commentId) => {
       const popupFilmCommentStructureView = new PopupFilmCommentStructureView(commentId, {
         hadleDeleteCommet: this.#deleteCommentHandler,
       });
       render(popupFilmCommentStructureView, this.#commentList);
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
-      // render(new PopupFilmCommentStructureView(commentId), this.#commentList);
     });
-
-
     render(this.#popupFilmDetailNewCommentView, this.#commentList);
   }
 
