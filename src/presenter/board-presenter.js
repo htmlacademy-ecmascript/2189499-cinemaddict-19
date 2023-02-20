@@ -10,6 +10,7 @@ import PopupPresenter from './popup-presenter.js';
 import { SortType, UpdateType, UserAction } from '../const.js';
 import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-transform';
 import { filter } from '../utils/filter.js';
+import LoadingView from '../view/loading-view.js';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -32,7 +33,8 @@ export default class BoardPresenter {
   #noMovieComponent = null;
   #filterType = null;
   #commentsModel = null;
-
+  #loadingComponent = new LoadingView();
+  #isLoading = true;
   #loadMoreButtonHandler = () => {
     const movieCount = this.movie.length;
     this.movie
@@ -128,6 +130,8 @@ export default class BoardPresenter {
         this.#removeComment(data.movie.comments);
         break;
       case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
         this.#renderMovieList(data);
         break;
     }
@@ -154,6 +158,10 @@ export default class BoardPresenter {
     if (this.#noMovieComponent) {
       remove(this.#noMovieComponent);
     }
+  }
+
+  #renderLoading() {
+    render(this.#loadingComponent, this.#filmContainerElement);
   }
 
   #renderPopup(movie) {
@@ -214,7 +222,13 @@ export default class BoardPresenter {
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
     this.#renderSort();
+
+
     render(this.#filmListComponent, this.#main);
+    if (this.#isLoading) {
+      this.#renderLoading();
+      return;
+    }
     this.#renderMovieList();
     this.#renderShowMoreBtn();
     render(new FooterStatisticsView(), this.#footer);
