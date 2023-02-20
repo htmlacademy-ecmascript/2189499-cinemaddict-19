@@ -108,28 +108,21 @@ export default class PopupView extends AbstractView {
   #handleClosePopupClick = null;
   #movie = null;
   #commentList = null;
-
   #hadleWatchlistClick = null;
   #handleAlreadyWatchedClick = null;
   #handleFavoriteClick = null;
-
   #popupFilmDetailNewCommentView = null;
   #popupFilmCommentStructureView = null;
   #handleDeleteComment = null;
   constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment}) {
     super();
     this.#movie = movie.movie;
-
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
-
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
-
     this.#handleClosePopupClick = onClosePopupClick;
-
     this.#handleDeleteComment = onCloseComment;
-
     this.#commentList = this.element.querySelector('.film-details__comments-list');
 
     this.element.querySelector('.film-details__close-btn')
@@ -144,7 +137,7 @@ export default class PopupView extends AbstractView {
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
 
-    movie.movie.comments.forEach((commentId) => {
+    this.#movie.comments.forEach((commentId) => {
       const popupFilmCommentStructureView = new PopupFilmCommentStructureView(commentId, {
         hadleDeleteCommet: this.#deleteCommentHandler,
       });
