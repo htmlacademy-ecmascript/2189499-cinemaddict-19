@@ -173,5 +173,4 @@ const mockComments = [
   },
 ];
 
-
 export { mockComments};

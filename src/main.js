@@ -6,10 +6,8 @@ import CommentsModel from './model/comments-model';
 import MovieApiService from './movie-api-service';
 import CommentsApiService from './comments-api-service';
 
-
 const AUTHORIZATION = 'Basic o0w590ik12389b';
 const END_POINT = 'https://19.ecmascript.pages.academy/cinemaddict';
-
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 const siteFooterElement = document.querySelector('.footer');
@@ -22,7 +20,7 @@ const movieModel = new MovieModel({
 const commentsModel = new CommentsModel({
   commentsApiServise: new CommentsApiService(END_POINT, AUTHORIZATION)
 });
-// const movieModel = new MovieModel();
+
 const filterModel = new FilterModel();
 const mainPresenter = new BoardPresenter({
   header: siteHeaderElement,

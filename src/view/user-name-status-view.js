@@ -8,9 +8,7 @@ function createUserNameStatusTemplate() {
 }
 
 export default class UserNameStatusView extends AbstractView {
-
   get template() {
     return createUserNameStatusTemplate();
   }
-
 }

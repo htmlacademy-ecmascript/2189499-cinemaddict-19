@@ -42,24 +42,16 @@ export default class CardFilmsView extends AbstractView {
   #handleShowPopupClick = null;
   #movie = null;
   #showPopupClickHandler = null;
-
   #hadleWatchlistClick = null;
   #handleAlreadyWatchedClick = null;
   #handleFavoriteClick = null;
 
-  #addToWatchlistBtn = null;
-  #watchedBtn = null;
-  #favoriteBtn = null;
-
-
   constructor({movie, onShowPopupClick, onWatchlistClick, onFavoriteClick, onAlreadyWatchedClick}) {
     super();
     this.#movie = movie;
-
     this.#hadleWatchlistClick = onWatchlistClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
-
 
     this.#showPopupClickHandler = () => {
       this.#handleShowPopupClick();
@@ -74,7 +66,6 @@ export default class CardFilmsView extends AbstractView {
 
     this.element.querySelector('.film-card__controls-item--mark-as-watched')
       .addEventListener('click', this.#alreadyWatchedClickHandler);
-
 
     this.element.querySelector('.film-card__controls-item--favorite')
       .addEventListener('click', this.#favoriteClickHandler);

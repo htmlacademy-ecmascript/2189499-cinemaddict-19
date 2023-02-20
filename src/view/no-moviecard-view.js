@@ -13,13 +13,11 @@ function createNoMovieTemplate(filterType) {
   return `<h2 class="films-list__title">${noMovieTextValue}</h2>`;
 }
 
-
-export default class NoMovieView extends AbstractView{
+export default class NoMovieView extends AbstractView {
   #filterType = null;
 
-  constructor({filterType}){
+  constructor({filterType}) {
     super();
-
     this.#filterType = filterType;
   }
 

@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
 
-
 const DATE_FORMAT = 'YYYY';
 const DURATION_FORMAT = 'H[h] mm';
 const COMMENT_FORMAT = 'YYYY MMMM DD HH:mm';
@@ -33,7 +32,7 @@ function sortMovieRating(movieA, movieB) {
   return dayjs(movieA.filmInfo.totalRating).diff(dayjs(movieB.filmInfo.totalRating));
 }
 
-function sortMovieDefault(movieA, movieB){
+function sortMovieDefault(movieA, movieB) {
   return movieA.id - movieB.id;
 }
 

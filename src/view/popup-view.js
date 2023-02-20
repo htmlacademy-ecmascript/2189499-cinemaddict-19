@@ -92,7 +92,6 @@ function createPopupTemplate(movie) {
         <button type="button" class="film-details__control-button ${isActiveFavorite} film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
       </section>
     </div>
-
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
       <h3 class="film-details__comments-title">Comments ${comments.length}</h3>
@@ -109,31 +108,22 @@ export default class PopupView extends AbstractView {
   #handleClosePopupClick = null;
   #movie = null;
   #commentList = null;
-
   #hadleWatchlistClick = null;
   #handleAlreadyWatchedClick = null;
   #handleFavoriteClick = null;
-
   #popupFilmDetailNewCommentView = null;
   #popupFilmCommentStructureView = null;
   #handleDeleteComment = null;
   constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment}) {
     super();
     this.#movie = movie.movie;
-
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
-
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
-
     this.#handleClosePopupClick = onClosePopupClick;
-
     this.#handleDeleteComment = onCloseComment;
-
     this.#commentList = this.element.querySelector('.film-details__comments-list');
-
-    // this.#commentList = commnetList;
 
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
@@ -147,19 +137,13 @@ export default class PopupView extends AbstractView {
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
 
-
-    // this.#popupFilmCommentStructureView = new PopupFilmCommentStructureView();
-
-    movie.movie.comments.forEach((commentId) => {
+    this.#movie.comments.forEach((commentId) => {
       const popupFilmCommentStructureView = new PopupFilmCommentStructureView(commentId, {
         hadleDeleteCommet: this.#deleteCommentHandler,
       });
       render(popupFilmCommentStructureView, this.#commentList);
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
-      // render(new PopupFilmCommentStructureView(commentId), this.#commentList);
     });
-
-
     render(this.#popupFilmDetailNewCommentView, this.#commentList);
   }
 

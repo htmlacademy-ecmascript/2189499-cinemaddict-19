@@ -28,8 +28,7 @@ function createMenuTemplate(currentFilterType, filters) {
 `);
 }
 
-
-export default class MenuView extends AbstractView{
+export default class MenuView extends AbstractView {
   #filters = null;
   #onClick = null;
   #currentFilterType = null;
@@ -38,7 +37,6 @@ export default class MenuView extends AbstractView{
 
   constructor({filters, onClick, currentFilterType, onFilterTypeChange}) {
     super();
-
     this.#filters = filters;
     this.#onClickHandler = onClick;
     this.#currentFilterType = currentFilterType;
@@ -52,10 +50,7 @@ export default class MenuView extends AbstractView{
 
   #filterTypeChangeHandler = (evt) => {
     evt.preventDefault();
-
     this.#currentFilterType = evt.target.dataset.filterType;
-
     this.#handleFilterTypeChange(evt.target.dataset.filterType);
   };
-
 }

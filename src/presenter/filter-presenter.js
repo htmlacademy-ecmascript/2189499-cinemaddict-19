@@ -3,14 +3,6 @@ import { render, replace, remove } from '../framework/render';
 import {FilterType, UpdateType} from '../const.js';
 import { filter } from '../utils/filter';
 
-// const filters = [
-//   {
-//     type: 'all',
-//     name: 'ALL',
-//     count: 0
-//   }
-// ];
-
 export default class FilterMoviePresenter {
   #filterComponentContainer = null;
   #currentFilterType = 'All';
@@ -31,7 +23,6 @@ export default class FilterMoviePresenter {
 
   get filters() {
     const movie = this.#movieModel.movie;
-
     return [
       {
         type: FilterType.ALL,
@@ -56,25 +47,20 @@ export default class FilterMoviePresenter {
     ];
   }
 
-
   init() {
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
-
     this.#filterComponent = new MenuView({
       filters,
       currentFilterType: this.#filterModel.filter,
       onFilterTypeChange: this.#filterTypeChange,
     });
-
     if (prevFilterComponent === null) {
       render(this.#filterComponent, this.#filterContainer);
       return;
     }
-
     replace(this.#filterComponent, prevFilterComponent);
     remove(prevFilterComponent);
-
   }
 
   #handleModelUpdate = () => {
@@ -85,7 +71,6 @@ export default class FilterMoviePresenter {
     if (this.#filterModel.filter === filterType) {
       return;
     }
-
     this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   };
 

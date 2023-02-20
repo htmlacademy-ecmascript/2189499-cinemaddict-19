@@ -5,10 +5,8 @@ function createSectionFilmListExtraTemplate() {
 }
 
 export default class SectionFilmListExtraView extends AbstractView {
-
   get template() {
     return createSectionFilmListExtraTemplate();
   }
-
 }
 

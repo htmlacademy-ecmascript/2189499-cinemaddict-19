@@ -20,7 +20,6 @@ export default class PopupPresenter {
     this.#popupViewComponent = new PopupView({
       movie,
       onClosePopupClick: this.#handleClosePopupClick,
-
       onWatchlistPopupClick: () => { this.#hadleWatchlistClick(movie); },
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
@@ -38,14 +37,12 @@ export default class PopupPresenter {
 
   #closeEscBtnPopup = () => {
     const escKeydownHandler = (evt) => {
-
-      if(evt.key === 'Escape' || evt.key === 'Esc') {
+      if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
         this.#handleClosePopupClick();
         document.removeEventListener('keydown', escKeydownHandler);
       }
     };
-
     document.addEventListener('keydown', escKeydownHandler);
   };
 
