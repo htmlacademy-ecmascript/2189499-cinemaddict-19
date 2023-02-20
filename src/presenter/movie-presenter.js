@@ -1,26 +1,19 @@
 import CardFilmsView from '../view/card-films-view';
-import { remove, render, replace } from '../framework/render';
+import { render, replace } from '../framework/render';
 import { UpdateType, UserAction } from '../const';
 
 export default class MoviePresenter {
   #filmContainer = null;
   #movie = null;
-
   #movieCardComponent = null;
   #onShowPopupClick = null;
   #onClosePopupClick = null;
-
   #handleDataChange = null;
-
 
   constructor({filmContainer, onDataChange, onShowPopupClick}) {
     this.#filmContainer = filmContainer;
     this.#onShowPopupClick = onShowPopupClick;
-
-
     this.#handleDataChange = onDataChange;
-
-
   }
 
   init(movie) {
@@ -30,25 +23,17 @@ export default class MoviePresenter {
       movie,
       onShowPopupClick: () => { this.#onShowPopupClick(movie); },
       onClosePopupClick: this.#onClosePopupClick,
-
       onWatchlistClick: () => { this.#hadleWatchlistClick(movie); },
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
     });
-
     if (prevMovieCardComponent === null) {
       render(this.#movieCardComponent, this.#filmContainer);
       return ;
     }
-
     if(this.#filmContainer.contains(prevMovieCardComponent.element)) {
       replace(this.#movieCardComponent, prevMovieCardComponent);
     }
-
-  }
-
-  #remove(component) {
-    remove(component);
   }
 
   #hadleWatchlistClick = () => {

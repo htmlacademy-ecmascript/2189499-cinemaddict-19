@@ -4,7 +4,6 @@ import FilterModel from './model/filter-model';
 import FilterMoviePresenter from './presenter/filter-presenter';
 import CommentsModel from './model/comments-model';
 
-
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 const siteFooterElement = document.querySelector('.footer');

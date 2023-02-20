@@ -35,7 +35,6 @@ function createPopupFilmDetailsNewCommentTemplate({emoji, comment}) {
 }
 
 export default class PopupFilmDetailNewCommentView extends AbstractStatefulView {
-
   #initialState = {
     emoji: '',
     comment: '',

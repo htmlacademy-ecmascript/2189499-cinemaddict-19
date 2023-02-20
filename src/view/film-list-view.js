@@ -11,9 +11,7 @@ function createFilmListTemplate() {
 }
 
 export default class FilmListView extends AbstractView{
-
   get template() {
     return createFilmListTemplate();
   }
-
 }

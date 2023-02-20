@@ -4,13 +4,6 @@ import { FilterType } from '../const.js';
 export default class FilterModel extends Observable {
   #filter = FilterType.ALL;
 
-
-  #all = null;
-  #favorite = null;
-  #watched = null;
-  #watchlist = null;
-
-
   get filter() {
     return this.#filter;
   }

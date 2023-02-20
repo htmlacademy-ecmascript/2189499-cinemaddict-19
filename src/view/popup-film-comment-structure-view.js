@@ -27,11 +27,8 @@ export default class PopupFilmCommentStructureView extends AbstractView {
   constructor(commentId, {hadleDeleteCommet, comments, commentsModel}) {
     super();
     this.#commentId = commentId;
-
     this.#commentsModel = commentsModel;
-
     this.#hadleDeleteCommet = hadleDeleteCommet;
-
     this.#comments = comments;
     this.element.querySelector('.film-details__comment-delete')
       .addEventListener('click', this.#daleteCommentHandler);

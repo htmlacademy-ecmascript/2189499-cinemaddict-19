@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
 
-
 const DATE_FORMAT = 'YYYY';
 const DURATION_FORMAT = 'H[h] mm';
 const COMMENT_FORMAT = 'YYYY MMMM DD HH:mm';
