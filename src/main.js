@@ -41,4 +41,4 @@ const filterPresenter = new FilterMoviePresenter({
 filterPresenter.init();
 mainPresenter.init();
 movieModel.init();
-commentsModel.init();
+// commentsModel.init();

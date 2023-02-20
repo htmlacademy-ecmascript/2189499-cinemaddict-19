@@ -3,9 +3,16 @@ import { mockComments } from '../mock/movies.js';
 
 
 export default class CommentsModel extends Observable {
+  debugger;
   #comments = mockComments;
-  get comments() {
-    return this.#comments;
+  #commentsApiService = null;
+  constructor({commentsApiService}) {
+    super();
+    this.#commentsApiService = commentsApiService;
+  }
+
+  async comments(movieId) {
+    return this.#commentsApiService.comments(movieId);
   }
 
 
