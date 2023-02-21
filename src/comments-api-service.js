@@ -3,14 +3,14 @@ import ApiService from './framework/api-service.js';
 
 export default class CommentsApiService extends ApiService {
 
-  get comments() {
-    return this._load({url: 'comments/CommentsId'})
+  async comments(movieId) {
+    return this._load({url: `comments/${movieId}`})
       .then(ApiService.parseResponce);
   }
 
-  async updateComment(comments, movie){
+  async updateComment(comments, movieId){
     const responce = await this._load({
-      url: `comments/${movie.id}`,
+      url: `comments/${movieId}`,
       method: Method.POST,
       body: JSON.stringify(comments),
       headers: new Headers({'Content-Type': 'application/json'}),
