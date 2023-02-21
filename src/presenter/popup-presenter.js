@@ -7,12 +7,13 @@ export default class PopupPresenter {
   #handleDataChange = null;
   #body = null;
   #movie = null;
-  #commentList = null;
   #removePopupPresenterComponentHandler = null;
-  constructor({body, onDataChange, removePopupPresenterComponent}) {
+  #commentsModel = null;
+  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel}) {
     this.#body = body;
     this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
     this.#handleDataChange = onDataChange;
+    this.#commentsModel = commentsModel;
   }
 
   init(movie) {
@@ -24,6 +25,7 @@ export default class PopupPresenter {
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
       onCloseComment: this.#closeCommentHandle,
+      commentsModel: this.#commentsModel,
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();

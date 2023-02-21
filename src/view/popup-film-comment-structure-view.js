@@ -32,6 +32,7 @@ export default class PopupFilmCommentStructureView extends AbstractView {
     this.#comments = comments;
     this.element.querySelector('.film-details__comment-delete')
       .addEventListener('click', this.#daleteCommentHandler);
+      console.log(this.#commentsModel);
   }
 
   get template() {

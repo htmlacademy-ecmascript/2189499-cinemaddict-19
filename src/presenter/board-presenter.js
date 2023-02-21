@@ -27,7 +27,6 @@ export default class BoardPresenter {
   #loadMoreButtonComponent = null;
   #popupPresenterComponent = null;
   #sortComponent = null;
-  #commentsList = null;
   #currentSortType = SortType.DEFAULT;
   #filterModel = null;
   #noMovieComponent = null;
@@ -173,8 +172,8 @@ export default class BoardPresenter {
       movie: this.#movieModel.movie,
       body: this.#body,
       removePopupPresenterComponent: () => { this.#removePopupPresenterComponent(); },
-      commentsList: this.#commentsList,
       onDataChange: this.#handleViewAction,
+      commentsModel: this.#commentsModel,
     });
     popupPresenter.init(movie);
     this.#popupPresenterComponent = popupPresenter;

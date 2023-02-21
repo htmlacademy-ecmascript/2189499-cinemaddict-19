@@ -29,7 +29,7 @@ function createPopupTemplate(movie) {
       </div>
       <div class="film-details__info-wrap">
         <div class="film-details__poster">
-          <img class="film-details__poster-img" src="./images/posters/${filmInfo.poster}" alt="">
+          <img class="film-details__poster-img" src="${filmInfo.poster}" alt="">
 
           <p class="film-details__age">${filmInfo.ageRating}+</p>
         </div>
@@ -114,7 +114,8 @@ export default class PopupView extends AbstractView {
   #popupFilmDetailNewCommentView = null;
   #popupFilmCommentStructureView = null;
   #handleDeleteComment = null;
-  constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment}) {
+  #commentsModel = null;
+  constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel}) {
     super();
     this.#movie = movie.movie;
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
@@ -123,8 +124,8 @@ export default class PopupView extends AbstractView {
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
     this.#handleClosePopupClick = onClosePopupClick;
     this.#handleDeleteComment = onCloseComment;
+    this.#commentsModel = commentsModel;
     this.#commentList = this.element.querySelector('.film-details__comments-list');
-
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
@@ -140,6 +141,7 @@ export default class PopupView extends AbstractView {
     this.#movie.comments.forEach((commentId) => {
       const popupFilmCommentStructureView = new PopupFilmCommentStructureView(commentId, {
         hadleDeleteCommet: this.#deleteCommentHandler,
+        commentsModel: this.#commentsModel,
       });
       render(popupFilmCommentStructureView, this.#commentList);
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
