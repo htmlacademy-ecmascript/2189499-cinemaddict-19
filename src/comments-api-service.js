@@ -7,16 +7,4 @@ export default class CommentsApiService extends ApiService {
     return this._load({ url: `comments/${card.id}` })
       .then(ApiService.parseResponse);
   }
-
-  // async updateComment(comments, movieId){
-  //   const responce = await this._load({
-  //     url: `comments/${movieId}`,
-  //     method: Method.POST,
-  //     body: JSON.stringify(comments),
-  //     headers: new Headers({'Content-Type': 'application/json'}),
-  //   });
-
-  //   const parsedResponce = await ApiService.parseResponse(responce);
-  //   return parsedResponce;
-  // }
 }

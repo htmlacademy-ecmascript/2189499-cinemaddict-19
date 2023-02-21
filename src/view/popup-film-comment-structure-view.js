@@ -6,13 +6,13 @@ import AbstractView from '../framework/view/abstract-view.js';
 function createPopupFilmCommentStructureTemplate(commentId) {
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
-    <img src="./images/emoji/${mockComments[commentId].emotion}" width="55" height="55" alt="emoji-${mockComments[commentId].emotion}">
+    <img src="./images/emoji/" width="55" height="55" alt="emoji-">
   </span>
   <div>
-    <p class="film-details__comment-text">${mockComments[commentId].comment}</p>
+    <p class="film-details__comment-text"></p>
     <p class="film-details__comment-info">
-      <span class="film-details__comment-author">${mockComments[commentId].author}</span>
-      <span class="film-details__comment-day">${humanizeCommentDate(mockComments[commentId].date)}</span>
+      <span class="film-details__comment-author"></span>
+      <span class="film-details__comment-day"></span>
       <button class="film-details__comment-delete">Delete</button>
     </p>
   </div>
@@ -32,7 +32,6 @@ export default class PopupFilmCommentStructureView extends AbstractView {
     this.#comments = comments;
     this.element.querySelector('.film-details__comment-delete')
       .addEventListener('click', this.#daleteCommentHandler);
-      console.log(this.#commentsModel);
   }
 
   get template() {

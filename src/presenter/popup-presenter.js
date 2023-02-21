@@ -16,8 +16,9 @@ export default class PopupPresenter {
     this.#commentsModel = commentsModel;
   }
 
-  init(movie) {
+  async init(movie) {
     this.#movie = movie.movie;
+    await this.#commentsModel.init(this.#movie);
     this.#popupViewComponent = new PopupView({
       movie,
       onClosePopupClick: this.#handleClosePopupClick,
@@ -25,7 +26,6 @@ export default class PopupPresenter {
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
       onCloseComment: this.#closeCommentHandle,
-      commentsModel: this.#commentsModel,
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();

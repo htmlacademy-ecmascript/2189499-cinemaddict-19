@@ -9,17 +9,17 @@ function adaptCommentsToClient(comments) {
 }
 
 export default class CommentsModel extends Observable {
-  debugger;
   #comments = [];
-  #commentsApiService = null;
-  constructor({commentsApiService}) {
+  #commentsApiServiсe = null;
+  constructor({commentsApiServiсe}) {
     super();
-    this.#commentsApiService = commentsApiService;
+    this.#commentsApiServiсe = commentsApiServiсe;
   }
 
   async init(card) {
+    debugger;
     try {
-      const comments = await this.#commentsApiService.getComments(card);
+      const comments = await this.#commentsApiServiсe.getComments(card);
       this.#comments = comments.map(adaptCommentsToClient);
     } catch(err) {
       this.#comments = [];
