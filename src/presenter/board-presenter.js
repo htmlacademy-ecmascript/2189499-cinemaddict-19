@@ -223,11 +223,10 @@ export default class BoardPresenter {
     render(new UserNameStatusView(), this.#header);
     this.#renderSort();
 
-
     render(this.#filmListComponent, this.#main);
+
     if (this.#isLoading) {
       this.#renderLoading();
-      return;
     }
     this.#renderMovieList();
     this.#renderShowMoreBtn();

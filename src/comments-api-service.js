@@ -3,8 +3,8 @@ import ApiService from './framework/api-service.js';
 
 export default class CommentsApiService extends ApiService {
 
-  async comments(movie) {
-    this._load({url: `comments/:${movie.id}`})
+  get comments() {
+    return this._load({url: 'comments/CommentsId'})
       .then(ApiService.parseResponce);
   }
 

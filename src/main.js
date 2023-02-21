@@ -5,6 +5,7 @@ import FilterMoviePresenter from './presenter/filter-presenter';
 import CommentsModel from './model/comments-model';
 import MovieApiService from './movie-api-service';
 import CommentsApiService from './comments-api-service';
+import { render } from './render';
 
 const AUTHORIZATION = 'Basic o0w590ik12389b';
 const END_POINT = 'https://19.ecmascript.pages.academy/cinemaddict';
@@ -41,4 +42,4 @@ const filterPresenter = new FilterMoviePresenter({
 filterPresenter.init();
 mainPresenter.init();
 movieModel.init();
-// commentsModel.init();
+commentsModel.init();
