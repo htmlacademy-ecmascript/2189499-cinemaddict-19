@@ -6,7 +6,6 @@ function createPopupFilmDetailsCommentsTitleTemplate(commentsCount) {
 
 export default class PopupFilmDetailsCommentsTitleView extends AbstractView {
   #commentsCount = null;
-
   constructor(commentsCount) {
     super();
     this.#commentsCount = commentsCount;
@@ -15,5 +14,4 @@ export default class PopupFilmDetailsCommentsTitleView extends AbstractView {
   get template() {
     return createPopupFilmDetailsCommentsTitleTemplate(this.#commentsCount);
   }
-
 }

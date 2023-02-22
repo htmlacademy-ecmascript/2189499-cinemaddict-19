@@ -1,7 +1,6 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view';
 import { SortType } from '../const.js';
 
-
 function createSortViewTemplate(sort) {
 
   const isActiveWatchlist = (sort === 'default')
@@ -26,16 +25,14 @@ function createSortViewTemplate(sort) {
 export default class SortView extends AbstractStatefulView {
   #handleSortTypeChange = null;
 
-  constructor({onSortTypeChange}){
+  constructor({onSortTypeChange}) {
     super();
     this.#handleSortTypeChange = onSortTypeChange;
     this._setState ({ sort: 'default' });
     this._restoreHandlers();
-
-
   }
 
-  _restoreHandlers(){
+  _restoreHandlers() {
     this.element.addEventListener('click', this.#sortTypeChangeHandler);
   }
 
@@ -58,6 +55,5 @@ export default class SortView extends AbstractStatefulView {
     this.updateElement({
       sort,
     });
-
   };
 }

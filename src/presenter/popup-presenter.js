@@ -1,12 +1,13 @@
 import { remove, render } from '../framework/render';
 import PopupView from '../view/popup-view';
-
+import { UserAction,UpdateType } from '../const';
 export default class PopupPresenter {
   #onClosePopupClick = null;
   #popupViewComponent = null;
   #handleDataChange = null;
   #body = null;
   #movie = null;
+  #commentList = null;
   #removePopupPresenterComponentHandler = null;
   constructor({body, onDataChange, removePopupPresenterComponent}) {
     this.#body = body;
@@ -19,10 +20,10 @@ export default class PopupPresenter {
     this.#popupViewComponent = new PopupView({
       movie,
       onClosePopupClick: this.#handleClosePopupClick,
-
       onWatchlistPopupClick: () => { this.#hadleWatchlistClick(movie); },
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
+      onCloseComment: this.#closeCommentHandle,
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
@@ -36,27 +37,46 @@ export default class PopupPresenter {
 
   #closeEscBtnPopup = () => {
     const escKeydownHandler = (evt) => {
-
-      if(evt.key === 'Escape' || evt.key === 'Esc') {
+      if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
         this.#handleClosePopupClick();
         document.removeEventListener('keydown', escKeydownHandler);
       }
     };
-
     document.addEventListener('keydown', escKeydownHandler);
   };
 
+  #closeCommentHandle = (commentId) => {
+    const movie = {
+      ...this.#movie,
+      comments: this.#movie.comments.filter((value) =>value !== Number(commentId)),
+    };
+    this.#handleDataChange(
+      UserAction.UPDATE_POPUP,
+      UpdateType.MINOR,
+      movie
+    );
+  };
+
   #hadleWatchlistClick = () => {
-    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, watchlist: !this.#movie.userDetails.watchlist}});
+    this.#handleDataChange(
+      UserAction.UPDATE_POPUP,
+      UpdateType.MINOR,
+      {...this.#movie, userDetails: {...this.#movie.userDetails, watchlist: !this.#movie.userDetails.watchlist}});
   };
 
   #handleAlreadyWatchedClick = () => {
-    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, alreadyWatched: !this.#movie.userDetails.alreadyWatched}});
+    this.#handleDataChange(
+      UserAction.UPDATE_POPUP,
+      UpdateType.MINOR,
+      {...this.#movie, userDetails: {...this.#movie.userDetails, alreadyWatched: !this.#movie.userDetails.alreadyWatched}});
   };
 
   #handleFavoriteClick = () => {
-    this.#handleDataChange({...this.#movie, userDetails: {...this.#movie.userDetails, favorite: !this.#movie.userDetails.favorite}});
+    this.#handleDataChange(
+      UserAction.UPDATE_POPUP,
+      UpdateType.MINOR,
+      {...this.#movie, userDetails: {...this.#movie.userDetails, favorite: !this.#movie.userDetails.favorite}});
   };
 
   destroy() {

@@ -11,4 +11,19 @@ const SortType = {
   RATING: 'rating',
 };
 
-export {FilterType, SortType};
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+  COMMENT: 'COMMENT',
+};
+
+const UserAction = {
+  SORT_MOVIE: 'SORT_MOVIE',
+  UPDATE_MOVIE: 'UPDATE_MOVIE',
+  UPDATE_POPUP: 'UPDATE_POPUP',
+  MINOR_POPUP: 'MINOR_POPUP',
+  DELETE_COMMENT: 'DELETE_COMMENT',
+};
+
+export {FilterType, SortType, UpdateType, UserAction};

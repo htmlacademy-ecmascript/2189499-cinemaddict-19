@@ -1,7 +1,8 @@
 
 import { mockComments } from '../mock/movies.js';
-import { humanizeReleaseDate } from '../utils/date-transform.js';
+import { humanizeCommentDate } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
+
 function createPopupFilmCommentStructureTemplate(commentId) {
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
@@ -11,7 +12,7 @@ function createPopupFilmCommentStructureTemplate(commentId) {
     <p class="film-details__comment-text">${mockComments[commentId].comment}</p>
     <p class="film-details__comment-info">
       <span class="film-details__comment-author">${mockComments[commentId].author}</span>
-      <span class="film-details__comment-day">${humanizeReleaseDate(mockComments[commentId].date)}</span>
+      <span class="film-details__comment-day">${humanizeCommentDate(mockComments[commentId].date)}</span>
       <button class="film-details__comment-delete">Delete</button>
     </p>
   </div>
@@ -20,13 +21,25 @@ function createPopupFilmCommentStructureTemplate(commentId) {
 
 export default class PopupFilmCommentStructureView extends AbstractView {
   #commentId = null;
-  constructor(commentId) {
+  #hadleDeleteCommet = null;
+  #commentsModel = null;
+  #comments = null;
+  constructor(commentId, {hadleDeleteCommet, comments, commentsModel}) {
     super();
     this.#commentId = commentId;
+    this.#commentsModel = commentsModel;
+    this.#hadleDeleteCommet = hadleDeleteCommet;
+    this.#comments = comments;
+    this.element.querySelector('.film-details__comment-delete')
+      .addEventListener('click', this.#daleteCommentHandler);
   }
 
   get template() {
-    return createPopupFilmCommentStructureTemplate(this.#commentId);
+    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments);
   }
+
+  #daleteCommentHandler = () => {
+    this.#hadleDeleteCommet(this.#commentId);
+  };
 
 }

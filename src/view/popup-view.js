@@ -4,6 +4,8 @@ import AbstractView from '../framework/view/abstract-view.js';
 import PopupFilmCommentStructureView from './popup-film-comment-structure-view';
 import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view';
 import { render } from '../framework/render.js';
+
+
 function createPopupTemplate(movie) {
   const {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
 
@@ -63,7 +65,7 @@ function createPopupTemplate(movie) {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Duration</td>
-              <td class="film-details__cell">${humanizeMovieDuration(filmInfo.duration)}</td>
+              <td class="film-details__cell">${humanizeMovieDuration(filmInfo.duration)}m</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
@@ -90,7 +92,6 @@ function createPopupTemplate(movie) {
         <button type="button" class="film-details__control-button ${isActiveFavorite} film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
       </section>
     </div>
-
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
       <h3 class="film-details__comments-title">Comments ${comments.length}</h3>
@@ -107,25 +108,23 @@ export default class PopupView extends AbstractView {
   #handleClosePopupClick = null;
   #movie = null;
   #commentList = null;
-
   #hadleWatchlistClick = null;
   #handleAlreadyWatchedClick = null;
   #handleFavoriteClick = null;
-
   #popupFilmDetailNewCommentView = null;
-
-  constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick}) {
+  #popupFilmCommentStructureView = null;
+  #handleDeleteComment = null;
+  constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment}) {
     super();
     this.#movie = movie.movie;
-
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
-
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
-
     this.#handleClosePopupClick = onClosePopupClick;
+    this.#handleDeleteComment = onCloseComment;
     this.#commentList = this.element.querySelector('.film-details__comments-list');
+
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
@@ -138,17 +137,23 @@ export default class PopupView extends AbstractView {
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
 
-    movie.movie.comments.forEach((commentId) => {
-      render(new PopupFilmCommentStructureView(commentId), this.#commentList);
+    this.#movie.comments.forEach((commentId) => {
+      const popupFilmCommentStructureView = new PopupFilmCommentStructureView(commentId, {
+        hadleDeleteCommet: this.#deleteCommentHandler,
+      });
+      render(popupFilmCommentStructureView, this.#commentList);
+      this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
     });
-
-
     render(this.#popupFilmDetailNewCommentView, this.#commentList);
   }
 
   get template() {
     return createPopupTemplate(this.#movie);
   }
+
+  #deleteCommentHandler = (commentId) => {
+    this.#handleDeleteComment(commentId);
+  };
 
   #closePopupClickHandler = (evt) => {
     evt.preventDefault();

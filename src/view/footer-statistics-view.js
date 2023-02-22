@@ -5,9 +5,7 @@ function createFooterStatisticsTemplate() {
 }
 
 export default class FooterStatisticsView extends AbstractView {
-
   get template() {
     return createFooterStatisticsTemplate();
   }
-
 }

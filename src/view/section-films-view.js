@@ -5,9 +5,7 @@ function createSectionFilmsTemplate() {
 }
 
 export default class SectionFilmsView extends AbstractView {
-
   get template() {
     return createSectionFilmsTemplate();
   }
-
 }
