@@ -4,7 +4,7 @@ import { mockComments } from '../mock/movies.js';
 
 function adaptCommentsToClient(comments) {
   comments.date = new Date(comments.date);
-
+  console.log(comments);
   return comments;
 }
 
@@ -16,14 +16,25 @@ export default class CommentsModel extends Observable {
     this.#commentsApiServiсe = commentsApiServiсe;
   }
 
-  async init(card) {
+
+  set comments(comments) {
+    this.#comments = comments;
+  }
+
+  get comments() {
+    return this.#comments;
+  }
+
+  async init(movie) {
     debugger;
     try {
-      const comments = await this.#commentsApiServiсe.getComments(card);
-      this.#comments = comments.map(adaptCommentsToClient);
+      const comments = await this.#commentsApiServiсe.getComments(movie);
+      // this.#comments = comments.map(adaptCommentsToClient);
+      this.#comments = comments;
     } catch(err) {
       this.#comments = [];
     }
+    console.log(this.#comments);
   }
 
   // async comments(movieId) {

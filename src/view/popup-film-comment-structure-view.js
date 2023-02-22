@@ -3,7 +3,8 @@ import { mockComments } from '../mock/movies.js';
 import { humanizeCommentDate } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 
-function createPopupFilmCommentStructureTemplate(commentId) {
+function createPopupFilmCommentStructureTemplate(commentId, comments) {
+  console.log(commentId, comments);
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
     <img src="./images/emoji/" width="55" height="55" alt="emoji-">
@@ -25,6 +26,7 @@ export default class PopupFilmCommentStructureView extends AbstractView {
   #commentsModel = null;
   #comments = null;
   constructor(commentId, {hadleDeleteCommet, comments, commentsModel}) {
+    debugger;
     super();
     this.#commentId = commentId;
     this.#commentsModel = commentsModel;
@@ -35,7 +37,7 @@ export default class PopupFilmCommentStructureView extends AbstractView {
   }
 
   get template() {
-    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments);
+    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments.comments);
   }
 
   #daleteCommentHandler = () => {

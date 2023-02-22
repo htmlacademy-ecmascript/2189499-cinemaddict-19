@@ -7,9 +7,10 @@ export default class PopupPresenter {
   #handleDataChange = null;
   #body = null;
   #movie = null;
+  #comments = null;
   #removePopupPresenterComponentHandler = null;
   #commentsModel = null;
-  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel}) {
+  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel, comments}) {
     this.#body = body;
     this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
     this.#handleDataChange = onDataChange;
@@ -18,9 +19,11 @@ export default class PopupPresenter {
 
   async init(movie) {
     this.#movie = movie.movie;
-    await this.#commentsModel.init(this.#movie);
+    await this.#commentsModel.init(movie.movie);
+    this.#comments = this.#commentsModel.comments;
     this.#popupViewComponent = new PopupView({
       movie,
+      comments: this.#comments,
       onClosePopupClick: this.#handleClosePopupClick,
       onWatchlistPopupClick: () => { this.#hadleWatchlistClick(movie); },
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
