@@ -1,19 +1,16 @@
-
-import { mockComments } from '../mock/movies.js';
 import { humanizeCommentDate } from '../utils/date-transform.js';
 import AbstractView from '../framework/view/abstract-view.js';
 
-function createPopupFilmCommentStructureTemplate(commentId, comments) {
-  console.log(commentId, comments);
+function createPopupFilmCommentStructureTemplate(commentId, comments, index) {
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
-    <img src="./images/emoji/" width="55" height="55" alt="emoji-">
+    <img src="./images/emoji/${comments[index].emotion}.png" width="55" height="55" alt="emoji-${comments[index].emotion}.png">
   </span>
   <div>
-    <p class="film-details__comment-text"></p>
+    <p class="film-details__comment-text">${comments[index].comment}</p>
     <p class="film-details__comment-info">
-      <span class="film-details__comment-author"></span>
-      <span class="film-details__comment-day"></span>
+      <span class="film-details__comment-author">${comments[index].author}</span>
+      <span class="film-details__comment-day">${humanizeCommentDate(comments[index].date)}</span>
       <button class="film-details__comment-delete">Delete</button>
     </p>
   </div>
@@ -25,9 +22,10 @@ export default class PopupFilmCommentStructureView extends AbstractView {
   #hadleDeleteCommet = null;
   #commentsModel = null;
   #comments = null;
-  constructor(commentId, {hadleDeleteCommet, comments, commentsModel}) {
-    debugger;
+  #index = null;
+  constructor(commentId, index, {hadleDeleteCommet, comments, commentsModel}) {
     super();
+    this.#index = index;
     this.#commentId = commentId;
     this.#commentsModel = commentsModel;
     this.#hadleDeleteCommet = hadleDeleteCommet;
@@ -37,7 +35,7 @@ export default class PopupFilmCommentStructureView extends AbstractView {
   }
 
   get template() {
-    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments.comments);
+    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#index);
   }
 
   #daleteCommentHandler = () => {

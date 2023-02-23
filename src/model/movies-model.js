@@ -8,10 +8,6 @@ export default class MovieModel extends Observable {
   constructor({movieApiService}){
     super();
     this.#movieApiService = movieApiService;
-
-    this.#movieApiService.movie.then((movie) => {
-      console.log(movie.map(this.#adaptToClient));
-    });
   }
 
   get movie() {
@@ -75,6 +71,5 @@ export default class MovieModel extends Observable {
 
     return adaptedMovie;
   }
-
 }
 

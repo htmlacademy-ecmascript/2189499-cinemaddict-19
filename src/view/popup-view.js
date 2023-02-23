@@ -5,7 +5,6 @@ import PopupFilmCommentStructureView from './popup-film-comment-structure-view';
 import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view';
 import { render } from '../framework/render.js';
 
-
 function createPopupTemplate(movie) {
   const {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
 
@@ -140,12 +139,15 @@ export default class PopupView extends AbstractView {
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
 
-    this.#movie.comments.forEach((commentId) => {
-      const popupFilmCommentStructureView = new PopupFilmCommentStructureView(commentId, {
-        hadleDeleteCommet: this.#deleteCommentHandler,
-        comments: this.#comments,
-        commentsModel: this.#commentsModel,
-      });
+    this.#movie.comments.forEach((commentId, index) => {
+      const popupFilmCommentStructureView = new PopupFilmCommentStructureView(
+        commentId,
+        index,
+        {
+          hadleDeleteCommet: this.#deleteCommentHandler,
+          comments: this.#comments,
+          commentsModel: this.#commentsModel,
+        });
       render(popupFilmCommentStructureView, this.#commentList);
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
     });

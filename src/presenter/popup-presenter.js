@@ -10,7 +10,7 @@ export default class PopupPresenter {
   #comments = null;
   #removePopupPresenterComponentHandler = null;
   #commentsModel = null;
-  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel, comments}) {
+  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel}) {
     this.#body = body;
     this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
     this.#handleDataChange = onDataChange;
