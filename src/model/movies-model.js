@@ -29,7 +29,6 @@ export default class MovieModel extends Observable {
   }
 
   async updateMovie(updatedType, update) {
-
     const index = this.#movie.findIndex((movie) => movie.id === update.id);
 
     if (index === -1) {
@@ -39,6 +38,7 @@ export default class MovieModel extends Observable {
     try {
       const response = await this.#movieApiService.updateMovie(update);
       const adaptedMovie = this.#adaptToClient(response);
+      console.log(adaptedMovie);
 
       this.#movie = [
         ...this.#movie.slice(0, index),

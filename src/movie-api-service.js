@@ -9,7 +9,7 @@ export default class MovieApiService extends ApiService {
 
 
   async updateMovie(movie){
-    console.log(this.#adaptToServer(movie));
+    // console.log(this.#adaptToServer(movie));
     const response = await this._load({
       url: `movies/${movie.id}`,
       method: Method.PUT,
@@ -17,6 +17,7 @@ export default class MovieApiService extends ApiService {
       headers: new Headers({'Content-Type': 'application/json'}),
     });
     const parsedResponse = await ApiService.parseResponse(response);
+
     return parsedResponse;
   }
 
@@ -26,11 +27,13 @@ export default class MovieApiService extends ApiService {
         ['age_rating']: movie.filmInfo.ageRating,
         ['alternative_title']: movie.filmInfo.alternativeTitle,
         ['total_rating']: movie.filmInfo.totalRating,
-        ['release']:{['release_country']: movie.filmInfo.release.releaseCountry},
+        ['release']:{['release_country']: movie.filmInfo.release.releaseCountry,
+          ['date']: movie.filmInfo.release.date.toISOString(),
+        },
       },
       ['user_details']:{...movie.userDetails,
         ['already_watched']: movie.userDetails.alreadyWatched,
-        ['watching_date']: movie.userDetails.watchingDate,
+        ['watching_date']: movie.userDetails.watchingDate.toISOString(),
       },
 
     };
