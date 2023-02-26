@@ -34,11 +34,9 @@ export default class MovieModel extends Observable {
     if (index === -1) {
       throw new Error('Can\'t update unexisting film');
     }
-    debugger;
     try {
       const response = await this.#movieApiService.updateMovie(update);
       const adaptedMovie = this.#adaptToClient(response);
-      console.log(adaptedMovie);
 
       this.#movie = [
         ...this.#movie.slice(0, index),
