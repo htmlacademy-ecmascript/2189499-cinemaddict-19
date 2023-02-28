@@ -7,7 +7,6 @@ export default class MovieApiService extends ApiService {
       .then(ApiService.parseResponse);
   }
 
-
   async updateMovie(movie){
     // console.log(this.#adaptToServer(movie));
     const response = await this._load({
@@ -47,7 +46,5 @@ export default class MovieApiService extends ApiService {
     delete adaptedMovie['user_details'].watchingDate;
 
     return adaptedMovie;
-
   }
-
 }
