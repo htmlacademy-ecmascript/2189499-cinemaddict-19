@@ -22,10 +22,10 @@ export default class PopupFilmCommentStructureView extends AbstractView {
   #hadleDeleteCommet = null;
   #commentsModel = null;
   #comments = null;
-  #index = null;
-  constructor(commentId, index, {hadleDeleteCommet, comments, commentsModel}) {
+  #indexOfComment = null;
+  constructor(commentId, indexOfComment, {hadleDeleteCommet, comments, commentsModel}) {
     super();
-    this.#index = index;
+    this.#indexOfComment = indexOfComment;
     this.#commentId = commentId;
     this.#commentsModel = commentsModel;
     this.#hadleDeleteCommet = hadleDeleteCommet;
@@ -35,7 +35,7 @@ export default class PopupFilmCommentStructureView extends AbstractView {
   }
 
   get template() {
-    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#index);
+    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#indexOfComment);
   }
 
   #daleteCommentHandler = () => {

@@ -50,7 +50,8 @@ export default class MovieModel extends Observable {
   }
 
   #adaptToClient(movie){
-    const adaptedMovie = {...movie,
+    const adaptedMovie = {
+      ...movie,
       filmInfo: {...movie['film_info'],
         alternativeTitle: movie['film_info'].alternative_title,
         ageRating: movie['film_info'].age_rating,
@@ -61,7 +62,8 @@ export default class MovieModel extends Observable {
             ? new Date(movie['film_info'].release.date) : movie['film_info'].release.date,
         },
       },
-      userDetails: {...movie['user_details'],
+      userDetails: {
+        ...movie['user_details'],
         alreadyWatched: movie['user_details'].already_watched,
         watchingDate: movie['user_details'].watching_date !== null
           ? new Date(movie['user_details'].watching_date) : movie['user_details'].watching_date,

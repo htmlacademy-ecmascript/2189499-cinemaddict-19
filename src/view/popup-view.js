@@ -139,10 +139,10 @@ export default class PopupView extends AbstractView {
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
 
-    this.#movie.comments.forEach((commentId, index) => {
+    this.#movie.comments.forEach((commentId, indexOfComment) => {
       const popupFilmCommentStructureView = new PopupFilmCommentStructureView(
         commentId,
-        index,
+        indexOfComment,
         {
           hadleDeleteCommet: this.#deleteCommentHandler,
           comments: this.#comments,
