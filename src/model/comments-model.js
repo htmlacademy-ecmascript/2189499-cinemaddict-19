@@ -1,9 +1,10 @@
 import Observable from '../framework/observable.js';
 
-
-function adaptCommentsToClient(comments) {
-  comments.date = new Date(comments.date);
-  return comments;
+function adaptCommentsToClient(comment) {
+  return {
+    ...comment,
+    date: new Date(comment.date)
+  };
 }
 
 export default class CommentsModel extends Observable {
