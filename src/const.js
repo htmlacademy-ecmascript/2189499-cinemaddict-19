@@ -29,7 +29,8 @@ const UserAction = {
 
 const Method = {
   GET: 'GET',
-  PUT: 'PUT'
+  PUT: 'PUT',
+  DELETE: 'DELETE',
 };
 
 export {FilterType, SortType, UpdateType, UserAction, Method};

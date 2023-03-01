@@ -16,9 +16,9 @@ export default class CommentsModel extends Observable {
   }
 
 
-  set comments(comments) {
-    this.#comments = comments;
-  }
+  // set comments(comments) {
+  //   this.#comments = comments;
+  // }
 
   get comments() {
     return this.#comments;
@@ -47,13 +47,13 @@ export default class CommentsModel extends Observable {
   //   }
   // }
 
-  // async deleteComment(updateType, update) {
-  //   try {
-  //     this.#commentsApiService.deleteComment(update.commentToDelete.id);
-  //     delete update.commentToDelete;
-  //     this._notify(updateType, update);
-  //   } catch(err) {
-  //     throw new Error('Can\'t delete comment');
-  //   }
-  // }
+  async deleteComment(id) {
+    try {
+      await this.#commentsApiServiсe.deleteComment(id);
+      this.#comments = this.#comments = this.#comments.filter((comment) => comment.id !== id);
+      this._notify(this.#comments);
+    } catch(err) {
+      throw new Error('Can\'t delete comment');
+    }
+  }
 }
