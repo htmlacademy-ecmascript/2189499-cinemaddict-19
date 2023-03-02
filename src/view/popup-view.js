@@ -115,13 +115,16 @@ export default class PopupView extends AbstractView {
   #handleDeleteComment = null;
   #commentsModel = null;
   #comments = null;
+  #hanleComment = null;
   constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
     super();
     this.#movie = movie.movie;
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
-    this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
+    this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView({
+      hanleComment: this.#commentAddHandler,
+    });
     this.#handleClosePopupClick = onClosePopupClick;
     this.#handleDeleteComment = onCloseComment;
     this.#commentsModel = commentsModel;
@@ -150,12 +153,16 @@ export default class PopupView extends AbstractView {
         });
       render(popupFilmCommentStructureView, this.#commentList);
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
-    });
+    }); 
     render(this.#popupFilmDetailNewCommentView, this.#commentList);
   }
 
   get template() {
     return createPopupTemplate(this.#movie);
+  }
+
+  #commentAddHandler = (comment) => {
+    console.log(comment);
   }
 
   #deleteCommentHandler = (commentId) => {

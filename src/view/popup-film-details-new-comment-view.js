@@ -40,10 +40,12 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
     comment: '',
   };
 
-  constructor() {
+  #hanleComment = null;
+  constructor({hanleComment}) {
     super();
     this._setState(this.#initialState);
     this._restoreHandlers();
+    this.#hanleComment = hanleComment;
   }
 
   _restoreHandlers() {
@@ -74,7 +76,12 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
 
   #commentKeyDownHandler = (evt) => {
     if (evt.ctrlKey && evt.key === 'Enter') {
-      console.log('submit');
+      // this.updateElement({
+      //   emoji: evt.target.src,
+      //   comment: document.querySelector('.film-details__comment-input').value,
+      // });
+      this.#hanleComment(this._state);
     }
+    
   };
 }
