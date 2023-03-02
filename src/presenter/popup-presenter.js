@@ -7,18 +7,23 @@ export default class PopupPresenter {
   #handleDataChange = null;
   #body = null;
   #movie = null;
-  #commentList = null;
+  #comments = null;
   #removePopupPresenterComponentHandler = null;
-  constructor({body, onDataChange, removePopupPresenterComponent}) {
+  #commentsModel = null;
+  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel}) {
     this.#body = body;
     this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
     this.#handleDataChange = onDataChange;
+    this.#commentsModel = commentsModel;
   }
 
-  init(movie) {
+  async init(movie) {
     this.#movie = movie.movie;
+    await this.#commentsModel.init(movie.movie);
+    this.#comments = this.#commentsModel.comments;
     this.#popupViewComponent = new PopupView({
       movie,
+      comments: this.#comments,
       onClosePopupClick: this.#handleClosePopupClick,
       onWatchlistPopupClick: () => { this.#hadleWatchlistClick(movie); },
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
@@ -46,16 +51,21 @@ export default class PopupPresenter {
     document.addEventListener('keydown', escKeydownHandler);
   };
 
-  #closeCommentHandle = (commentId) => {
+  #closeCommentHandle = async (commentId) => { debugger;
     const movie = {
       ...this.#movie,
       comments: this.#movie.comments.filter((value) =>value !== Number(commentId)),
     };
-    this.#handleDataChange(
-      UserAction.UPDATE_POPUP,
-      UpdateType.MINOR,
-      movie
-    );
+    try {
+      await this.#commentsModel.deleteComment(commentId);
+      this.#handleDataChange(
+        UserAction.UPDATE_POPUP,
+        UpdateType.MINOR,
+        movie
+      );
+    } catch(err) {
+      throw new Error("Can't delete comment");
+    }
   };
 
   #hadleWatchlistClick = () => {

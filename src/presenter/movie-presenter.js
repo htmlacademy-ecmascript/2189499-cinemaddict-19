@@ -61,4 +61,3 @@ export default class MoviePresenter {
     this.#movieCardComponent.element.remove();
   }
 }
-

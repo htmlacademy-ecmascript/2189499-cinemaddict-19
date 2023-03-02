@@ -16,6 +16,7 @@ const UpdateType = {
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
   COMMENT: 'COMMENT',
+  INIT: 'INIT',
 };
 
 const UserAction = {
@@ -26,4 +27,10 @@ const UserAction = {
   DELETE_COMMENT: 'DELETE_COMMENT',
 };
 
-export {FilterType, SortType, UpdateType, UserAction};
+const Method = {
+  GET: 'GET',
+  PUT: 'PUT',
+  DELETE: 'DELETE',
+};
+
+export {FilterType, SortType, UpdateType, UserAction, Method};

@@ -10,6 +10,7 @@ import PopupPresenter from './popup-presenter.js';
 import { SortType, UpdateType, UserAction } from '../const.js';
 import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-transform';
 import { filter } from '../utils/filter.js';
+import LoadingView from '../view/loading-view.js';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -26,13 +27,13 @@ export default class BoardPresenter {
   #loadMoreButtonComponent = null;
   #popupPresenterComponent = null;
   #sortComponent = null;
-  #commentsList = null;
   #currentSortType = SortType.DEFAULT;
   #filterModel = null;
   #noMovieComponent = null;
   #filterType = null;
   #commentsModel = null;
-
+  #loadingComponent = new LoadingView();
+  #isLoading = true;
   #loadMoreButtonHandler = () => {
     const movieCount = this.movie.length;
     this.movie
@@ -109,6 +110,7 @@ export default class BoardPresenter {
   };
 
   #handleModelEvent = (updateType, data) => {
+    debugger;
     switch(updateType) {
       case UpdateType.PATCH:
         this.#moviePresenter.get(data.id).init(data);
@@ -125,7 +127,13 @@ export default class BoardPresenter {
         this.#renderMovieList(data);
         break;
       case UpdateType.COMMENT:
-        this.#removeComment(data.movie.comments);
+        this.#removeComment(data.comments);
+        break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderMovieList(data);
+        break;
     }
   };
 
@@ -152,6 +160,10 @@ export default class BoardPresenter {
     }
   }
 
+  #renderLoading() {
+    render(this.#loadingComponent, this.#filmContainerElement);
+  }
+
   #renderPopup(movie) {
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
@@ -161,8 +173,8 @@ export default class BoardPresenter {
       movie: this.#movieModel.movie,
       body: this.#body,
       removePopupPresenterComponent: () => { this.#removePopupPresenterComponent(); },
-      commentsList: this.#commentsList,
       onDataChange: this.#handleViewAction,
+      commentsModel: this.#commentsModel,
     });
     popupPresenter.init(movie);
     this.#popupPresenterComponent = popupPresenter;
@@ -210,7 +222,12 @@ export default class BoardPresenter {
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
     this.#renderSort();
+
     render(this.#filmListComponent, this.#main);
+
+    if (this.#isLoading) {
+      this.#renderLoading();
+    }
     this.#renderMovieList();
     this.#renderShowMoreBtn();
     render(new FooterStatisticsView(), this.#footer);
@@ -223,5 +240,3 @@ export default class BoardPresenter {
     render(this.#loadMoreButtonComponent, this.#main);
   }
 }
-
-

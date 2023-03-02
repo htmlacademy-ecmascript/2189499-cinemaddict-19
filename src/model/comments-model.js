@@ -1,31 +1,40 @@
 import Observable from '../framework/observable.js';
-import { mockComments } from '../mock/movies.js';
 
+function adaptCommentsToClient(comment) {
+  return {
+    ...comment,
+    date: new Date(comment.date)
+  };
+}
 
-export default class CommentModel extends Observable {
-  #comments = mockComments;
+export default class CommentsModel extends Observable {
+  #comments = [];
+  #commentsApiServiсe = null;
+  constructor({commentsApiServiсe}) {
+    super();
+    this.#commentsApiServiсe = commentsApiServiсe;
+  }
+
   get comments() {
     return this.#comments;
   }
 
-
-  addСomment (updateType, update) {
-    this.#comments = [
-      ...this.#comments,
-      update
-    ];
-    this._notify(updateType, update);
+  async init(movie) {
+    try {
+      const comments = await this.#commentsApiServiсe.getComments(movie);
+      this.#comments = comments.map(adaptCommentsToClient);
+    } catch(err) {
+      this.#comments = [];
+    }
   }
 
-  deleteСomment (updateType, update) {
-    const index = this.#comments.findIndex((comment) => comment.id === update.commentId );
-    if (index === -1) {
-      throw new Error('Can\'t delete unexisting comment');
+  async deleteComment(id) {
+    try {
+      await this.#commentsApiServiсe.deleteComment(id);
+      this.#comments = this.#comments = this.#comments.filter((comment) => comment.id !== id);
+      this._notify(this.#comments);
+    } catch(err) {
+      throw new Error('Can\'t delete comment');
     }
-    this.#comments = [
-      ...this.#comments.slice(0, index),
-      ...this.#comments.slice(index + 1),
-    ];
-    this._notify(updateType);
   }
 }

@@ -49,6 +49,8 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
   _restoreHandlers() {
     this.element.querySelector('.film-details__emoji-list')
       .addEventListener('click', this.#emojiClickHandler);
+    this.element.querySelector('.film-details__comment-input')
+      .addEventListener('keydown', this.#commentKeyDownHandler);
   }
 
   get template() {
@@ -68,5 +70,11 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
       emoji: evt.target.src,
       comment: document.querySelector('.film-details__comment-input').value,
     });
+  };
+
+  #commentKeyDownHandler = (evt) => {
+    if (evt.ctrlKey && evt.key === 'Enter') {
+      console.log('submit');
+    }
   };
 }
