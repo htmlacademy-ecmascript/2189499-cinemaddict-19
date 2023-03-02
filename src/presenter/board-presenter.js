@@ -110,6 +110,7 @@ export default class BoardPresenter {
   };
 
   #handleModelEvent = (updateType, data) => {
+    debugger;
     switch(updateType) {
       case UpdateType.PATCH:
         this.#moviePresenter.get(data.id).init(data);
@@ -126,7 +127,7 @@ export default class BoardPresenter {
         this.#renderMovieList(data);
         break;
       case UpdateType.COMMENT:
-        this.#removeComment(data.movie.comments);
+        this.#removeComment(data.comments);
         break;
       case UpdateType.INIT:
         this.#isLoading = false;
@@ -239,5 +240,3 @@ export default class BoardPresenter {
     render(this.#loadMoreButtonComponent, this.#main);
   }
 }
-
-

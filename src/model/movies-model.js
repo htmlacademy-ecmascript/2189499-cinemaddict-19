@@ -69,7 +69,6 @@ export default class MovieModel extends Observable {
           ? new Date(movie['user_details'].watching_date) : movie['user_details'].watching_date,
       },
     };
-
     delete adaptedMovie['film_info'];
     delete adaptedMovie['user_details'];
     delete adaptedMovie.filmInfo.total_rating;
@@ -78,7 +77,7 @@ export default class MovieModel extends Observable {
     delete adaptedMovie.filmInfo.release.release_country;
     delete adaptedMovie.userDetails.already_watched;
     delete adaptedMovie.userDetails.watching_date;
-
+    
     return adaptedMovie;
   }
 }

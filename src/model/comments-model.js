@@ -15,11 +15,6 @@ export default class CommentsModel extends Observable {
     this.#commentsApiServiсe = commentsApiServiсe;
   }
 
-
-  set comments(comments) {
-    this.#comments = comments;
-  }
-
   get comments() {
     return this.#comments;
   }
@@ -33,27 +28,13 @@ export default class CommentsModel extends Observable {
     }
   }
 
-  // async comments(movieId) {
-  //   return await this.#commentsApiService.comments(movieId);
-  // }
-
-  // async addComment(updateType, update) {
-  //   try {
-  //     this.#commentsApiService.addComment(update.id, update.commentToAdd);
-  //     delete update.commentToAdd;
-  //     this._notify(updateType, update);
-  //   } catch(err) {
-  //     throw new Error('Can\'t add comment');
-  //   }
-  // }
-
-  // async deleteComment(updateType, update) {
-  //   try {
-  //     this.#commentsApiService.deleteComment(update.commentToDelete.id);
-  //     delete update.commentToDelete;
-  //     this._notify(updateType, update);
-  //   } catch(err) {
-  //     throw new Error('Can\'t delete comment');
-  //   }
-  // }
+  async deleteComment(id) {
+    try {
+      await this.#commentsApiServiсe.deleteComment(id);
+      this.#comments = this.#comments = this.#comments.filter((comment) => comment.id !== id);
+      this._notify(this.#comments);
+    } catch(err) {
+      throw new Error('Can\'t delete comment');
+    }
+  }
 }

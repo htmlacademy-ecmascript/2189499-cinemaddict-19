@@ -51,16 +51,21 @@ export default class PopupPresenter {
     document.addEventListener('keydown', escKeydownHandler);
   };
 
-  #closeCommentHandle = (commentId) => {
+  #closeCommentHandle = async (commentId) => { debugger;
     const movie = {
       ...this.#movie,
       comments: this.#movie.comments.filter((value) =>value !== Number(commentId)),
     };
-    this.#handleDataChange(
-      UserAction.UPDATE_POPUP,
-      UpdateType.MINOR,
-      movie
-    );
+    try {
+      await this.#commentsModel.deleteComment(commentId);
+      this.#handleDataChange(
+        UserAction.UPDATE_POPUP,
+        UpdateType.MINOR,
+        movie
+      );
+    } catch(err) {
+      throw new Error("Can't delete comment");
+    }
   };
 
   #hadleWatchlistClick = () => {
