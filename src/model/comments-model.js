@@ -39,8 +39,8 @@ export default class CommentsModel extends Observable {
 
   async addComment(updateType, update) {
     try {
-      this.#commentsApiServiсe.addComment(update.id, update.commentToAdd);
-      delete update.commentToAdd;
+      this.#commentsApiServiсe.addComment(update.movie, update.commentAdd);
+      delete update.commentAdd;
       this._notify(updateType, update);
     } catch(err) {
       throw new Error('Can\'t add comment');

@@ -29,6 +29,7 @@ export default class PopupPresenter {
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
       onCloseComment: this.#closeCommentHandle,
+      onAddCommentHandler: this.#handleCommentAdd,
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
@@ -51,7 +52,22 @@ export default class PopupPresenter {
     document.addEventListener('keydown', escKeydownHandler);
   };
 
-  #closeCommentHandle = async (commentId) => { debugger;
+  #handleCommentAdd = (commentAdd) => {
+    const movie = {
+      ...this.#movie,
+    };
+    debugger;
+      // athis.#commentsModel.addComment(UpdateType.MINOR, {commentAdd, movie});
+      // this.#commentsModel.addComment(commentAdd, movie);
+      this.#handleDataChange(
+        UserAction.ADD_COMMENT,
+        UpdateType.MINOR,
+        {commentAdd, movie},
+      )
+    
+  }
+
+  #closeCommentHandle = async (commentId) => {
     const movie = {
       ...this.#movie,
       comments: this.#movie.comments.filter((value) =>value !== Number(commentId)),

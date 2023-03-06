@@ -25,12 +25,14 @@ const UserAction = {
   UPDATE_POPUP: 'UPDATE_POPUP',
   MINOR_POPUP: 'MINOR_POPUP',
   DELETE_COMMENT: 'DELETE_COMMENT',
+  ADD_COMMENT: 'ADD_COMMENT',
 };
 
 const Method = {
   GET: 'GET',
   PUT: 'PUT',
   DELETE: 'DELETE',
+  POST: 'POST',
 };
 
 export {FilterType, SortType, UpdateType, UserAction, Method};

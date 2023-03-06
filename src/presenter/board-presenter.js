@@ -106,11 +106,14 @@ export default class BoardPresenter {
         break;
       case UserAction.DELETE_COMMENT:
         this.#commentsModel.deleteСomment(updateType, update);
+        break;
+      case UserAction.ADD_COMMENT:
+        this.#commentsModel.addComment(updateType, update);
+        break;
     }
   };
 
   #handleModelEvent = (updateType, data) => {
-    debugger;
     switch(updateType) {
       case UpdateType.PATCH:
         this.#moviePresenter.get(data.id).init(data);

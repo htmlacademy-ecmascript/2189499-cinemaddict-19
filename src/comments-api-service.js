@@ -15,10 +15,12 @@ export default class CommentsApiService extends ApiService {
       body: JSON.stringify(comment),
       headers: new Headers({ 'Content-Type': 'application/json' })
     });
-    if (response) {
-      const parsedResponse = await ApiService.parseResponse(response);
-      return parsedResponse;
-    }
+    const parsedResponse = await ApiService.parseResponse(response);
+    return parsedResponse;
+    // if (response) {
+    //   const parsedResponse = await ApiService.parseResponse(response);
+    //   return parsedResponse;
+    // }
   }
 
   async deleteComment(id) {

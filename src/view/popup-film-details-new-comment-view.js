@@ -2,6 +2,7 @@ import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import he from 'he';
 
 function createPopupFilmDetailsNewCommentTemplate({emoji, comment}) {
+  console.log(emoji);
   return (`<form class="film-details__new-comment" action="" method="get">
       <div class="film-details__add-emoji-label">${(emoji) ? `<img src=${emoji} width="55" height="55">` : ''}</div>
 
@@ -72,6 +73,7 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
       emoji: evt.target.src,
       comment: document.querySelector('.film-details__comment-input').value,
     });
+    console.log(evt.target);
   };
 
   #commentKeyDownHandler = (evt) => {
@@ -80,6 +82,7 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
       //   emoji: evt.target.src,
       //   comment: document.querySelector('.film-details__comment-input').value,
       // });
+      console.log(this._state);
       this.#hanleComment(this._state);
     }
     

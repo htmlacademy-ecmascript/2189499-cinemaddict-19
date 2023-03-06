@@ -116,7 +116,8 @@ export default class PopupView extends AbstractView {
   #commentsModel = null;
   #comments = null;
   #hanleComment = null;
-  constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
+  #onAddCommentHandler = null;
+  constructor({movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
     super();
     this.#movie = movie.movie;
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
@@ -125,6 +126,7 @@ export default class PopupView extends AbstractView {
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView({
       hanleComment: this.#commentAddHandler,
     });
+    this.#onAddCommentHandler = onAddCommentHandler;
     this.#handleClosePopupClick = onClosePopupClick;
     this.#handleDeleteComment = onCloseComment;
     this.#commentsModel = commentsModel;
@@ -162,7 +164,7 @@ export default class PopupView extends AbstractView {
   }
 
   #commentAddHandler = (comment) => {
-    console.log(comment);
+    this.#onAddCommentHandler(comment);
   }
 
   #deleteCommentHandler = (commentId) => {

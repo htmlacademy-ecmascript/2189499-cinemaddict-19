@@ -29,6 +29,7 @@ export default class MovieModel extends Observable {
   }
 
   async updateMovie(updatedType, update) {
+    debugger;
     const index = this.#movie.findIndex((movie) => movie.id === update.id);
 
     if (index === -1) {
