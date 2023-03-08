@@ -75,7 +75,7 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
   };
 
   #commentKeyDownHandler = (evt) => {
-    if (evt.ctrlKey && evt.key === 'Enter') {
+    if ((evt.metaKey || evt.ctrlKey) && evt.key === 'Enter') {
       
       const emotion = String(
         document.querySelector('.film-details__add-emoji-label')
