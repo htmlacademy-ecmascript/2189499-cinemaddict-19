@@ -1,34 +1,34 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import he from 'he';
 
-function createPopupFilmDetailsNewCommentTemplate({emoji, comment}) {
-  console.log(emoji);
+function createPopupFilmDetailsNewCommentTemplate({emotion, comment}) {
+  console.log(emotion);
   return (`<form class="film-details__new-comment" action="" method="get">
-      <div class="film-details__add-emoji-label">${(emoji) ? `<img src=${emoji} width="55" height="55">` : ''}</div>
+      <div class="film-details__add-emoji-label">${(emotion) ? `<img src=${emotion} width="55" height="55">` : ''}</div>
 
       <label class="film-details__comment-label">
         <textarea class="film-details__comment-input" placeholder="${he.encode('Select reaction below and write comment here')}" name="${comment}">${comment}</textarea>
       </label>
 
       <div class="film-details__emoji-list">
-        <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile" ${(emoji.includes('smile')) ? 'checked' : ''}>
+        <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="smile" ${(emotion.includes('smile')) ? 'checked' : ''}>
         <label class="film-details__emoji-label" for="emoji-smile">
-          <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
+          <img src="./images/emoji/smile.png" width="30" height="30" alt="smile">
         </label>
 
-        <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping" ${(emoji.includes('sleeping')) ? 'checked' : ''}>
+        <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-sleeping" value="sleeping" ${(emotion.includes('sleeping')) ? 'checked' : ''}>
         <label class="film-details__emoji-label" for="emoji-sleeping">
-          <img src="./images/emoji/sleeping.png" width="30" height="30" alt="emoji">
+          <img src="./images/emoji/sleeping.png" width="30" height="30" alt="sleeping">
         </label>
 
-        <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke" ${(emoji.includes('puke')) ? 'checked' : ''}>
+        <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-puke" value="puke" ${(emotion.includes('puke')) ? 'checked' : ''}>
         <label class="film-details__emoji-label" for="emoji-puke">
-          <img src="./images/emoji/puke.png" width="30" height="30" alt="emoji">
+          <img src="./images/emoji/puke.png" width="30" height="30" alt="puke">
         </label>
 
-        <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry" ${(emoji.includes('angry')) ? 'checked' : ''}>
+        <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-angry" value="angry" ${(emotion.includes('angry')) ? 'checked' : ''}>
         <label class="film-details__emoji-label" for="emoji-angry">
-          <img src="./images/emoji/angry.png" width="30" height="30" alt="emoji">
+          <img src="./images/emoji/angry.png" width="30" height="30" alt="angry">
         </label>
       </div>
     </form>`
@@ -37,7 +37,7 @@ function createPopupFilmDetailsNewCommentTemplate({emoji, comment}) {
 
 export default class PopupFilmDetailNewCommentView extends AbstractStatefulView {
   #initialState = {
-    emoji: '',
+    emotion: '',
     comment: '',
   };
 
@@ -57,8 +57,8 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
   }
 
   get template() {
-    const {emoji, comment} = this._state;
-    return createPopupFilmDetailsNewCommentTemplate({emoji, comment});
+    const {emotion, comment} = this._state;
+    return createPopupFilmDetailsNewCommentTemplate({emotion, comment});
   }
 
   reset() {
@@ -70,20 +70,26 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
       return;
     }
     this.updateElement({
-      emoji: evt.target.src,
+      emotion: evt.target.src,
       comment: document.querySelector('.film-details__comment-input').value,
     });
-    console.log(evt.target);
+    console.log();
   };
 
   #commentKeyDownHandler = (evt) => {
     if (evt.ctrlKey && evt.key === 'Enter') {
-      // this.updateElement({
-      //   emoji: evt.target.src,
-      //   comment: document.querySelector('.film-details__comment-input').value,
-      // });
-      console.log(this._state);
-      this.#hanleComment(this._state);
+      
+      const emotion = String(
+        document.querySelector('.film-details__add-emoji-label')
+          .querySelector('img')
+            .src.substring(35)
+              .split('.')[0]
+      );
+      
+      this.#hanleComment({
+        emotion: emotion,
+        comment: document.querySelector('.film-details__comment-input').value,
+      });
     }
     
   };

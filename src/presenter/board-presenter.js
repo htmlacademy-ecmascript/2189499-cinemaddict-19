@@ -94,6 +94,7 @@ export default class BoardPresenter {
   }
 
   #handleViewAction = (actionType, updateType, update) => {
+    debugger;
     switch(actionType) {
       case UserAction.SORT_MOVIE:
         this.#movieModel.updateType(updateType, update);
