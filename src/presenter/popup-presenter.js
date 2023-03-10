@@ -1,6 +1,7 @@
 import { remove, render } from '../framework/render';
 import PopupView from '../view/popup-view';
 import { UserAction,UpdateType } from '../const';
+
 export default class PopupPresenter {
   #onClosePopupClick = null;
   #popupViewComponent = null;
@@ -10,14 +11,18 @@ export default class PopupPresenter {
   #comments = null;
   #removePopupPresenterComponentHandler = null;
   #commentsModel = null;
-  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel}) {
+  #popupState = null;
+
+  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel, popupState}) {
     this.#body = body;
     this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
     this.#handleDataChange = onDataChange;
     this.#commentsModel = commentsModel;
+    this.#popupState = popupState;
   }
 
   async init(movie) {
+    console.log(this.#popupState);
     this.#movie = movie.movie;
     await this.#commentsModel.init(movie.movie);
     this.#comments = this.#commentsModel.comments;
@@ -102,5 +107,15 @@ export default class PopupPresenter {
 
   destroy() {
     this.#popupViewComponent.element.remove();
+  }
+
+  
+  setSavingComment() {
+    if (this.#popupState === 'OPENED') {
+      console.log('попап открыт');
+      // this._state.updateElement({
+      //   isDisabled: true,
+      // })
+    }
   }
 }

@@ -1,8 +1,9 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import he from 'he';
 
-function createPopupFilmDetailsNewCommentTemplate({emotion, comment}) {
-  return (`<form class="film-details__new-comment" action="" method="get">
+function createPopupFilmDetailsNewCommentTemplate({emotion, comment, isDisabled}) {
+  console.log(isDisabled)
+  return (`<form class="film-details__new-comment" action="" method="get" ${isDisabled ? 'disabled' : ''}>
       <div class="film-details__add-emoji-label">${(emotion) ? `<img src=${emotion} width="55" height="55">` : ''}</div>
 
       <label class="film-details__comment-label">
@@ -38,6 +39,7 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
   #initialState = {
     emotion: '',
     comment: '',
+    isDisabled: false,
   };
 
   #hanleComment = null;
@@ -56,8 +58,8 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
   }
 
   get template() {
-    const {emotion, comment} = this._state;
-    return createPopupFilmDetailsNewCommentTemplate({emotion, comment});
+    const {emotion, comment, isDisabled} = this._state;
+    return createPopupFilmDetailsNewCommentTemplate({emotion, comment, isDisabled});
   }
 
   reset() {

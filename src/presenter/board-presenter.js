@@ -12,6 +12,13 @@ import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-tr
 import { filter } from '../utils/filter.js';
 import LoadingView from '../view/loading-view.js';
 
+const PopupState = {
+  CLOSED: 'CLOSED',
+  OPENED: 'OPENED',
+};
+
+let globalPopupState = 'CLOSED'; //флаг, который информирует о том открыт ли какой-либо попап
+
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
   static MOVIE_COUNT_ZERO = 0;
@@ -34,6 +41,8 @@ export default class BoardPresenter {
   #commentsModel = null;
   #loadingComponent = new LoadingView();
   #isLoading = true;
+
+  #popupState = PopupState.CLOSED;
   #loadMoreButtonHandler = () => {
     const movieCount = this.movie.length;
     this.movie
@@ -108,6 +117,7 @@ export default class BoardPresenter {
         this.#commentsModel.deleteСomment(updateType, update);
         break;
       case UserAction.ADD_COMMENT:
+        this.#popupPresenterComponent.setSavingComment();
         this.#commentsModel.addComment(updateType, update);
         break;
     }
@@ -147,6 +157,7 @@ export default class BoardPresenter {
   #openPopup = (movie) => {
     this.#body.classList.add('hide-overflow');
     this.#renderPopup({movie});
+    // console.log(this.#popupState);
   };
 
   #removeComment(comment) {
@@ -168,6 +179,7 @@ export default class BoardPresenter {
   }
 
   #renderPopup(movie) {
+    this.#popupState = 'OPENED';
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
       this.#popupPresenterComponent = null;
@@ -178,6 +190,7 @@ export default class BoardPresenter {
       removePopupPresenterComponent: () => { this.#removePopupPresenterComponent(); },
       onDataChange: this.#handleViewAction,
       commentsModel: this.#commentsModel,
+      popupState: this.#popupState,
     });
     popupPresenter.init(movie);
     this.#popupPresenterComponent = popupPresenter;
