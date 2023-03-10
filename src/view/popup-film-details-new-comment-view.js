@@ -7,7 +7,7 @@ function createPopupFilmDetailsNewCommentTemplate({emotion, comment, isDisabled}
       <div class="film-details__add-emoji-label">${(emotion) ? `<img src=${emotion} width="55" height="55">` : ''}</div>
 
       <label class="film-details__comment-label">
-        <textarea class="film-details__comment-input" placeholder="${he.encode('Select reaction below and write comment here')}" name="${comment}">${comment}</textarea>
+        <textarea class="film-details__comment-input" placeholder="${he.encode('Select reaction below and write comment here')}" name="${comment}" ${isDisabled ? 'disabled' : ''} >${comment}</textarea>
       </label>
 
       <div class="film-details__emoji-list">

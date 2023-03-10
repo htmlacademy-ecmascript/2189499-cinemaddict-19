@@ -191,6 +191,12 @@ export default class PopupView extends AbstractView {
   resetpopupFilmDetailNewCommentView() {
     this.#popupFilmDetailNewCommentView.reset();
   }
+
+  setSavingComment() {
+    this.#popupFilmDetailNewCommentView.updateElement({
+      isDisabled: true,
+    })
+  }
 }
 
 

@@ -111,11 +111,12 @@ export default class PopupPresenter {
 
   
   setSavingComment() {
-    if (this.#popupState === 'OPENED') {
-      console.log('попап открыт');
-      // this._state.updateElement({
-      //   isDisabled: true,
-      // })
-    }
+    this.#popupViewComponent.setSavingComment();
+    // if (this.#popupState === 'OPENED') {
+    //   console.log('попап открыт');
+    //   // this._state.updateElement({
+    //   //   isDisabled: true,
+    //   // })
+    // }
   }
 }
