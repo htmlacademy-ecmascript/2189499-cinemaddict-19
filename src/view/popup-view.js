@@ -158,10 +158,7 @@ export default class PopupView extends AbstractView {
           commentsModel: this.#commentsModel,
         });
 
-
         this.#popupCommentsView.set(commentId, popupFilmCommentStructureView);
-        // console.log(this.#popupCommentsView);
-
 
       render(popupFilmCommentStructureView, this.#commentList);
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;

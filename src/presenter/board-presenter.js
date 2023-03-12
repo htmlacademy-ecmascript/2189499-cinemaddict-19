@@ -117,6 +117,7 @@ export default class BoardPresenter {
       case UserAction.DELETE_COMMENT:
         this.#popupPresenterComponent.setDeletingComment(update.commentId);
         this.#movieModel.updateMovie(updateType, update);
+        // this.#commentsModel.deleteComment(updateType, update);
         break;
       case UserAction.ADD_COMMENT:
         this.#popupPresenterComponent.setSavingComment();
@@ -159,7 +160,6 @@ export default class BoardPresenter {
   #openPopup = (movie) => {
     this.#body.classList.add('hide-overflow');
     this.#renderPopup({movie});
-    // console.log(this.#popupState);
   };
 
   #removeComment(comment) {
