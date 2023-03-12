@@ -148,12 +148,13 @@ export default class PopupView extends AbstractView {
       .addEventListener('click', this.#favoriteClickHandler);
 
     this.#movie.comments.forEach((commentId, indexOfComment) => {
+      debugger;
       const popupFilmCommentStructureView = new PopupFilmCommentStructureView(
         commentId,
         indexOfComment,
         {
           hadleDeleteCommet: this.#deleteCommentHandler,
-          comments: this.#comments,
+          comments: this.#comments[indexOfComment],
           commentsModel: this.#commentsModel,
         });
 
@@ -208,11 +209,10 @@ export default class PopupView extends AbstractView {
   }
 
   setDeletingComment(commentId) {
-    console.log(this.#popupCommentsView.get(commentId).updateElement({isDeleting: true}));
-    // this.#popupCommentsView.get(commentId).updateElement({
-    //   isDeleting: true,
-    // });
+    this.#popupCommentsView.get(commentId.id).updateElement({
+      isDeleting: true,
+      isDisabled: true,
+    });
+
   }
 }
-
-

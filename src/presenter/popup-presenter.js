@@ -72,10 +72,10 @@ export default class PopupPresenter {
   #closeCommentHandle = async (commentId) => {
     const movie = {
       ...this.#movie,
-      comments: this.#movie.comments.filter((value) =>value !== Number(commentId)),
+      comments: this.#movie.comments.filter((value) =>value !== Number(commentId.id)),
     };
     try {
-      await this.#commentsModel.deleteComment(commentId);
+      await this.#commentsModel.deleteComment(commentId.id);
       this.#handleDataChange(
         UserAction.DELETE_COMMENT,
         UpdateType.MINOR,

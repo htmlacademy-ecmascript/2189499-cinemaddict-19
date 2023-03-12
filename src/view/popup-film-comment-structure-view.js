@@ -1,17 +1,17 @@
 import { humanizeCommentDate } from '../utils/date-transform.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
-function createPopupFilmCommentStructureTemplate(commentId, comments, index) {
+function createPopupFilmCommentStructureTemplate(commentId, comments, index, {isDisabled, isDeleting}) {
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
-    <img src="./images/emoji/${comments[index].emotion}.png" width="55" height="55" alt="emoji-${comments[index].emotion}.png">
+    <img src="./images/emoji/${comments.emotion}.png" width="55" height="55" alt="emoji-${comments.emotion}.png">
   </span>
   <div>
-    <p class="film-details__comment-text">${comments[index].comment}</p>
+    <p class="film-details__comment-text">${comments.comment}</p>
     <p class="film-details__comment-info">
-      <span class="film-details__comment-author">${comments[index].author}</span>
-      <span class="film-details__comment-day">${humanizeCommentDate(comments[index].date)}</span>
-      <button class="film-details__comment-delete">Delete</button>
+      <span class="film-details__comment-author">${comments.author}</span>
+      <span class="film-details__comment-day">${humanizeCommentDate(comments.date)}</span>
+      <button class="film-details__comment-delete" ${isDisabled ? 'disabled' : ''}>${isDeleting ? 'Deleting...' : 'Delete'}</button>
     </p>
   </div>
 </li>`;
@@ -23,6 +23,8 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
   #commentsModel = null;
   #comments = null;
   #indexOfComment = null;
+  #commentsData = null;
+  
 
   #initialState = {
     isDisabled: false,
@@ -37,7 +39,6 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
     this.#commentsModel = commentsModel;
     this.#hadleDeleteCommet = hadleDeleteCommet;
     this.#comments = comments;
-
     this._setState(this.#initialState);
     this._restoreHandlers();
 
@@ -49,10 +50,11 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
   }
 
   #deleteCommentHandler = () => {
-    this.#hadleDeleteCommet(this.#commentId);
+    debugger;
+    this.#hadleDeleteCommet(this.#comments);
   };
 
   get template() {
-    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#indexOfComment, this._state);
+    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#indexOfComment, this._state, this.#commentsData);
   }
 }
