@@ -66,7 +66,9 @@ export default class PopupPresenter {
       )
     
   }
+  /////////////////
 
+  
   #closeCommentHandle = async (commentId) => {
     const movie = {
       ...this.#movie,
@@ -75,9 +77,9 @@ export default class PopupPresenter {
     try {
       await this.#commentsModel.deleteComment(commentId);
       this.#handleDataChange(
-        UserAction.UPDATE_POPUP,
+        UserAction.DELETE_COMMENT,
         UpdateType.MINOR,
-        movie
+        {commentId, movie}
       );
     } catch(err) {
       throw new Error("Can't delete comment");
@@ -118,5 +120,9 @@ export default class PopupPresenter {
     //   //   isDisabled: true,
     //   // })
     // }
+  }
+
+  setDeletingComment(commentId) {
+    this.#popupViewComponent.setDeletingComment(commentId);
   }
 }

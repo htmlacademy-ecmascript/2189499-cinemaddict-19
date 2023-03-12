@@ -103,7 +103,7 @@ export default class BoardPresenter {
   }
 
   #handleViewAction = (actionType, updateType, update) => {
-    // debugger;
+    debugger;
     switch(actionType) {
       case UserAction.SORT_MOVIE:
         this.#movieModel.updateType(updateType, update);
@@ -115,7 +115,8 @@ export default class BoardPresenter {
         this.#movieModel.updateMovie(updateType, update);
         break;
       case UserAction.DELETE_COMMENT:
-        this.#commentsModel.deleteСomment(updateType, update);
+        this.#popupPresenterComponent.setDeletingComment(update.commentId);
+        this.#movieModel.updateMovie(updateType, update);
         break;
       case UserAction.ADD_COMMENT:
         this.#popupPresenterComponent.setSavingComment();

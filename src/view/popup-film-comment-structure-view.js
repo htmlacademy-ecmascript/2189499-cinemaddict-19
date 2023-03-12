@@ -1,5 +1,5 @@
 import { humanizeCommentDate } from '../utils/date-transform.js';
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 function createPopupFilmCommentStructureTemplate(commentId, comments, index) {
   return `<li class="film-details__comment">
@@ -17,12 +17,19 @@ function createPopupFilmCommentStructureTemplate(commentId, comments, index) {
 </li>`;
 }
 
-export default class PopupFilmCommentStructureView extends AbstractView {
+export default class PopupFilmCommentStructureView extends AbstractStatefulView {
   #commentId = null;
   #hadleDeleteCommet = null;
   #commentsModel = null;
   #comments = null;
   #indexOfComment = null;
+
+  #initialState = {
+    isDisabled: false,
+    isDeleting: false
+  };
+
+
   constructor(commentId, indexOfComment, {hadleDeleteCommet, comments, commentsModel}) {
     super();
     this.#indexOfComment = indexOfComment;
@@ -30,16 +37,22 @@ export default class PopupFilmCommentStructureView extends AbstractView {
     this.#commentsModel = commentsModel;
     this.#hadleDeleteCommet = hadleDeleteCommet;
     this.#comments = comments;
+
+    this._setState(this.#initialState);
+    this._restoreHandlers();
+
+  }
+
+  _restoreHandlers() {
     this.element.querySelector('.film-details__comment-delete')
-      .addEventListener('click', this.#daleteCommentHandler);
+    .addEventListener('click', this.#deleteCommentHandler);
   }
 
-  get template() {
-    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#indexOfComment);
-  }
-
-  #daleteCommentHandler = () => {
+  #deleteCommentHandler = () => {
     this.#hadleDeleteCommet(this.#commentId);
   };
 
+  get template() {
+    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#indexOfComment, this._state);
+  }
 }

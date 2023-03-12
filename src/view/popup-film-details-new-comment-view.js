@@ -4,7 +4,7 @@ import he from 'he';
 function createPopupFilmDetailsNewCommentTemplate({emotion, comment, isDisabled}) {
   console.log(isDisabled)
   return (`<form class="film-details__new-comment" action="" method="get" ${isDisabled ? 'disabled' : ''}>
-      <div class="film-details__add-emoji-label">${(emotion) ? `<img src=${emotion} width="55" height="55">` : ''}</div>
+      <div class="film-details__add-emoji-label">${(emotion) ? `<img src=${emotion} width="55" height="55">` : '' }</div>
 
       <label class="film-details__comment-label">
         <textarea class="film-details__comment-input" placeholder="${he.encode('Select reaction below and write comment here')}" name="${comment}" ${isDisabled ? 'disabled' : ''} >${comment}</textarea>

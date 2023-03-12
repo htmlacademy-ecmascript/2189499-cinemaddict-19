@@ -117,6 +117,9 @@ export default class PopupView extends AbstractView {
   #comments = null;
   #hanleComment = null;
   #onAddCommentHandler = null;
+
+  #popupCommentsView = new Map();
+
   constructor({movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
     super();
     this.#movie = movie.movie;
@@ -153,6 +156,12 @@ export default class PopupView extends AbstractView {
           comments: this.#comments,
           commentsModel: this.#commentsModel,
         });
+
+
+        this.#popupCommentsView.set(commentId, popupFilmCommentStructureView);
+        // console.log(this.#popupCommentsView);
+
+
       render(popupFilmCommentStructureView, this.#commentList);
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
     }); 
@@ -196,6 +205,13 @@ export default class PopupView extends AbstractView {
     this.#popupFilmDetailNewCommentView.updateElement({
       isDisabled: true,
     })
+  }
+
+  setDeletingComment(commentId) {
+    console.log(this.#popupCommentsView.get(commentId).updateElement({isDeleting: true}));
+    // this.#popupCommentsView.get(commentId).updateElement({
+    //   isDeleting: true,
+    // });
   }
 }
 
