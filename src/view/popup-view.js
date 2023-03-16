@@ -141,15 +141,6 @@ export default class PopupView extends AbstractStatefulView {
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
-    // this.element.querySelector('.film-details__control-button--watchlist')
-    //   .addEventListener('click', this.#addToWatchlistPopupClickHandler);
-
-    // this.element.querySelector('.film-details__control-button--watched')
-    //   .addEventListener('click', this.#alreadyWatchedClickHandler);
-
-    // this.element.querySelector('.film-details__control-button--favorite')
-    //   .addEventListener('click', this.#favoriteClickHandler);
-
     this.#filmDetailsControl = this.element.querySelector('.film-details__controls');
 
     this.#movie.comments.forEach((commentId, indexOfComment) => {
@@ -233,8 +224,7 @@ export default class PopupView extends AbstractStatefulView {
     this.#popupFilmDetailNewCommentView.shake();
   };
 
-  setAbortingWatchProgress = (popupViewComponent) => {
-    const elem = popupViewComponent.element.querySelector('.film-details__controls');
-    elem.shake();
+  setAbortingWatchProgress = () => {
+    this.#popupFilmDetailsControlView.shake();
   };
 }
