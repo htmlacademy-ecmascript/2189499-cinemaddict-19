@@ -86,4 +86,6 @@ export default class CardFilmsView extends AbstractView {
   #favoriteClickHandler = () => {
     this.#handleFavoriteClick();
   };
+
+
 }

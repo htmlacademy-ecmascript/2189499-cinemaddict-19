@@ -60,5 +60,9 @@ export default class MoviePresenter {
   destroy() {
     this.#movieCardComponent.element.remove();
   }
+
+  setAbortingCardFilmInfo() {
+    this.#movieCardComponent.shake();
+  }
 }
 

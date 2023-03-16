@@ -106,7 +106,11 @@ export default class BoardPresenter {
         this.#movieModel.updateType(updateType, update);
         break;
       case UserAction.UPDATE_MOVIE:
-        this.#movieModel.updateMovie(updateType, update);
+        try {
+          await this.#movieModel.updateMovie(updateType, update);
+        } catch {
+          this.#moviePresenter.get(update.id).setAbortingCardFilmInfo();
+        }
         break;
       case UserAction.UPDATE_POPUP:
         try {
