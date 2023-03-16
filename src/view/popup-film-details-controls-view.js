@@ -28,13 +28,10 @@ function createPopupFilmDetailsControlViewTemplate(movie) {
 
 export default class PopupFilmDetailsControlView extends AbstractStatefulView {
   #movie = null;
-  // #hadleWatchlistClick = null;
-  // #handleAlreadyWatchedClick = null;
-  // #handleFavoriteClick = null;
-
   #hadleWatchlistClick = null;
   #handleAlreadyWatchedClick = null;
   #handleFavoriteClick = null;
+
   constructor({movie, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick}) {
     super();
     this.#movie = movie;
@@ -43,14 +40,14 @@ export default class PopupFilmDetailsControlView extends AbstractStatefulView {
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
 
-    // this.element.querySelector('.film-details__control-button--watchlist')
-    //   .addEventListener('click', this.#addToWatchlistPopupClickHandler);
+    this.element.querySelector('.film-details__control-button--watchlist')
+      .addEventListener('click', this.#addToWatchlistPopupClickHandler);
 
-    // this.element.querySelector('.film-details__control-button--watched')
-    //   .addEventListener('click', this.#alreadyWatchedClickHandler);
+    this.element.querySelector('.film-details__control-button--watched')
+      .addEventListener('click', this.#alreadyWatchedClickHandler);
 
-    // this.element.querySelector('.film-details__control-button--favorite')
-    //   .addEventListener('click', this.#favoriteClickHandler);
+    this.element.querySelector('.film-details__control-button--favorite')
+      .addEventListener('click', this.#favoriteClickHandler);
   }
 
   get template() {
