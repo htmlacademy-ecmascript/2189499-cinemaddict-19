@@ -22,7 +22,6 @@ export default class PopupPresenter {
   }
 
   async init(movie) {
-    console.log(this.#popupState);
     this.#movie = movie.movie;
     await this.#commentsModel.init(movie.movie);
     this.#comments = this.#commentsModel.comments;
@@ -65,23 +64,18 @@ export default class PopupPresenter {
       {commentAdd, movie},
     );
   };
-  /////////////////
 
   #closeCommentHandle = async (commentId) => {
     const movie = {
       ...this.#movie,
       comments: this.#movie.comments.filter((value) =>value !== Number(commentId.id)),
     };
-    // try {
-    //   await this.#commentsModel.deleteComment(commentId.id);
+
     this.#handleDataChange(
       UserAction.DELETE_COMMENT,
       UpdateType.MINOR,
       {commentId, movie}
     );
-    // } catch(err) {
-    //   throw new Error("Can't delete comment");
-    // }
   };
 
   #hadleWatchlistClick = () => {
@@ -123,5 +117,9 @@ export default class PopupPresenter {
 
   setAbortingSavingComment() {
     this.#popupViewComponent.setAbortingSavingComment();
+  }
+
+  setAbortingWatchProgress() {
+    this.#popupViewComponent.setAbortingWatchProgress(this.#popupViewComponent);
   }
 }

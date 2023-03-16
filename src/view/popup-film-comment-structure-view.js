@@ -45,7 +45,7 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
 
   _restoreHandlers() {
     this.element.querySelector('.film-details__comment-delete')
-    .addEventListener('click', this.#deleteCommentHandler);
+      .addEventListener('click', this.#deleteCommentHandler);
   }
 
   #deleteCommentHandler = () => {

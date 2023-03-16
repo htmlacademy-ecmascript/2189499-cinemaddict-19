@@ -112,7 +112,11 @@ export default class BoardPresenter {
         this.#movieModel.updateMovie(updateType, update);
         break;
       case UserAction.UPDATE_POPUP:
-        this.#movieModel.updateMovie(updateType, update);
+        try {
+          await this.#movieModel.updateMovie(updateType, update);
+        } catch {
+          this.#popupPresenterComponent.setAbortingWatchProgress();
+        }
         break;
       case UserAction.DELETE_COMMENT:
         this.#popupPresenterComponent.setDeletingComment(update.commentId);

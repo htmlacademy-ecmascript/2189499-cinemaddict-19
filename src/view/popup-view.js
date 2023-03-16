@@ -1,9 +1,10 @@
 import { humanizeMovieDuration } from '../utils/date-transform.js';
 import { humanizeReleaseDate } from '../utils/date-transform.js';
-import AbstractView from '../framework/view/abstract-view.js';
+// import AbstractView from '../framework/view/abstract-view.js';
 import PopupFilmCommentStructureView from './popup-film-comment-structure-view';
 import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view';
 import { render } from '../framework/render.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 function createPopupTemplate(movie) {
   const {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
@@ -103,7 +104,7 @@ function createPopupTemplate(movie) {
 </section>`;
 }
 
-export default class PopupView extends AbstractView {
+export default class PopupView extends AbstractStatefulView {
   #handleClosePopupClick = null;
   #movie = null;
   #commentList = null;
@@ -117,6 +118,8 @@ export default class PopupView extends AbstractView {
   #comments = null;
   #hanleComment = null;
   #onAddCommentHandler = null;
+
+  #filmDetailsControl = null;
 
   #popupCommentsView = new Map();
 
@@ -146,6 +149,8 @@ export default class PopupView extends AbstractView {
 
     this.element.querySelector('.film-details__control-button--favorite')
       .addEventListener('click', this.#favoriteClickHandler);
+
+    this.#filmDetailsControl = this.element.querySelector('.film-details__controls');
 
     this.#movie.comments.forEach((commentId, indexOfComment) => {
       debugger;
@@ -227,5 +232,10 @@ export default class PopupView extends AbstractView {
       isDisabled: false,
     });
     this.#popupFilmDetailNewCommentView.shake();
+  };
+
+  setAbortingWatchProgress = (popupViewComponent) => {
+    const elem = popupViewComponent.element.querySelector('.film-details__controls');
+    elem.shake();
   };
 }
