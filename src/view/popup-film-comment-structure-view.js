@@ -24,7 +24,6 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
   #comments = null;
   #indexOfComment = null;
   #commentsData = null;
-  
 
   #initialState = {
     isDisabled: false,

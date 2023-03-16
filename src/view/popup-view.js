@@ -214,10 +214,12 @@ export default class PopupView extends AbstractView {
   }
 
   setAbortingDeletingComment = (commentId) => {
+    debugger;
     this.#popupCommentsView.get(commentId.id).updateElement({
       isDeleting: false,
       isDisabled: false,
     });
+    this.#popupCommentsView.get(commentId.id).shake();
   };
 
   setAbortingSavingComment = () => {
