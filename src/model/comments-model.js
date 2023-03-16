@@ -40,6 +40,7 @@ export default class CommentsModel extends Observable {
   }
 
   async deleteComment(id, update) {
+    debugger;
     try {
       await this.#commentsApiServiсe.deleteComment(id);
       this.#comments = this.#comments = this.#comments.filter((comment) => comment.id !== id);

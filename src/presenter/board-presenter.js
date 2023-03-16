@@ -116,7 +116,7 @@ export default class BoardPresenter {
         break;
       case UserAction.DELETE_COMMENT:
         this.#popupPresenterComponent.setDeletingComment(update.commentId);
-        this.#movieModel.updateMovie(updateType, update);
+        this.#movieModel.updateMovie(updateType, update.movie);
         // this.#commentsModel.deleteComment(updateType, update);
         break;
       case UserAction.ADD_COMMENT:
