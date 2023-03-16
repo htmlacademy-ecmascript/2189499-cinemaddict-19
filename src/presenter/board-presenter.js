@@ -102,7 +102,7 @@ export default class BoardPresenter {
     this.#moviePresenter.set(movie.id, moviePresenter);
   }
 
-  #handleViewAction = (actionType, updateType, update) => {
+  #handleViewAction = async (actionType, updateType, update) => {
     debugger;
     switch(actionType) {
       case UserAction.SORT_MOVIE:
@@ -121,7 +121,11 @@ export default class BoardPresenter {
         break;
       case UserAction.ADD_COMMENT:
         this.#popupPresenterComponent.setSavingComment();
-        this.#commentsModel.addComment(updateType, update);
+        try {
+          await this.#commentsModel.addComment(updateType, update);
+        } catch {
+          this.#popupPresenterComponent.setAbortingSavingComment();
+        }
         break;
     }
   };

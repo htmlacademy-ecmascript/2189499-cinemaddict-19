@@ -58,17 +58,15 @@ export default class PopupPresenter {
   };
 
   #handleCommentAdd = (commentAdd) => {
-    const movie = this.#movie.id
-      this.#handleDataChange(
-        UserAction.ADD_COMMENT,
-        UpdateType.MINOR,
-        {commentAdd, movie},
-      )
-    
-  }
+    const movie = this.#movie.id;
+    this.#handleDataChange(
+      UserAction.ADD_COMMENT,
+      UpdateType.MINOR,
+      {commentAdd, movie},
+    );
+  };
   /////////////////
 
-  
   #closeCommentHandle = async (commentId) => {
     const movie = {
       ...this.#movie,
@@ -111,18 +109,15 @@ export default class PopupPresenter {
     this.#popupViewComponent.element.remove();
   }
 
-  
   setSavingComment() {
     this.#popupViewComponent.setSavingComment();
-    // if (this.#popupState === 'OPENED') {
-    //   console.log('попап открыт');
-    //   // this._state.updateElement({
-    //   //   isDisabled: true,
-    //   // })
-    // }
   }
 
   setDeletingComment(commentId) {
     this.#popupViewComponent.setDeletingComment(commentId);
+  }
+
+  setAbortingSavingComment() {
+    this.#popupViewComponent.setAbortingSavingComment();
   }
 }

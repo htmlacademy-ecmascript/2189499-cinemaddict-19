@@ -158,11 +158,11 @@ export default class PopupView extends AbstractView {
           commentsModel: this.#commentsModel,
         });
 
-        this.#popupCommentsView.set(commentId, popupFilmCommentStructureView);
+      this.#popupCommentsView.set(commentId, popupFilmCommentStructureView);
 
       render(popupFilmCommentStructureView, this.#commentList);
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
-    }); 
+    });
     render(this.#popupFilmDetailNewCommentView, this.#commentList);
   }
 
@@ -172,7 +172,7 @@ export default class PopupView extends AbstractView {
 
   #commentAddHandler = (comment) => {
     this.#onAddCommentHandler(comment);
-  }
+  };
 
   #deleteCommentHandler = (commentId) => {
     this.#handleDeleteComment(commentId);
@@ -202,7 +202,7 @@ export default class PopupView extends AbstractView {
   setSavingComment() {
     this.#popupFilmDetailNewCommentView.updateElement({
       isDisabled: true,
-    })
+    });
   }
 
   setDeletingComment(commentId) {
@@ -212,4 +212,11 @@ export default class PopupView extends AbstractView {
     });
 
   }
+
+  setAbortingSavingComment = () => {
+    this.#popupFilmDetailNewCommentView.updateElement({
+      isDisabled: false,
+    });
+    this.#popupFilmDetailNewCommentView.shake();
+  };
 }
