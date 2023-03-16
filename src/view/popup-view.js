@@ -1,25 +1,13 @@
 import { humanizeMovieDuration } from '../utils/date-transform.js';
 import { humanizeReleaseDate } from '../utils/date-transform.js';
-// import AbstractView from '../framework/view/abstract-view.js';
 import PopupFilmCommentStructureView from './popup-film-comment-structure-view';
 import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view';
+import PopupFilmDetailsControlView from './popup-film-details-controls-view';
 import { render } from '../framework/render.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 function createPopupTemplate(movie) {
   const {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
-
-  const isActiveWatchlist = watchlist
-    ? 'film-details__control-button--active'
-    : '';
-
-  const isActiveAlreadyWatched = alreadyWatched
-    ? 'film-details__control-button--active'
-    : '';
-
-  const isActiveFavorite = favorite
-    ? 'film-details__control-button--active'
-    : '';
 
   return `<section class="film-details">
   <div class="film-details__inner">
@@ -86,12 +74,9 @@ function createPopupTemplate(movie) {
         </div>
       </div>
 
-      <section class="film-details__controls">
-        <button type="button" class="film-details__control-button ${isActiveWatchlist} film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
-        <button type="button" class="film-details__control-button ${isActiveAlreadyWatched} film-details__control-button--watched" id="watched" name="watched">Already watched</button>
-        <button type="button" class="film-details__control-button ${isActiveFavorite} film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
-      </section>
+      <section class="film-details__controls-wrap"></section>
     </div>
+
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
       <h3 class="film-details__comments-title">Comments ${comments.length}</h3>
@@ -123,6 +108,10 @@ export default class PopupView extends AbstractStatefulView {
 
   #popupCommentsView = new Map();
 
+  #popupFilmDetailsControlView = null;
+
+  #popupFilmDetailsControlSection = null;
+
   constructor({movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
     super();
     this.#movie = movie.movie;
@@ -132,6 +121,17 @@ export default class PopupView extends AbstractStatefulView {
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView({
       hanleComment: this.#commentAddHandler,
     });
+
+
+    this.#popupFilmDetailsControlSection = this.element.querySelector('.film-details__controls-wrap');
+    this.#popupFilmDetailsControlView = new PopupFilmDetailsControlView({
+      movie: this.#movie,
+      onWatchlistPopupClick: this.#addToWatchlistPopupClickHandler,
+      onAlreadyWatchedClick: this.#alreadyWatchedClickHandler,
+      onFavoriteClick: this.#favoriteClickHandler,
+    });
+    render(this.#popupFilmDetailsControlView, this.#popupFilmDetailsControlSection);
+
     this.#onAddCommentHandler = onAddCommentHandler;
     this.#handleClosePopupClick = onClosePopupClick;
     this.#handleDeleteComment = onCloseComment;
@@ -141,19 +141,18 @@ export default class PopupView extends AbstractStatefulView {
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
-    this.element.querySelector('.film-details__control-button--watchlist')
-      .addEventListener('click', this.#addToWatchlistPopupClickHandler);
+    // this.element.querySelector('.film-details__control-button--watchlist')
+    //   .addEventListener('click', this.#addToWatchlistPopupClickHandler);
 
-    this.element.querySelector('.film-details__control-button--watched')
-      .addEventListener('click', this.#alreadyWatchedClickHandler);
+    // this.element.querySelector('.film-details__control-button--watched')
+    //   .addEventListener('click', this.#alreadyWatchedClickHandler);
 
-    this.element.querySelector('.film-details__control-button--favorite')
-      .addEventListener('click', this.#favoriteClickHandler);
+    // this.element.querySelector('.film-details__control-button--favorite')
+    //   .addEventListener('click', this.#favoriteClickHandler);
 
     this.#filmDetailsControl = this.element.querySelector('.film-details__controls');
 
     this.#movie.comments.forEach((commentId, indexOfComment) => {
-      debugger;
       const popupFilmCommentStructureView = new PopupFilmCommentStructureView(
         commentId,
         indexOfComment,

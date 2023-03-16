@@ -2,7 +2,6 @@ import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import he from 'he';
 
 function createPopupFilmDetailsNewCommentTemplate({emotion, comment, isDisabled}) {
-  console.log(isDisabled)
   return (`<form class="film-details__new-comment" action="" method="get" ${isDisabled ? 'disabled' : ''}>
       <div class="film-details__add-emoji-label">${(emotion) ? `<img src=${emotion} width="55" height="55">` : '' }</div>
 
@@ -78,14 +77,12 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
 
   #commentKeyDownHandler = (evt) => {
     if ((evt.metaKey || evt.ctrlKey) && evt.key === 'Enter') {
-      
       const emotion = String(
         document.querySelector('.film-details__add-emoji-label')
           .querySelector('img')
-            .src.substring(35)
-              .split('.')[0]
+          .src.substring(35)
+          .split('.')[0]
       );
-      
       this.#hanleComment({
         emotion: emotion,
         comment: document.querySelector('.film-details__comment-input').value,
