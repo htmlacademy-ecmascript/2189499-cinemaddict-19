@@ -1,7 +1,6 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view';
 
 function createPopupFilmDetailsControlViewTemplate(movie) {
-  debugger;
   const {userDetails: {watchlist, alreadyWatched, favorite}} = movie;
 
   const isActiveWatchlist = watchlist

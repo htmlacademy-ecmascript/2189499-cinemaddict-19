@@ -17,8 +17,6 @@ const PopupState = {
   OPENED: 'OPENED',
 };
 
-let globalPopupState = 'CLOSED'; //флаг, который информирует о том открыт ли какой-либо попап
-
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
   static MOVIE_COUNT_ZERO = 0;
@@ -103,7 +101,6 @@ export default class BoardPresenter {
   }
 
   #handleViewAction = async (actionType, updateType, update) => {
-    debugger;
     switch(actionType) {
       case UserAction.SORT_MOVIE:
         this.#movieModel.updateType(updateType, update);

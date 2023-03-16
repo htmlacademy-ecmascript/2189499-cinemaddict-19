@@ -32,7 +32,6 @@ export default class CommentsModel extends Observable {
     try {
       const newComment = await this.#commentsApiServiсe.addComment(update);
       this.#comments = newComment.comments;
-      console.log(newComment);
       this._notify(updateType, adaptToClient(newComment.movie));
     } catch(err) {
       throw new Error('Can\'t add comment');
@@ -40,7 +39,6 @@ export default class CommentsModel extends Observable {
   }
 
   async deleteComment(updateType, update) {
-    debugger;
     try {
       await this.#commentsApiServiсe.deleteComment(update.commentId.id);
       this.#comments = this.#comments = this.#comments.filter((comment) => comment.id !== update.commentId.id);

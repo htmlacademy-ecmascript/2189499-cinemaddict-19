@@ -49,7 +49,6 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
   }
 
   #deleteCommentHandler = () => {
-    debugger;
     this.#hadleDeleteCommet(this.#comments);
   };
 

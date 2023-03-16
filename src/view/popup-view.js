@@ -7,7 +7,7 @@ import { render } from '../framework/render.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 function createPopupTemplate(movie) {
-  const {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
+  const {comments, filmInfo} = movie;
 
   return `<section class="film-details">
   <div class="film-details__inner">
@@ -209,7 +209,6 @@ export default class PopupView extends AbstractStatefulView {
   }
 
   setAbortingDeletingComment = (commentId) => {
-    debugger;
     this.#popupCommentsView.get(commentId.id).updateElement({
       isDeleting: false,
       isDisabled: false,
