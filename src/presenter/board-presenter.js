@@ -111,7 +111,6 @@ export default class BoardPresenter {
   }
 
   #handleViewAction = async (actionType, updateType, update) => {
-    debugger;
     this.#uiBLocker.block();
     switch(actionType) {
       case UserAction.SORT_MOVIE:
