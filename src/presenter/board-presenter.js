@@ -11,10 +11,16 @@ import { SortType, UpdateType, UserAction } from '../const.js';
 import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-transform';
 import { filter } from '../utils/filter.js';
 import LoadingView from '../view/loading-view.js';
+import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
 
 const PopupState = {
   CLOSED: 'CLOSED',
   OPENED: 'OPENED',
+};
+
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
 };
 
 export default class BoardPresenter {
@@ -39,6 +45,10 @@ export default class BoardPresenter {
   #commentsModel = null;
   #loadingComponent = new LoadingView();
   #isLoading = true;
+  #uiBLocker = new UiBlocker({
+    LOWER_LIMIT:TimeLimit.LOWER_LIMIT,
+    UPPER_LIMIT: TimeLimit.UPPER_LIMIT,
+  });
 
   #popupState = PopupState.CLOSED;
   #loadMoreButtonHandler = () => {
@@ -101,6 +111,8 @@ export default class BoardPresenter {
   }
 
   #handleViewAction = async (actionType, updateType, update) => {
+    debugger;
+    this.#uiBLocker.block();
     switch(actionType) {
       case UserAction.SORT_MOVIE:
         this.#movieModel.updateType(updateType, update);
@@ -137,6 +149,7 @@ export default class BoardPresenter {
         }
         break;
     }
+    this.#uiBLocker.unblock();
   };
 
   #handleModelEvent = (updateType, data) => {
