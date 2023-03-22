@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { FilterType } from '../const.js';
-
+debugger;
 const NoMovieTextType = {
   [FilterType.ALL]: 'There are no movies in our database',
   [FilterType.WATCHLIST]: 'There are no movies to watch now',

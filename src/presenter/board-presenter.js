@@ -196,9 +196,7 @@ export default class BoardPresenter {
     this.#moviePresenter.clear();
     remove(this.#loadMoreButtonComponent);
     this.#renderShowMoreBtn();
-    if (this.#noMovieComponent) {
-      remove(this.#noMovieComponent);
-    }
+    remove(this.#noMovieComponent);
   }
 
   #renderLoading() {
@@ -240,31 +238,34 @@ export default class BoardPresenter {
   }
 
   #renderMovieList() {
+
     if (this.movie.length <= BoardPresenter.MOVIE_COUNT_PER_STEP) {
       remove(this.#loadMoreButtonComponent);
     }
-    if (this.movie.length === BoardPresenter.MOVIE_COUNT_ZERO) {
-      this.#renderNoMovie();
-    }
+
     for (let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++){
+
+      if (i === BoardPresenter.MOVIE_COUNT_ZERO) {
+        render(this.#noMovieComponent, this.#main);
+      } else if ( i > 0 ) {
+        remove(this.#noMovieComponent, this.#main);
+      }
+
       if (i === this.movie.length) {
         return;
       }
       this.#renderMovie(this.movie[i]);
-    }
-  }
 
-  #renderNoMovie(filterType) {
-    this.#filterType = filterType;
-    this.#noMovieComponent = new NoMovieView({
-      filterType: this.#filterType,
-    });
-    render(this.#noMovieComponent, this.#main);
+    }
   }
 
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
     this.#renderSort();
+
+    this.#noMovieComponent = new NoMovieView({
+      filterType: this.#filterType,
+    });
 
     render(this.#filmListComponent, this.#main);
 
