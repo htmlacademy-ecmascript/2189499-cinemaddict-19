@@ -12,6 +12,7 @@ import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-tr
 import { filter } from '../utils/filter.js';
 import LoadingView from '../view/loading-view.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
+import FilterMoviePresenter from './filter-presenter.js';
 
 const PopupState = {
   CLOSED: 'CLOSED',
@@ -50,6 +51,7 @@ export default class BoardPresenter {
     UPPER_LIMIT: TimeLimit.UPPER_LIMIT,
   });
 
+  #filterMoviePresenter = null;
   #popupState = PopupState.CLOSED;
   #loadMoreButtonHandler = () => {
     const movieCount = this.movie.length;
@@ -239,17 +241,20 @@ export default class BoardPresenter {
 
   #renderMovieList() {
 
+    // this.#filterMoviePresenter = new FilterMoviePresenter();
+    // console.log(this.#filterMoviePresenter);
+
     if (this.movie.length <= BoardPresenter.MOVIE_COUNT_PER_STEP) {
       remove(this.#loadMoreButtonComponent);
     }
 
     for (let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++){
 
-      if (i === BoardPresenter.MOVIE_COUNT_ZERO) {
-        render(this.#noMovieComponent, this.#main);
-      } else if ( i > 0 ) {
-        remove(this.#noMovieComponent, this.#main);
-      }
+      // if (i === BoardPresenter.MOVIE_COUNT_ZERO) {
+      //   render(this.#noMovieComponent, this.#main);
+      // } else if ( i > 0 ) {
+      //   remove(this.#noMovieComponent, this.#main);
+      // }
 
       if (i === this.movie.length) {
         return;
@@ -263,9 +268,9 @@ export default class BoardPresenter {
     render(new UserNameStatusView(), this.#header);
     this.#renderSort();
 
-    this.#noMovieComponent = new NoMovieView({
-      filterType: this.#filterType,
-    });
+    // this.#noMovieComponent = new NoMovieView({
+    //   filterType: this.#filterType,
+    // });
 
     render(this.#filmListComponent, this.#main);
 

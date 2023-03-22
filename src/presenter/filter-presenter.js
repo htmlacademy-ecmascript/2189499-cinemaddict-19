@@ -2,7 +2,7 @@ import MenuView from '../view/menu-view';
 import { render, replace, remove } from '../framework/render';
 import {FilterType, UpdateType} from '../const.js';
 import { filter } from '../utils/filter';
-
+import NoMovieView from '../view/no-moviecard-view.js';
 export default class FilterMoviePresenter {
   #filterComponentContainer = null;
   #currentFilterType = 'All';
@@ -11,6 +11,13 @@ export default class FilterMoviePresenter {
   #movieModel = null;
   #filterModel = null;
   #filterContainer = null;
+  #noMovieCardComponent = null;
+
+  #allMovieLength = null;
+  #watchlistMovieLength = null;
+  #historyMovieLength = null;
+  #favoritesMoviesLength = null;
+
   constructor({ main, filterModel, movieModel, filterContainer}){
     this.#filterContainer = filterContainer;
     this.#main = main;
@@ -22,6 +29,11 @@ export default class FilterMoviePresenter {
 
   get filters() {
     const movie = this.#movieModel.movie;
+    this.#allMovieLength = filter[FilterType.ALL](movie).length;
+    this.#watchlistMovieLength = filter[FilterType.WATCHLIST](movie).length;
+    this.#historyMovieLength = filter[FilterType.HISTORY](movie).length;
+    this.#favoritesMoviesLength = filter[FilterType.FAVORITES](movie).length;
+
     return [
       {
         type: FilterType.ALL,
@@ -49,17 +61,66 @@ export default class FilterMoviePresenter {
   init() {
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
+
     this.#filterComponent = new MenuView({
       filters,
       currentFilterType: this.#filterModel.filter,
       onFilterTypeChange: this.#filterTypeChange,
     });
+
     if (prevFilterComponent === null) {
       render(this.#filterComponent, this.#filterContainer);
       return;
     }
     replace(this.#filterComponent, prevFilterComponent);
     remove(prevFilterComponent);
+
+
+    this.#noMovieCardComponent = new NoMovieView({
+      filterType: this.#filterModel.filter,
+    });
+
+    if (this.#filterModel.filter === 'All' && this.#allMovieLength === 0 ) {
+      render(this.#noMovieCardComponent, this.#filterContainer);
+    }
+    if (this.#filterModel.filter === 'Watchlist' && this.#watchlistMovieLength === 0) {
+      render(this.#noMovieCardComponent, this.#filterContainer);
+    }
+    if (this.#filterModel.filter === 'History' && this.#historyMovieLength === 0) {
+      render(this.#noMovieCardComponent, this.#filterContainer);
+    }
+    if (this.#filterModel.filter === 'Favorites' && this.#favoritesMoviesLength === 0) {
+      render(this.#noMovieCardComponent, this.#filterContainer);
+    }
+
+    if (this.#filterModel.filter === 'All' && this.#allMovieLength !== 0 ) {
+      const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+      if (textNoMovieMessgae !== null) {
+        textNoMovieMessgae.remove();
+      }
+    }
+
+    if (this.#filterModel.filter === 'Watchlist' && this.#watchlistMovieLength !== 0 ) {
+      const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+      if (textNoMovieMessgae !== null) {
+        textNoMovieMessgae.remove();
+      }
+    }
+
+    if (this.#filterModel.filter === 'History' && this.#historyMovieLength !== 0 ) {
+      const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+      if (textNoMovieMessgae !== null) {
+        textNoMovieMessgae.remove();
+      }
+    }
+
+    if (this.#filterModel.filter === 'Favorites' && this.#favoritesMoviesLength !== 0 ) {
+      const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+      if (textNoMovieMessgae !== null) {
+        textNoMovieMessgae.remove();
+      }
+    }
+
   }
 
   #handleModelUpdate = () => {

@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { FilterType } from '../const.js';
-debugger;
+
 const NoMovieTextType = {
   [FilterType.ALL]: 'There are no movies in our database',
   [FilterType.WATCHLIST]: 'There are no movies to watch now',
@@ -10,7 +10,7 @@ const NoMovieTextType = {
 
 function createNoMovieTemplate(filterType) {
   const noMovieTextValue = NoMovieTextType[filterType];
-  return `<h2 class="films-list__title">${noMovieTextValue}</h2>`;
+  return `<h2 class="films-list__title" id="no-movie">${noMovieTextValue}</h2>`;
 }
 
 export default class NoMovieView extends AbstractView {
