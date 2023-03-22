@@ -81,15 +81,31 @@ export default class FilterMoviePresenter {
     });
 
     if (this.#filterModel.filter === 'All' && this.#allMovieLength === 0 ) {
+      const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+      if (textNoMovieMessgae !== null) {
+        textNoMovieMessgae.remove();
+      }
       render(this.#noMovieCardComponent, this.#filterContainer);
     }
     if (this.#filterModel.filter === 'Watchlist' && this.#watchlistMovieLength === 0) {
+      const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+      if (textNoMovieMessgae !== null) {
+        textNoMovieMessgae.remove();
+      }
       render(this.#noMovieCardComponent, this.#filterContainer);
     }
     if (this.#filterModel.filter === 'History' && this.#historyMovieLength === 0) {
+      const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+      if (textNoMovieMessgae !== null) {
+        textNoMovieMessgae.remove();
+      }
       render(this.#noMovieCardComponent, this.#filterContainer);
     }
     if (this.#filterModel.filter === 'Favorites' && this.#favoritesMoviesLength === 0) {
+      const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+      if (textNoMovieMessgae !== null) {
+        textNoMovieMessgae.remove();
+      }
       render(this.#noMovieCardComponent, this.#filterContainer);
     }
 
