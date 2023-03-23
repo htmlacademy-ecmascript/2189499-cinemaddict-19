@@ -3,6 +3,14 @@ import PopupView from '../view/popup-view';
 import { UserAction,UpdateType } from '../const';
 
 export default class PopupPresenter {
+
+  #initialState = {
+    emotion: '',
+    comment: '',
+    isDisabled: false,
+    scrollPosition: 0,
+  };
+
   #onClosePopupClick = null;
   #popupViewComponent = null;
   #handleDataChange = null;
@@ -13,7 +21,7 @@ export default class PopupPresenter {
   #commentsModel = null;
   #popupState = null;
   #scrollPosition = null;
-
+  #scrollState = 0;
 
   constructor({body, onDataChange, removePopupPresenterComponent, commentsModel, popupState}) {
     this.#body = body;
@@ -36,13 +44,13 @@ export default class PopupPresenter {
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
       onCloseComment: this.#closeCommentHandle,
       onAddCommentHandler: this.#handleCommentAdd,
-      scrollPosition: this.#scrollPosition,
+      // onScroll: this.#scrollPosirion ,
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
-    console.log(this.#scrollPosition);
-    //вот тут происходит прокурутка к нашей позиции
-    this.#popupViewComponent.element.scrollBy(0, 200);
+    this.#popupViewComponent.element.scrollBy(0, localStorage.scrollX);
+    let cord = ['scrollX']
+    localStorage[cord] = 0;
   }
 
   #handleClosePopupClick = () => {
@@ -117,7 +125,7 @@ export default class PopupPresenter {
 
   setDeletingComment(commentId) {
     this.#popupViewComponent.setDeletingComment(commentId);
-
+    // console.log(this.element);
   }
 
   setAbortingDeletingComment(commentId) {

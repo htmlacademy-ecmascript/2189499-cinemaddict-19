@@ -103,6 +103,7 @@ export default class PopupView extends AbstractStatefulView {
   #comments = null;
   #hanleComment = null;
   #onAddCommentHandler = null;
+  #scroll = null;
 
   #scrollPosition = null;
 
@@ -114,7 +115,7 @@ export default class PopupView extends AbstractStatefulView {
 
   #popupFilmDetailsControlSection = null;
 
-  constructor({scrollPosition, movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
+  constructor({onScroll, movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
     super();
     this.#movie = movie.movie;
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
@@ -136,7 +137,7 @@ export default class PopupView extends AbstractStatefulView {
     });
     render(this.#popupFilmDetailsControlView, this.#popupFilmDetailsControlSection);
 
-    this.#scrollPosition = scrollPosition;
+    // this.#scrollPosition = scrollPosition;
     this.#onAddCommentHandler = onAddCommentHandler;
     this.#handleClosePopupClick = onClosePopupClick;
     this.#handleDeleteComment = onCloseComment;
@@ -164,6 +165,8 @@ export default class PopupView extends AbstractStatefulView {
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
     });
     render(this.#popupFilmDetailNewCommentView, this.#commentList);
+
+    // this.#scroll = onScroll;
   }
 
   get template() {
@@ -171,13 +174,14 @@ export default class PopupView extends AbstractStatefulView {
   }
 
   #commentAddHandler = (comment) => {
-    debugger;
-    const scroll = this.element.scrollTop;
-    this.#scrollPosition(scroll);
+    let cord = ['scrollX']
+    localStorage[cord] = [this.element.scrollTop];
     this.#onAddCommentHandler(comment);
   };
 
   #deleteCommentHandler = (commentId) => {
+    let cord = ['scrollX']
+    localStorage[cord] = [this.element.scrollTop];
     this.#handleDeleteComment(commentId);
   };
 
@@ -189,17 +193,20 @@ export default class PopupView extends AbstractStatefulView {
   #addToWatchlistPopupClickHandler = () => {
     this.#hadleWatchlistClick();
 
-    console.log(this.element.scrollTop);
+    let cord = ['scrollX']
+    localStorage[cord] = [this.element.scrollTop];
   };
 
   #alreadyWatchedClickHandler = () => {
     this.#handleAlreadyWatchedClick();
-    console.log(this.element.scrollTop);
+    let cord = ['scrollX']
+    localStorage[cord] = [this.element.scrollTop];
   };
 
   #favoriteClickHandler = () => {
     this.#handleFavoriteClick();
-    console.log(this.element.scrollTop);
+    let cord = ['scrollX']
+    localStorage[cord] = [this.element.scrollTop];
   };
 
   resetpopupFilmDetailNewCommentView() {
