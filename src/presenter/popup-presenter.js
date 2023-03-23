@@ -12,6 +12,8 @@ export default class PopupPresenter {
   #removePopupPresenterComponentHandler = null;
   #commentsModel = null;
   #popupState = null;
+  #scrollPosition = null;
+
 
   constructor({body, onDataChange, removePopupPresenterComponent, commentsModel, popupState}) {
     this.#body = body;
@@ -34,9 +36,13 @@ export default class PopupPresenter {
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
       onCloseComment: this.#closeCommentHandle,
       onAddCommentHandler: this.#handleCommentAdd,
+      scrollPosition: this.#scrollPosition,
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
+    console.log(this.#scrollPosition);
+    //вот тут происходит прокурутка к нашей позиции
+    this.#popupViewComponent.element.scrollBy(0, 200);
   }
 
   #handleClosePopupClick = () => {
@@ -63,6 +69,8 @@ export default class PopupPresenter {
       UpdateType.MINOR,
       {commentAdd, movie},
     );
+    // console.log(this.element)
+    // this.#scrollPosition = 
   };
 
   #closeCommentHandle = async (commentId) => {
@@ -109,6 +117,7 @@ export default class PopupPresenter {
 
   setDeletingComment(commentId) {
     this.#popupViewComponent.setDeletingComment(commentId);
+
   }
 
   setAbortingDeletingComment(commentId) {

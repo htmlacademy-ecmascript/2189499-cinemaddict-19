@@ -104,6 +104,8 @@ export default class PopupView extends AbstractStatefulView {
   #hanleComment = null;
   #onAddCommentHandler = null;
 
+  #scrollPosition = null;
+
   #filmDetailsControl = null;
 
   #popupCommentsView = new Map();
@@ -112,7 +114,7 @@ export default class PopupView extends AbstractStatefulView {
 
   #popupFilmDetailsControlSection = null;
 
-  constructor({movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
+  constructor({scrollPosition, movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
     super();
     this.#movie = movie.movie;
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
@@ -121,7 +123,9 @@ export default class PopupView extends AbstractStatefulView {
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView({
       hanleComment: this.#commentAddHandler,
     });
-
+    // this.#scrollPosition = 
+    // scrollPosition: this.#scrollPosition;
+    
 
     this.#popupFilmDetailsControlSection = this.element.querySelector('.film-details__controls-wrap');
     this.#popupFilmDetailsControlView = new PopupFilmDetailsControlView({
@@ -132,6 +136,7 @@ export default class PopupView extends AbstractStatefulView {
     });
     render(this.#popupFilmDetailsControlView, this.#popupFilmDetailsControlSection);
 
+    this.#scrollPosition = scrollPosition;
     this.#onAddCommentHandler = onAddCommentHandler;
     this.#handleClosePopupClick = onClosePopupClick;
     this.#handleDeleteComment = onCloseComment;
@@ -166,6 +171,9 @@ export default class PopupView extends AbstractStatefulView {
   }
 
   #commentAddHandler = (comment) => {
+    debugger;
+    const scroll = this.element.scrollTop;
+    this.#scrollPosition(scroll);
     this.#onAddCommentHandler(comment);
   };
 
@@ -180,14 +188,18 @@ export default class PopupView extends AbstractStatefulView {
 
   #addToWatchlistPopupClickHandler = () => {
     this.#hadleWatchlistClick();
+
+    console.log(this.element.scrollTop);
   };
 
   #alreadyWatchedClickHandler = () => {
     this.#handleAlreadyWatchedClick();
+    console.log(this.element.scrollTop);
   };
 
   #favoriteClickHandler = () => {
     this.#handleFavoriteClick();
+    console.log(this.element.scrollTop);
   };
 
   resetpopupFilmDetailNewCommentView() {
@@ -198,14 +210,17 @@ export default class PopupView extends AbstractStatefulView {
     this.#popupFilmDetailNewCommentView.updateElement({
       isDisabled: true,
     });
+    // console.log(this.element.scrollTop);
   }
 
   setDeletingComment(commentId) {
+    debugger;
     this.#popupCommentsView.get(commentId.id).updateElement({
       isDeleting: true,
       isDisabled: true,
+      scrollPosition: this.element.scrollTop,
     });
-
+    // console.log(this.element.scrollTop);
   }
 
   setAbortingDeletingComment = (commentId) => {
