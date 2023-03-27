@@ -88,10 +88,6 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
         emotion: emotion,
         comment: document.querySelector('.film-details__comment-input').value,
       });
-      // this.updateElement({
-      //   scrollPosition: 
-      // })
-      // 
     }
   };
 }

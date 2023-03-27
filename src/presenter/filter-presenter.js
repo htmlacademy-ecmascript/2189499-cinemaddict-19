@@ -4,10 +4,7 @@ import {FilterType, UpdateType} from '../const.js';
 import { filter } from '../utils/filter';
 import NoMovieView from '../view/no-moviecard-view.js';
 export default class FilterMoviePresenter {
-  #filterComponentContainer = null;
-  #currentFilterType = 'All';
   #filterComponent = null;
-  #main = null;
   #movieModel = null;
   #filterModel = null;
   #filterContainer = null;
@@ -18,9 +15,8 @@ export default class FilterMoviePresenter {
   #historyMovieLength = null;
   #favoritesMoviesLength = null;
 
-  constructor({ main, filterModel, movieModel, filterContainer}){
+  constructor({filterModel, movieModel, filterContainer}){
     this.#filterContainer = filterContainer;
-    this.#main = main;
     this.#filterModel = filterModel;
     this.#movieModel = movieModel;
     this.#movieModel.addObserver(this.#handleModelUpdate);

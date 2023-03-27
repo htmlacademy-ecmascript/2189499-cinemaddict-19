@@ -20,7 +20,6 @@ function createPopupFilmCommentStructureTemplate(commentId, comments, index, {is
 export default class PopupFilmCommentStructureView extends AbstractStatefulView {
   #commentId = null;
   #hadleDeleteCommet = null;
-  #commentsModel = null;
   #comments = null;
   #indexOfComment = null;
   #commentsData = null;
@@ -31,11 +30,10 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
   };
 
 
-  constructor(commentId, indexOfComment, {hadleDeleteCommet, comments, commentsModel}) {
+  constructor(commentId, indexOfComment, {hadleDeleteCommet, comments}) {
     super();
     this.#indexOfComment = indexOfComment;
     this.#commentId = commentId;
-    this.#commentsModel = commentsModel;
     this.#hadleDeleteCommet = hadleDeleteCommet;
     this.#comments = comments;
     this._setState(this.#initialState);

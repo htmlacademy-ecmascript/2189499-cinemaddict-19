@@ -3,15 +3,6 @@ import PopupView from '../view/popup-view';
 import { UserAction,UpdateType } from '../const';
 
 export default class PopupPresenter {
-
-  #initialState = {
-    emotion: '',
-    comment: '',
-    isDisabled: false,
-    scrollPosition: 0,
-  };
-
-  #onClosePopupClick = null;
   #popupViewComponent = null;
   #handleDataChange = null;
   #body = null;
@@ -20,8 +11,6 @@ export default class PopupPresenter {
   #removePopupPresenterComponentHandler = null;
   #commentsModel = null;
   #popupState = null;
-  #scrollPosition = null;
-  #scrollState = 0;
 
   constructor({body, onDataChange, removePopupPresenterComponent, commentsModel, popupState}) {
     this.#body = body;
@@ -44,7 +33,6 @@ export default class PopupPresenter {
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
       onCloseComment: this.#closeCommentHandle,
       onAddCommentHandler: this.#handleCommentAdd,
-      // onScroll: this.#scrollPosirion ,
     });
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
@@ -77,8 +65,6 @@ export default class PopupPresenter {
       UpdateType.MINOR,
       {commentAdd, movie},
     );
-    // console.log(this.element)
-    // this.#scrollPosition = 
   };
 
   #closeCommentHandle = async (commentId) => {
@@ -125,7 +111,6 @@ export default class PopupPresenter {
 
   setDeletingComment(commentId) {
     this.#popupViewComponent.setDeletingComment(commentId);
-    // console.log(this.element);
   }
 
   setAbortingDeletingComment(commentId) {

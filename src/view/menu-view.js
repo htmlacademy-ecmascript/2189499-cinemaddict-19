@@ -30,15 +30,12 @@ function createMenuTemplate(currentFilterType, filters) {
 
 export default class MenuView extends AbstractView {
   #filters = null;
-  #onClick = null;
   #currentFilterType = null;
-  #onClickHandler = null;
   #handleFilterTypeChange = null;
 
-  constructor({filters, onClick, currentFilterType, onFilterTypeChange}) {
+  constructor({filters, currentFilterType, onFilterTypeChange}) {
     super();
     this.#filters = filters;
-    this.#onClickHandler = onClick;
     this.#currentFilterType = currentFilterType;
     this.#handleFilterTypeChange = onFilterTypeChange;
     this.element.querySelectorAll('.main-navigation__item').forEach((element) => element.addEventListener('click', this.#filterTypeChangeHandler));

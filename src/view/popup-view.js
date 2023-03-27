@@ -103,16 +103,9 @@ export default class PopupView extends AbstractStatefulView {
   #comments = null;
   #hanleComment = null;
   #onAddCommentHandler = null;
-  #scroll = null;
-
-  #scrollPosition = null;
-
   #filmDetailsControl = null;
-
   #popupCommentsView = new Map();
-
   #popupFilmDetailsControlView = null;
-
   #popupFilmDetailsControlSection = null;
 
   constructor({onScroll, movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
@@ -124,9 +117,6 @@ export default class PopupView extends AbstractStatefulView {
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView({
       hanleComment: this.#commentAddHandler,
     });
-    // this.#scrollPosition = 
-    // scrollPosition: this.#scrollPosition;
-    
 
     this.#popupFilmDetailsControlSection = this.element.querySelector('.film-details__controls-wrap');
     this.#popupFilmDetailsControlView = new PopupFilmDetailsControlView({
@@ -136,8 +126,6 @@ export default class PopupView extends AbstractStatefulView {
       onFavoriteClick: this.#favoriteClickHandler,
     });
     render(this.#popupFilmDetailsControlView, this.#popupFilmDetailsControlSection);
-
-    // this.#scrollPosition = scrollPosition;
     this.#onAddCommentHandler = onAddCommentHandler;
     this.#handleClosePopupClick = onClosePopupClick;
     this.#handleDeleteComment = onCloseComment;
@@ -165,8 +153,6 @@ export default class PopupView extends AbstractStatefulView {
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
     });
     render(this.#popupFilmDetailNewCommentView, this.#commentList);
-
-    // this.#scroll = onScroll;
   }
 
   get template() {
@@ -217,17 +203,14 @@ export default class PopupView extends AbstractStatefulView {
     this.#popupFilmDetailNewCommentView.updateElement({
       isDisabled: true,
     });
-    // console.log(this.element.scrollTop);
   }
 
   setDeletingComment(commentId) {
-    debugger;
     this.#popupCommentsView.get(commentId.id).updateElement({
       isDeleting: true,
       isDisabled: true,
       scrollPosition: this.element.scrollTop,
     });
-    // console.log(this.element.scrollTop);
   }
 
   setAbortingDeletingComment = (commentId) => {
