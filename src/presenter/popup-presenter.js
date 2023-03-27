@@ -59,7 +59,7 @@ export default class PopupPresenter {
   };
 
   #handleCommentAdd = (commentAdd) => {
-    const movie = this.#movie.id;
+    const movie = this.#movie;
     this.#handleDataChange(
       UserAction.ADD_COMMENT,
       UpdateType.MINOR,

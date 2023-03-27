@@ -111,6 +111,7 @@ export default class BoardPresenter {
   }
 
   #handleViewAction = async (actionType, updateType, update) => {
+    debugger;
     this.#uiBLocker.block();
     switch(actionType) {
       case UserAction.SORT_MOVIE:
@@ -143,6 +144,7 @@ export default class BoardPresenter {
         this.#popupPresenterComponent.setSavingComment();
         try {
           await this.#commentsModel.addComment(updateType, update);
+          this.#movieModel.updateMovie(updateType, update.movie);
         } catch {
           this.#popupPresenterComponent.setAbortingSavingComment();
         }

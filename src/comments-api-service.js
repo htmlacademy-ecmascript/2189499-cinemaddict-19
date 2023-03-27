@@ -10,7 +10,7 @@ export default class CommentsApiService extends ApiService {
 
   async addComment({commentAdd, movie}) {
     const response = await this._load({
-      url: `comments/${movie}`,
+      url: `comments/${movie.id}`,
       method: Method.POST,
       body: JSON.stringify(commentAdd),
       headers: new Headers({'Content-Type': 'application/json'}),
