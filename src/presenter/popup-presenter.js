@@ -2,6 +2,8 @@ import { remove, render } from '../framework/render';
 import PopupView from '../view/popup-view';
 import { UserAction,UpdateType } from '../const';
 
+// let cord = 0;
+
 export default class PopupPresenter {
   #popupViewComponent = null;
   #handleDataChange = null;
@@ -37,14 +39,14 @@ export default class PopupPresenter {
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
     this.#popupViewComponent.element.scrollBy(0, localStorage.scrollX);
-    let cord = ['scrollX']
-    localStorage[cord] = 0;
   }
 
   #handleClosePopupClick = () => {
     remove(this.#popupViewComponent);
     this.#removePopupPresenterComponentHandler();
     this.#body.classList.remove('hide-overflow');
+    let cord = ['scrollX'];
+    localStorage[cord] = 0;
   };
 
   #closeEscBtnPopup = () => {

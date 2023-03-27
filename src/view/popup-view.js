@@ -172,6 +172,8 @@ export default class PopupView extends AbstractStatefulView {
   };
 
   #closePopupClickHandler = (evt) => {
+    let cord = ['scrollX'];
+    localStorage[cord] = [this.element.scrollTop = 0];
     evt.preventDefault();
     this.#handleClosePopupClick();
   };
