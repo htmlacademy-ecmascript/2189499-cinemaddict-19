@@ -143,7 +143,7 @@ export default class BoardPresenter {
       case UserAction.ADD_COMMENT:
         this.#popupPresenterComponent.setSavingComment();
         try {
-          await this.#commentsModel.addComment(updateType, update);
+          this.#commentsModel.addComment(updateType, update);
           this.#movieModel.updateMovie(updateType, update.movie);
         } catch {
           this.#popupPresenterComponent.setAbortingSavingComment();
