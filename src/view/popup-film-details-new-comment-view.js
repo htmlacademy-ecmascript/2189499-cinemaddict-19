@@ -77,17 +77,24 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
   };
 
   #commentKeyDownHandler = (evt) => {
+    
     if ((evt.metaKey || evt.ctrlKey) && evt.key === 'Enter') {
-      const emotion = String(
-        document.querySelector('.film-details__add-emoji-label')
-          .querySelector('img')
-          .src.substring(35)
-          .split('.')[0]
-      );
-      this.#hanleComment({
-        emotion: emotion,
-        comment: document.querySelector('.film-details__comment-input').value,
-      });
+      let emotion = document.querySelector('.film-details__add-emoji-label').querySelector('img');
+        if (emotion !== null) {
+          let emotionSrc = emotion.src;
+          let emotionSrcSubstring = String(emotionSrc.substring(35).split('.')[0]);
+        
+          this.#hanleComment({
+            emotion: emotionSrcSubstring,
+            comment: document.querySelector('.film-details__comment-input').value,
+          });  
+        }
+        if (emotion === null) {
+          this.#hanleComment({
+            emotion: emotion,
+            comment: document.querySelector('.film-details__comment-input').value,
+          });  
+        }
     }
   };
 }

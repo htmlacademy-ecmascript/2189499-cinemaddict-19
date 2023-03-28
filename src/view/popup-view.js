@@ -108,7 +108,7 @@ export default class PopupView extends AbstractStatefulView {
   #popupFilmDetailsControlView = null;
   #popupFilmDetailsControlSection = null;
 
-  constructor({onScroll, movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
+  constructor({movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
     super();
     this.#movie = movie.movie;
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
@@ -163,6 +163,10 @@ export default class PopupView extends AbstractStatefulView {
     let cord = ['scrollX']
     localStorage[cord] = [this.element.scrollTop];
     this.#onAddCommentHandler(comment);
+    if (comment.emotion === null) {
+      setAbortingSavingComment();
+      return;
+    }
   };
 
   #deleteCommentHandler = (commentId) => {
