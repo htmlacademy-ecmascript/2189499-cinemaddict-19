@@ -24,8 +24,11 @@ export default class PopupPresenter {
 
   async init(movie) {
     this.#movie = movie.movie;
+    
     await this.#commentsModel.init(movie.movie);
+
     this.#comments = this.#commentsModel.comments;
+
     this.#popupViewComponent = new PopupView({
       movie,
       comments: this.#comments,
