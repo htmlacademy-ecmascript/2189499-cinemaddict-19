@@ -43,8 +43,7 @@ export default class PopupPresenter {
     remove(this.#popupViewComponent);
     this.#removePopupPresenterComponentHandler();
     this.#body.classList.remove('hide-overflow');
-    const cord = ['scrollX'];
-    localStorage[cord] = 0;
+    localStorage.setItem('scrollX', 0);
   };
 
   #closeEscBtnPopup = () => {

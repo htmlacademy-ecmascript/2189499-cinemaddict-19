@@ -164,8 +164,7 @@ export default class PopupView extends AbstractStatefulView {
   }
 
   #commentAddHandler = (comment) => {
-    const cord = ['scrollX'];
-    localStorage[cord] = [this.element.scrollTop];
+    localStorage.setItem('scrollX', this.element.scrollTop);
     this.#onAddCommentHandler(comment);
     if (comment.emotion === null) {
       this.setAbortingSavingComment();
@@ -173,35 +172,28 @@ export default class PopupView extends AbstractStatefulView {
   };
 
   #deleteCommentHandler = (commentId) => {
-    const cord = ['scrollX'];
-    localStorage[cord] = [this.element.scrollTop];
+    localStorage.setItem('scrollX', this.element.scrollTop);
     this.#handleDeleteComment(commentId);
   };
 
   #closePopupClickHandler = (evt) => {
-    const cord = ['scrollX'];
-    localStorage[cord] = [this.element.scrollTop = 0];
     evt.preventDefault();
     this.#handleClosePopupClick();
   };
 
   #addToWatchlistPopupClickHandler = () => {
     this.#hadleWatchlistClick();
-
-    const cord = ['scrollX'];
-    localStorage[cord] = [this.element.scrollTop];
+    localStorage.setItem('scrollX', this.element.scrollTop);
   };
 
   #alreadyWatchedClickHandler = () => {
     this.#handleAlreadyWatchedClick();
-    const cord = ['scrollX'];
-    localStorage[cord] = [this.element.scrollTop];
+    localStorage.setItem('scrollX', this.element.scrollTop);
   };
 
   #favoriteClickHandler = () => {
     this.#handleFavoriteClick();
-    const cord = ['scrollX'];
-    localStorage[cord] = [this.element.scrollTop];
+    localStorage.setItem('scrollX', this.element.scrollTop);
   };
 
   resetpopupFilmDetailNewCommentView() {
