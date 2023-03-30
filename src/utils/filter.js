@@ -1,23 +1,14 @@
 import { FilterType } from '../const.js';
 
-function inMovieWatchlist(movie) {
-  const {userDetails: {watchlist}} = movie;
-  return watchlist;
-}
-function inMovieHistory(movie) {
-  const {userDetails: {alreadyWatched}} = movie;
-  return alreadyWatched;
-}
-function inMovieFavorites(movie) {
-  const {userDetails: {favorite}} = movie;
-  return favorite;
+function filterParam(movie, field) {
+  return movie.userDetails[field];
 }
 
 const filter = {
   [FilterType.ALL]: (movies) => movies,
-  [FilterType.WATCHLIST]: (movies) => movies.filter((watched) => inMovieWatchlist(watched)),
-  [FilterType.HISTORY]: (movies) => movies.filter((alreadyWatched) => inMovieHistory(alreadyWatched)),
-  [FilterType.FAVORITES]: (movies) => movies.filter((favorite) => inMovieFavorites(favorite)),
+  [FilterType.WATCHLIST]: (movies) => movies.filter((movie) => filterParam(movie, 'watchlist')),
+  [FilterType.HISTORY]: (movies) => movies.filter((movie) => filterParam(movie, 'alreadyWatched')),
+  [FilterType.FAVORITES]: (movies) => movies.filter((movie) => filterParam(movie, 'favorite')),
 };
 
 export {filter};

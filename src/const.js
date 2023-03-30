@@ -25,12 +25,31 @@ const UserAction = {
   UPDATE_POPUP: 'UPDATE_POPUP',
   MINOR_POPUP: 'MINOR_POPUP',
   DELETE_COMMENT: 'DELETE_COMMENT',
+  ADD_COMMENT: 'ADD_COMMENT',
 };
 
 const Method = {
   GET: 'GET',
   PUT: 'PUT',
   DELETE: 'DELETE',
+  POST: 'POST',
 };
 
-export {FilterType, SortType, UpdateType, UserAction, Method};
+const PopupState = {
+  CLOSED: 'CLOSED',
+  OPENED: 'OPENED',
+};
+
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
+};
+
+const Format = {
+  DATE_FORMAT: 'YYYY',
+  DURATION_FORMAT: 'H[h] mm',
+  COMMENT_FORMAT: 'YYYY MMMM DD HH:mm',
+  RELEASE_FORMAT: 'DD MMMM YYYY'
+};
+
+export {FilterType, SortType, UpdateType, UserAction, Method, PopupState, TimeLimit, Format};

@@ -1,8 +1,8 @@
 import { remove, render } from '../framework/render';
 import PopupView from '../view/popup-view';
 import { UserAction,UpdateType } from '../const';
+
 export default class PopupPresenter {
-  #onClosePopupClick = null;
   #popupViewComponent = null;
   #handleDataChange = null;
   #body = null;
@@ -10,6 +10,7 @@ export default class PopupPresenter {
   #comments = null;
   #removePopupPresenterComponentHandler = null;
   #commentsModel = null;
+
   constructor({body, onDataChange, removePopupPresenterComponent, commentsModel}) {
     this.#body = body;
     this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
@@ -21,6 +22,7 @@ export default class PopupPresenter {
     this.#movie = movie.movie;
     await this.#commentsModel.init(movie.movie);
     this.#comments = this.#commentsModel.comments;
+
     this.#popupViewComponent = new PopupView({
       movie,
       comments: this.#comments,
@@ -29,43 +31,53 @@ export default class PopupPresenter {
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
       onCloseComment: this.#closeCommentHandle,
+      onAddCommentHandler: this.#handleCommentAdd,
     });
+
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
+    this.#popupViewComponent.element.scrollBy(0, localStorage.scrollX);
   }
 
   #handleClosePopupClick = () => {
     remove(this.#popupViewComponent);
     this.#removePopupPresenterComponentHandler();
     this.#body.classList.remove('hide-overflow');
+    localStorage.setItem('scrollX', 0);
   };
 
   #closeEscBtnPopup = () => {
     const escKeydownHandler = (evt) => {
+
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
         this.#handleClosePopupClick();
         document.removeEventListener('keydown', escKeydownHandler);
       }
+
     };
     document.addEventListener('keydown', escKeydownHandler);
   };
 
-  #closeCommentHandle = async (commentId) => { debugger;
+  #handleCommentAdd = (commentAdd) => {
+    this.#handleDataChange(
+      UserAction.ADD_COMMENT,
+      UpdateType.MINOR,
+      {commentAdd, movie: this.#movie},
+    );
+  };
+
+  #closeCommentHandle = async (commentId) => {
     const movie = {
       ...this.#movie,
-      comments: this.#movie.comments.filter((value) =>value !== Number(commentId)),
+      comments: this.#movie.comments.filter((value) =>value !== Number(commentId.id)),
     };
-    try {
-      await this.#commentsModel.deleteComment(commentId);
-      this.#handleDataChange(
-        UserAction.UPDATE_POPUP,
-        UpdateType.MINOR,
-        movie
-      );
-    } catch(err) {
-      throw new Error("Can't delete comment");
-    }
+
+    this.#handleDataChange(
+      UserAction.DELETE_COMMENT,
+      UpdateType.MINOR,
+      {commentId, movie}
+    );
   };
 
   #hadleWatchlistClick = () => {
@@ -92,4 +104,25 @@ export default class PopupPresenter {
   destroy() {
     this.#popupViewComponent.element.remove();
   }
+
+  setSavingComment() {
+    this.#popupViewComponent.setSavingComment();
+  }
+
+  setDeletingComment(commentId) {
+    this.#popupViewComponent.setDeletingComment(commentId);
+  }
+
+  setAbortingDeletingComment(commentId) {
+    this.#popupViewComponent.setAbortingDeletingComment(commentId);
+  }
+
+  setAbortingSavingComment() {
+    this.#popupViewComponent.setAbortingSavingComment();
+  }
+
+  setAbortingWatchProgress() {
+    this.#popupViewComponent.setAbortingWatchProgress(this.#popupViewComponent);
+  }
+
 }

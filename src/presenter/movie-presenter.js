@@ -27,13 +27,16 @@ export default class MoviePresenter {
       onAlreadyWatchedClick: () => { this.#handleAlreadyWatchedClick(movie); },
       onFavoriteClick: () => { this.#handleFavoriteClick(movie); },
     });
+
     if (prevMovieCardComponent === null) {
       render(this.#movieCardComponent, this.#filmContainerElement);
       return ;
     }
+
     if (this.#filmContainerElement.contains(prevMovieCardComponent.element)) {
       replace(this.#movieCardComponent, prevMovieCardComponent);
     }
+
   }
 
   #hadleWatchlistClick = () => {
@@ -59,5 +62,9 @@ export default class MoviePresenter {
 
   destroy() {
     this.#movieCardComponent.element.remove();
+  }
+
+  setAbortingCardFilmInfo() {
+    this.#movieCardComponent.shake();
   }
 }

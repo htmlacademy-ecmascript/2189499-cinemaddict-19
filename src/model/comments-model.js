@@ -1,15 +1,10 @@
 import Observable from '../framework/observable.js';
-
-function adaptCommentsToClient(comment) {
-  return {
-    ...comment,
-    date: new Date(comment.date)
-  };
-}
+import { adaptToClient, adaptCommentsToClient } from '../utils/common.js';
 
 export default class CommentsModel extends Observable {
   #comments = [];
   #commentsApiServiсe = null;
+
   constructor({commentsApiServiсe}) {
     super();
     this.#commentsApiServiсe = commentsApiServiсe;
@@ -28,10 +23,20 @@ export default class CommentsModel extends Observable {
     }
   }
 
-  async deleteComment(id) {
+  async addComment(updateType, update) {
     try {
-      await this.#commentsApiServiсe.deleteComment(id);
-      this.#comments = this.#comments = this.#comments.filter((comment) => comment.id !== id);
+      const newComment = await this.#commentsApiServiсe.addComment(update);
+      this.#comments = newComment.comments;
+      this._notify(updateType, adaptToClient(newComment.movie));
+    } catch(err) {
+      throw new Error('Can\'t add comment');
+    }
+  }
+
+  async deleteComment(updateType, update) {
+    try {
+      await this.#commentsApiServiсe.deleteComment(update.commentId.id);
+      this.#comments = this.#comments = this.#comments.filter((comment) => comment.id !== update.commentId.id);
       this._notify(this.#comments);
     } catch(err) {
       throw new Error('Can\'t delete comment');

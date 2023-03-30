@@ -1,45 +1,56 @@
 import { humanizeCommentDate } from '../utils/date-transform.js';
-import AbstractView from '../framework/view/abstract-view.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
-function createPopupFilmCommentStructureTemplate(commentId, comments, index) {
+function createPopupFilmCommentStructureTemplate(commentId, comments, index, {isDisabled, isDeleting}) {
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
-    <img src="./images/emoji/${comments[index].emotion}.png" width="55" height="55" alt="emoji-${comments[index].emotion}.png">
+    <img src="./images/emoji/${comments.emotion}.png" width="55" height="55" alt="emoji-${comments.emotion}.png">
   </span>
   <div>
-    <p class="film-details__comment-text">${comments[index].comment}</p>
+    <p class="film-details__comment-text">${comments.comment}</p>
     <p class="film-details__comment-info">
-      <span class="film-details__comment-author">${comments[index].author}</span>
-      <span class="film-details__comment-day">${humanizeCommentDate(comments[index].date)}</span>
-      <button class="film-details__comment-delete">Delete</button>
+      <span class="film-details__comment-author">${comments.author}</span>
+      <span class="film-details__comment-day">${humanizeCommentDate(comments.date)}</span>
+      <button class="film-details__comment-delete" ${isDisabled ? 'disabled' : ''}>${isDeleting ? 'Deleting...' : 'Delete'}</button>
     </p>
   </div>
 </li>`;
 }
 
-export default class PopupFilmCommentStructureView extends AbstractView {
+export default class PopupFilmCommentStructureView extends AbstractStatefulView {
   #commentId = null;
   #hadleDeleteCommet = null;
-  #commentsModel = null;
   #comments = null;
   #indexOfComment = null;
-  constructor(commentId, indexOfComment, {hadleDeleteCommet, comments, commentsModel}) {
+  #commentsData = null;
+
+  #initialState = {
+    isDisabled: false,
+    isDeleting: false
+  };
+
+  constructor(commentId, indexOfComment, {hadleDeleteCommet, comments}) {
     super();
     this.#indexOfComment = indexOfComment;
     this.#commentId = commentId;
-    this.#commentsModel = commentsModel;
     this.#hadleDeleteCommet = hadleDeleteCommet;
     this.#comments = comments;
-    this.element.querySelector('.film-details__comment-delete')
-      .addEventListener('click', this.#daleteCommentHandler);
+    this._setState(this.#initialState);
+    this._restoreHandlers();
   }
 
   get template() {
-    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#indexOfComment);
+    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#indexOfComment, this._state, this.#commentsData);
   }
 
-  #daleteCommentHandler = () => {
-    this.#hadleDeleteCommet(this.#commentId);
+  _restoreHandlers() {
+    this.element.querySelector('.film-details__comment-delete')
+      .addEventListener('click', this.#deleteCommentHandler);
+  }
+
+  #deleteCommentHandler = () => {
+    this.#hadleDeleteCommet(this.#comments);
   };
+
 
 }

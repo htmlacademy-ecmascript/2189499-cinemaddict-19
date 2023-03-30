@@ -8,17 +8,25 @@ export default class CommentsApiService extends ApiService {
       .then(ApiService.parseResponse);
   }
 
-  async addComment(movie, comment) {
+  async addComment({commentAdd, movie}) {
     const response = await this._load({
       url: `comments/${movie.id}`,
       method: Method.POST,
-      body: JSON.stringify(comment),
-      headers: new Headers({ 'Content-Type': 'application/json' })
+      body: JSON.stringify(commentAdd),
+      headers: new Headers({'Content-Type': 'application/json'}),
     });
-    if (response) {
-      const parsedResponse = await ApiService.parseResponse(response);
-      return parsedResponse;
-    }
+
+    const parsedResponse = await ApiService.parseResponse(response);
+
+    return parsedResponse;
+  }
+
+  async deleteComment(id) {
+    const response = await this._load({
+      url: `comments/${id}`,
+      method: Method.DELETE
+    });
+    return response;
   }
 
   async deleteComment(id) {

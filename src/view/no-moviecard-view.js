@@ -10,7 +10,7 @@ const NoMovieTextType = {
 
 function createNoMovieTemplate(filterType) {
   const noMovieTextValue = NoMovieTextType[filterType];
-  return `<h2 class="films-list__title">${noMovieTextValue}</h2>`;
+  return `<h2 class="films-list__title" id="no-movie">${noMovieTextValue}</h2>`;
 }
 
 export default class NoMovieView extends AbstractView {
@@ -24,4 +24,5 @@ export default class NoMovieView extends AbstractView {
   get template() {
     return createNoMovieTemplate(this.#filterType);
   }
+
 }

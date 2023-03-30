@@ -1,24 +1,13 @@
 import { humanizeMovieDuration } from '../utils/date-transform.js';
 import { humanizeReleaseDate } from '../utils/date-transform.js';
-import AbstractView from '../framework/view/abstract-view.js';
 import PopupFilmCommentStructureView from './popup-film-comment-structure-view';
 import PopupFilmDetailNewCommentView from './popup-film-details-new-comment-view';
+import PopupFilmDetailsControlView from './popup-film-details-controls-view';
 import { render } from '../framework/render.js';
+import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 
 function createPopupTemplate(movie) {
-  const {comments, filmInfo, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
-
-  const isActiveWatchlist = watchlist
-    ? 'film-details__control-button--active'
-    : '';
-
-  const isActiveAlreadyWatched = alreadyWatched
-    ? 'film-details__control-button--active'
-    : '';
-
-  const isActiveFavorite = favorite
-    ? 'film-details__control-button--active'
-    : '';
+  const {comments, filmInfo} = movie;
 
   return `<section class="film-details">
   <div class="film-details__inner">
@@ -85,12 +74,9 @@ function createPopupTemplate(movie) {
         </div>
       </div>
 
-      <section class="film-details__controls">
-        <button type="button" class="film-details__control-button ${isActiveWatchlist} film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
-        <button type="button" class="film-details__control-button ${isActiveAlreadyWatched} film-details__control-button--watched" id="watched" name="watched">Already watched</button>
-        <button type="button" class="film-details__control-button ${isActiveFavorite} film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
-      </section>
+      <section class="film-details__controls-wrap"></section>
     </div>
+
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
       <h3 class="film-details__comments-title">Comments ${comments.length}</h3>
@@ -103,7 +89,7 @@ function createPopupTemplate(movie) {
 </section>`;
 }
 
-export default class PopupView extends AbstractView {
+export default class PopupView extends AbstractStatefulView {
   #handleClosePopupClick = null;
   #movie = null;
   #commentList = null;
@@ -115,29 +101,45 @@ export default class PopupView extends AbstractView {
   #handleDeleteComment = null;
   #commentsModel = null;
   #comments = null;
-  constructor({movie, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
+  #hanleComment = null;
+  #onAddCommentHandler = null;
+  #filmDetailsControl = null;
+  #popupCommentsView = new Map();
+  #popupFilmDetailsControlView = null;
+  #popupFilmDetailsControlSection = null;
+
+  constructor({movie, onAddCommentHandler, onClosePopupClick, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick, onCloseComment, commentsModel, comments}) {
     super();
     this.#movie = movie.movie;
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
-    this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView();
+
+    this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView({
+      hanleComment: this.#commentAddHandler,
+    });
+
+    this.#popupFilmDetailsControlSection = this.element.querySelector('.film-details__controls-wrap');
+
+    this.#popupFilmDetailsControlView = new PopupFilmDetailsControlView({
+      movie: this.#movie,
+      onWatchlistPopupClick: this.#addToWatchlistPopupClickHandler,
+      onAlreadyWatchedClick: this.#alreadyWatchedClickHandler,
+      onFavoriteClick: this.#favoriteClickHandler,
+    });
+
+    render(this.#popupFilmDetailsControlView, this.#popupFilmDetailsControlSection);
+    this.#onAddCommentHandler = onAddCommentHandler;
     this.#handleClosePopupClick = onClosePopupClick;
     this.#handleDeleteComment = onCloseComment;
     this.#commentsModel = commentsModel;
     this.#comments = comments;
     this.#commentList = this.element.querySelector('.film-details__comments-list');
+
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
-    this.element.querySelector('.film-details__control-button--watchlist')
-      .addEventListener('click', this.#addToWatchlistPopupClickHandler);
-
-    this.element.querySelector('.film-details__control-button--watched')
-      .addEventListener('click', this.#alreadyWatchedClickHandler);
-
-    this.element.querySelector('.film-details__control-button--favorite')
-      .addEventListener('click', this.#favoriteClickHandler);
+    this.#filmDetailsControl = this.element.querySelector('.film-details__controls');
 
     this.#movie.comments.forEach((commentId, indexOfComment) => {
       const popupFilmCommentStructureView = new PopupFilmCommentStructureView(
@@ -145,9 +147,12 @@ export default class PopupView extends AbstractView {
         indexOfComment,
         {
           hadleDeleteCommet: this.#deleteCommentHandler,
-          comments: this.#comments,
+          comments: this.#comments[indexOfComment],
           commentsModel: this.#commentsModel,
         });
+
+      this.#popupCommentsView.set(commentId, popupFilmCommentStructureView);
+
       render(popupFilmCommentStructureView, this.#commentList);
       this.#popupFilmCommentStructureView = popupFilmCommentStructureView;
     });
@@ -158,7 +163,16 @@ export default class PopupView extends AbstractView {
     return createPopupTemplate(this.#movie);
   }
 
+  #commentAddHandler = (comment) => {
+    localStorage.setItem('scrollX', this.element.scrollTop);
+    this.#onAddCommentHandler(comment);
+    if (comment.emotion === null) {
+      this.setAbortingSavingComment();
+    }
+  };
+
   #deleteCommentHandler = (commentId) => {
+    localStorage.setItem('scrollX', this.element.scrollTop);
     this.#handleDeleteComment(commentId);
   };
 
@@ -169,19 +183,53 @@ export default class PopupView extends AbstractView {
 
   #addToWatchlistPopupClickHandler = () => {
     this.#hadleWatchlistClick();
+    localStorage.setItem('scrollX', this.element.scrollTop);
   };
 
   #alreadyWatchedClickHandler = () => {
     this.#handleAlreadyWatchedClick();
+    localStorage.setItem('scrollX', this.element.scrollTop);
   };
 
   #favoriteClickHandler = () => {
     this.#handleFavoriteClick();
+    localStorage.setItem('scrollX', this.element.scrollTop);
   };
 
   resetpopupFilmDetailNewCommentView() {
     this.#popupFilmDetailNewCommentView.reset();
   }
+
+  setSavingComment() {
+    this.#popupFilmDetailNewCommentView.updateElement({
+      isDisabled: true,
+    });
+  }
+
+  setDeletingComment(commentId) {
+    this.#popupCommentsView.get(commentId.id).updateElement({
+      isDeleting: true,
+      isDisabled: true,
+      scrollPosition: this.element.scrollTop,
+    });
+  }
+
+  setAbortingDeletingComment = (commentId) => {
+    this.#popupCommentsView.get(commentId.id).updateElement({
+      isDeleting: false,
+      isDisabled: false,
+    });
+    this.#popupCommentsView.get(commentId.id).shake();
+  };
+
+  setAbortingSavingComment = () => {
+    this.#popupFilmDetailNewCommentView.updateElement({
+      isDisabled: false,
+    });
+    this.#popupFilmDetailNewCommentView.shake();
+  };
+
+  setAbortingWatchProgress = () => {
+    this.#popupFilmDetailsControlView.shake();
+  };
 }
-
-

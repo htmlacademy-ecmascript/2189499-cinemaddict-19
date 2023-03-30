@@ -4,13 +4,15 @@ import SortView from '../view/sort-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';
 import FooterStatisticsView from '../view/footer-statistics-view.js';
-import NoMovieView from '../view/no-moviecard-view.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
 import { SortType, UpdateType, UserAction } from '../const.js';
 import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-transform';
 import { filter } from '../utils/filter.js';
 import LoadingView from '../view/loading-view.js';
+import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
+import { PopupState } from '../const.js';
+import { TimeLimit } from '../const.js';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -34,6 +36,12 @@ export default class BoardPresenter {
   #commentsModel = null;
   #loadingComponent = new LoadingView();
   #isLoading = true;
+  #uiBLocker = new UiBlocker({
+    LOWER_LIMIT:TimeLimit.LOWER_LIMIT,
+    UPPER_LIMIT: TimeLimit.UPPER_LIMIT,
+  });
+
+  #popupState = PopupState.CLOSED;
   #loadMoreButtonHandler = () => {
     const movieCount = this.movie.length;
     this.movie
@@ -93,24 +101,49 @@ export default class BoardPresenter {
     this.#moviePresenter.set(movie.id, moviePresenter);
   }
 
-  #handleViewAction = (actionType, updateType, update) => {
+  #handleViewAction = async (actionType, updateType, update) => {
+    this.#uiBLocker.block();
     switch(actionType) {
       case UserAction.SORT_MOVIE:
         this.#movieModel.updateType(updateType, update);
         break;
       case UserAction.UPDATE_MOVIE:
-        this.#movieModel.updateMovie(updateType, update);
+        try {
+          await this.#movieModel.updateMovie(updateType, update);
+        } catch {
+          this.#moviePresenter.get(update.id).setAbortingCardFilmInfo();
+        }
         break;
       case UserAction.UPDATE_POPUP:
-        this.#movieModel.updateMovie(updateType, update);
+        try {
+          await this.#movieModel.updateMovie(updateType, update);
+        } catch {
+          this.#popupPresenterComponent.setAbortingWatchProgress();
+        }
         break;
       case UserAction.DELETE_COMMENT:
-        this.#commentsModel.deleteСomment(updateType, update);
+        this.#popupPresenterComponent.setDeletingComment(update.commentId);
+        try {
+          await this.#commentsModel.deleteComment(updateType, update);
+          this.#movieModel.updateMovie(updateType, update.movie);
+        } catch {
+          this.#popupPresenterComponent.setAbortingDeletingComment(update.commentId);
+        }
+        break;
+      case UserAction.ADD_COMMENT:
+        this.#popupPresenterComponent.setSavingComment();
+        try {
+          await this.#commentsModel.addComment(updateType, update);
+          this.#movieModel.updateMovie(updateType, update.movie);
+        } catch {
+          this.#popupPresenterComponent.setAbortingSavingComment();
+        }
+        break;
     }
+    this.#uiBLocker.unblock();
   };
 
   #handleModelEvent = (updateType, data) => {
-    debugger;
     switch(updateType) {
       case UpdateType.PATCH:
         this.#moviePresenter.get(data.id).init(data);
@@ -155,9 +188,7 @@ export default class BoardPresenter {
     this.#moviePresenter.clear();
     remove(this.#loadMoreButtonComponent);
     this.#renderShowMoreBtn();
-    if (this.#noMovieComponent) {
-      remove(this.#noMovieComponent);
-    }
+    remove(this.#noMovieComponent);
   }
 
   #renderLoading() {
@@ -165,6 +196,7 @@ export default class BoardPresenter {
   }
 
   #renderPopup(movie) {
+    this.#popupState = 'OPENED';
     if (this.#popupPresenterComponent) {
       this.#popupPresenterComponent.destroy();
       this.#popupPresenterComponent = null;
@@ -175,6 +207,7 @@ export default class BoardPresenter {
       removePopupPresenterComponent: () => { this.#removePopupPresenterComponent(); },
       onDataChange: this.#handleViewAction,
       commentsModel: this.#commentsModel,
+      popupState: this.#popupState,
     });
     popupPresenter.init(movie);
     this.#popupPresenterComponent = popupPresenter;
@@ -197,32 +230,25 @@ export default class BoardPresenter {
   }
 
   #renderMovieList() {
+
     if (this.movie.length <= BoardPresenter.MOVIE_COUNT_PER_STEP) {
       remove(this.#loadMoreButtonComponent);
     }
-    if (this.movie.length === BoardPresenter.MOVIE_COUNT_ZERO) {
-      this.#renderNoMovie();
-    }
-    for (let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++){
+
+    for (let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++) {
+
       if (i === this.movie.length) {
         return;
       }
-      this.#renderMovie(this.movie[i]);
-    }
-  }
 
-  #renderNoMovie(filterType) {
-    this.#filterType = filterType;
-    this.#noMovieComponent = new NoMovieView({
-      filterType: this.#filterType,
-    });
-    render(this.#noMovieComponent, this.#main);
+      this.#renderMovie(this.movie[i]);
+
+    }
   }
 
   #renderBoard() {
     render(new UserNameStatusView(), this.#header);
     this.#renderSort();
-
     render(this.#filmListComponent, this.#main);
 
     if (this.#isLoading) {
