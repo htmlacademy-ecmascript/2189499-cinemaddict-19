@@ -3,13 +3,13 @@ import { render, replace, remove } from '../framework/render';
 import {FilterType, UpdateType} from '../const.js';
 import { filter } from '../utils/filter';
 import NoMovieView from '../view/no-moviecard-view.js';
+
 export default class FilterMoviePresenter {
   #filterComponent = null;
   #movieModel = null;
   #filterModel = null;
   #filterContainer = null;
   #noMovieCardComponent = null;
-
   #allMovieLength = null;
   #watchlistMovieLength = null;
   #historyMovieLength = null;
@@ -36,16 +36,19 @@ export default class FilterMoviePresenter {
         name: 'All',
         count: filter[FilterType.ALL](movie).length,
       },
+
       {
         type: FilterType.WATCHLIST,
         name: 'Watchlist',
         count: filter[FilterType.WATCHLIST](movie).length,
       },
+
       {
         type: FilterType.HISTORY,
         name: 'History',
         count: filter[FilterType.HISTORY](movie).length,
       },
+
       {
         type: FilterType.FAVORITES,
         name: 'Favorites',
@@ -78,61 +81,79 @@ export default class FilterMoviePresenter {
 
     if (this.#filterModel.filter === 'All' && this.#allMovieLength === 0 ) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
+
       render(this.#noMovieCardComponent, this.#filterContainer);
     }
+
     if (this.#filterModel.filter === 'Watchlist' && this.#watchlistMovieLength === 0) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
+
       render(this.#noMovieCardComponent, this.#filterContainer);
     }
+
     if (this.#filterModel.filter === 'History' && this.#historyMovieLength === 0) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
+
       render(this.#noMovieCardComponent, this.#filterContainer);
     }
+
     if (this.#filterModel.filter === 'Favorites' && this.#favoritesMoviesLength === 0) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
+
       render(this.#noMovieCardComponent, this.#filterContainer);
     }
 
     if (this.#filterModel.filter === 'All' && this.#allMovieLength !== 0 ) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
+
     }
 
     if (this.#filterModel.filter === 'Watchlist' && this.#watchlistMovieLength !== 0 ) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
+
     }
 
     if (this.#filterModel.filter === 'History' && this.#historyMovieLength !== 0 ) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
+
     }
 
     if (this.#filterModel.filter === 'Favorites' && this.#favoritesMoviesLength !== 0 ) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
+
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
-    }
 
+    }
   }
 
   #handleModelUpdate = () => {
@@ -140,9 +161,11 @@ export default class FilterMoviePresenter {
   };
 
   #filterTypeChange = (filterType) => {
+
     if (this.#filterModel.filter === filterType) {
       return;
     }
+
     this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   };
 

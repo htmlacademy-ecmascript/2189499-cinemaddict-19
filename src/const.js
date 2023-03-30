@@ -35,4 +35,21 @@ const Method = {
   POST: 'POST',
 };
 
-export {FilterType, SortType, UpdateType, UserAction, Method};
+const PopupState = {
+  CLOSED: 'CLOSED',
+  OPENED: 'OPENED',
+};
+
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000,
+};
+
+const Format = {
+  DATE_FORMAT: 'YYYY',
+  DURATION_FORMAT: 'H[h] mm',
+  COMMENT_FORMAT: 'YYYY MMMM DD HH:mm',
+  RELEASE_FORMAT: 'DD MMMM YYYY'
+};
+
+export {FilterType, SortType, UpdateType, UserAction, Method, PopupState, TimeLimit, Format};

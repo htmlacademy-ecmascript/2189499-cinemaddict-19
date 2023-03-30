@@ -4,7 +4,6 @@ import SortView from '../view/sort-view.js';
 import ShowMoreButtonView from '../view/show-more-button-view.js';
 import UserNameStatusView from '../view/user-name-status-view.js';
 import FooterStatisticsView from '../view/footer-statistics-view.js';
-import NoMovieView from '../view/no-moviecard-view.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
 import { SortType, UpdateType, UserAction } from '../const.js';
@@ -12,16 +11,8 @@ import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-tr
 import { filter } from '../utils/filter.js';
 import LoadingView from '../view/loading-view.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
-
-const PopupState = {
-  CLOSED: 'CLOSED',
-  OPENED: 'OPENED',
-};
-
-const TimeLimit = {
-  LOWER_LIMIT: 350,
-  UPPER_LIMIT: 1000,
-};
+import { PopupState } from '../const.js';
+import { TimeLimit } from '../const.js';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -272,5 +263,4 @@ export default class BoardPresenter {
     render(this.#loadMoreButtonComponent, this.#main);
   }
 }
-
 

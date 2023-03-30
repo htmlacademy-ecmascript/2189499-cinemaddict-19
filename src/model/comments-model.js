@@ -1,15 +1,10 @@
 import Observable from '../framework/observable.js';
-import { adaptToClient } from '../utils/common.js';
-function adaptCommentsToClient(comment) {
-  return {
-    ...comment,
-    date: new Date(comment.date)
-  };
-}
+import { adaptToClient, adaptCommentsToClient } from '../utils/common.js';
 
 export default class CommentsModel extends Observable {
   #comments = [];
   #commentsApiServiсe = null;
+
   constructor({commentsApiServiсe}) {
     super();
     this.#commentsApiServiсe = commentsApiServiсe;

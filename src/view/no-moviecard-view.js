@@ -24,4 +24,5 @@ export default class NoMovieView extends AbstractView {
   get template() {
     return createNoMovieTemplate(this.#filterType);
   }
+
 }

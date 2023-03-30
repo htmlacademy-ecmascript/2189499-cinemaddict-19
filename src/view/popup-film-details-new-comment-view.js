@@ -43,6 +43,7 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
   };
 
   #hanleComment = null;
+
   constructor({hanleComment}) {
     super();
     this._setState(this.#initialState);
@@ -50,16 +51,16 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
     this.#hanleComment = hanleComment;
   }
 
+  get template() {
+    const {emotion, comment, isDisabled} = this._state;
+    return createPopupFilmDetailsNewCommentTemplate({emotion, comment, isDisabled});
+  }
+
   _restoreHandlers() {
     this.element.querySelector('.film-details__emoji-list')
       .addEventListener('click', this.#emojiClickHandler);
     this.element.querySelector('.film-details__comment-input')
       .addEventListener('keydown', this.#commentKeyDownHandler);
-  }
-
-  get template() {
-    const {emotion, comment, isDisabled} = this._state;
-    return createPopupFilmDetailsNewCommentTemplate({emotion, comment, isDisabled});
   }
 
   reset() {
@@ -77,24 +78,23 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
   };
 
   #commentKeyDownHandler = (evt) => {
-    
     if ((evt.metaKey || evt.ctrlKey) && evt.key === 'Enter') {
-      let emotion = document.querySelector('.film-details__add-emoji-label').querySelector('img');
-        if (emotion !== null) {
-          let emotionSrc = emotion.src;
-          let emotionSrcSubstring = String(emotionSrc.substring(35).split('.')[0]);
-        
-          this.#hanleComment({
-            emotion: emotionSrcSubstring,
-            comment: document.querySelector('.film-details__comment-input').value,
-          });  
-        }
-        if (emotion === null) {
-          this.#hanleComment({
-            emotion: emotion,
-            comment: document.querySelector('.film-details__comment-input').value,
-          });  
-        }
+      const emotion = document.querySelector('.film-details__add-emoji-label').querySelector('img');
+      if (emotion !== null) {
+        const emotionSrc = emotion.src;
+        const emotionSrcSubstring = String(emotionSrc.substring(35).split('.')[0]);
+
+        this.#hanleComment({
+          emotion: emotionSrcSubstring,
+          comment: document.querySelector('.film-details__comment-input').value,
+        });
+      }
+      if (emotion === null) {
+        this.#hanleComment({
+          emotion: emotion,
+          comment: document.querySelector('.film-details__comment-input').value,
+        });
+      }
     }
   };
 }

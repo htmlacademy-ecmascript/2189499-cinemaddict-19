@@ -29,7 +29,6 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
     isDeleting: false
   };
 
-
   constructor(commentId, indexOfComment, {hadleDeleteCommet, comments}) {
     super();
     this.#indexOfComment = indexOfComment;
@@ -38,7 +37,10 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
     this.#comments = comments;
     this._setState(this.#initialState);
     this._restoreHandlers();
+  }
 
+  get template() {
+    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#indexOfComment, this._state, this.#commentsData);
   }
 
   _restoreHandlers() {
@@ -50,7 +52,5 @@ export default class PopupFilmCommentStructureView extends AbstractStatefulView 
     this.#hadleDeleteCommet(this.#comments);
   };
 
-  get template() {
-    return createPopupFilmCommentStructureTemplate(this.#commentId, this.#comments, this.#indexOfComment, this._state, this.#commentsData);
-  }
+
 }

@@ -2,8 +2,6 @@ import { remove, render } from '../framework/render';
 import PopupView from '../view/popup-view';
 import { UserAction,UpdateType } from '../const';
 
-// let cord = 0;
-
 export default class PopupPresenter {
   #popupViewComponent = null;
   #handleDataChange = null;
@@ -12,19 +10,17 @@ export default class PopupPresenter {
   #comments = null;
   #removePopupPresenterComponentHandler = null;
   #commentsModel = null;
-  #popupState = null;
 
-  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel, popupState}) {
+  constructor({body, onDataChange, removePopupPresenterComponent, commentsModel}) {
     this.#body = body;
     this.#removePopupPresenterComponentHandler = removePopupPresenterComponent;
     this.#handleDataChange = onDataChange;
     this.#commentsModel = commentsModel;
-    this.#popupState = popupState;
   }
 
   async init(movie) {
     this.#movie = movie.movie;
-    
+
     await this.#commentsModel.init(movie.movie);
 
     this.#comments = this.#commentsModel.comments;
@@ -48,7 +44,7 @@ export default class PopupPresenter {
     remove(this.#popupViewComponent);
     this.#removePopupPresenterComponentHandler();
     this.#body.classList.remove('hide-overflow');
-    let cord = ['scrollX'];
+    const cord = ['scrollX'];
     localStorage[cord] = 0;
   };
 

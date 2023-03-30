@@ -114,17 +114,20 @@ export default class PopupView extends AbstractStatefulView {
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
+
     this.#popupFilmDetailNewCommentView = new PopupFilmDetailNewCommentView({
       hanleComment: this.#commentAddHandler,
     });
 
     this.#popupFilmDetailsControlSection = this.element.querySelector('.film-details__controls-wrap');
+
     this.#popupFilmDetailsControlView = new PopupFilmDetailsControlView({
       movie: this.#movie,
       onWatchlistPopupClick: this.#addToWatchlistPopupClickHandler,
       onAlreadyWatchedClick: this.#alreadyWatchedClickHandler,
       onFavoriteClick: this.#favoriteClickHandler,
     });
+
     render(this.#popupFilmDetailsControlView, this.#popupFilmDetailsControlSection);
     this.#onAddCommentHandler = onAddCommentHandler;
     this.#handleClosePopupClick = onClosePopupClick;
@@ -132,6 +135,7 @@ export default class PopupView extends AbstractStatefulView {
     this.#commentsModel = commentsModel;
     this.#comments = comments;
     this.#commentList = this.element.querySelector('.film-details__comments-list');
+
     this.element.querySelector('.film-details__close-btn')
       .addEventListener('click', this.#closePopupClickHandler);
 
@@ -160,23 +164,22 @@ export default class PopupView extends AbstractStatefulView {
   }
 
   #commentAddHandler = (comment) => {
-    let cord = ['scrollX']
+    const cord = ['scrollX'];
     localStorage[cord] = [this.element.scrollTop];
     this.#onAddCommentHandler(comment);
     if (comment.emotion === null) {
-      setAbortingSavingComment();
-      return;
+      this.setAbortingSavingComment();
     }
   };
 
   #deleteCommentHandler = (commentId) => {
-    let cord = ['scrollX']
+    const cord = ['scrollX'];
     localStorage[cord] = [this.element.scrollTop];
     this.#handleDeleteComment(commentId);
   };
 
   #closePopupClickHandler = (evt) => {
-    let cord = ['scrollX'];
+    const cord = ['scrollX'];
     localStorage[cord] = [this.element.scrollTop = 0];
     evt.preventDefault();
     this.#handleClosePopupClick();
@@ -185,19 +188,19 @@ export default class PopupView extends AbstractStatefulView {
   #addToWatchlistPopupClickHandler = () => {
     this.#hadleWatchlistClick();
 
-    let cord = ['scrollX']
+    const cord = ['scrollX'];
     localStorage[cord] = [this.element.scrollTop];
   };
 
   #alreadyWatchedClickHandler = () => {
     this.#handleAlreadyWatchedClick();
-    let cord = ['scrollX']
+    const cord = ['scrollX'];
     localStorage[cord] = [this.element.scrollTop];
   };
 
   #favoriteClickHandler = () => {
     this.#handleFavoriteClick();
-    let cord = ['scrollX']
+    const cord = ['scrollX'];
     localStorage[cord] = [this.element.scrollTop];
   };
 

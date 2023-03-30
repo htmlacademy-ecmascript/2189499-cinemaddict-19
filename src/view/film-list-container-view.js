@@ -9,4 +9,3 @@ export default class FilmListContainerView extends AbstractView {
     return createFilmListContainerTemplate();
   }
 }
-

@@ -32,12 +32,12 @@ export default class SortView extends AbstractStatefulView {
     this._restoreHandlers();
   }
 
-  _restoreHandlers() {
-    this.element.addEventListener('click', this.#sortTypeChangeHandler);
-  }
-
   get template() {
     return createSortViewTemplate(this._state.sort);
+  }
+
+  _restoreHandlers() {
+    this.element.addEventListener('click', this.#sortTypeChangeHandler);
   }
 
   reset() {

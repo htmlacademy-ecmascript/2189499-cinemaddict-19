@@ -2,6 +2,13 @@ function getRandomArrayElement(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
+function adaptCommentsToClient(comment) {
+  return {
+    ...comment,
+    date: new Date(comment.date)
+  };
+}
+
 function adaptToClient(movie){
   const adaptedMovie = {
     ...movie,
@@ -35,4 +42,4 @@ function adaptToClient(movie){
   return adaptedMovie;
 }
 
-export {getRandomArrayElement, adaptToClient};
+export {getRandomArrayElement, adaptToClient, adaptCommentsToClient};

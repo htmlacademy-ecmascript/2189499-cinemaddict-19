@@ -1,6 +1,7 @@
 import { UpdateType } from '../const.js';
 import Observable from '../framework/observable.js';
 import { adaptToClient } from '../utils/common.js';
+
 export default class MovieModel extends Observable {
   #movieApiService = null;
   #movie = [];
@@ -34,11 +35,10 @@ export default class MovieModel extends Observable {
     if (index === -1) {
       throw new Error('Can\'t update unexisting film');
     }
+
     try {
       const response = await this.#movieApiService.updateMovie(update);
-      let adaptedMovie = adaptToClient(response);
-      console.log(adaptedMovie);
-
+      const adaptedMovie = adaptToClient(response);
       this.#movie = [
         ...this.#movie.slice(0, index),
         adaptedMovie,

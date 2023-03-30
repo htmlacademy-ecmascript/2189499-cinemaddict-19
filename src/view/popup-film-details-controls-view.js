@@ -15,7 +15,6 @@ function createPopupFilmDetailsControlViewTemplate(movie) {
     ? 'film-details__control-button--active'
     : '';
 
-
   return (`
   <section class="film-details__controls">
   <button type="button" class="film-details__control-button ${isActiveWatchlist} film-details__control-button--watchlist" id="watchlist" name="watchlist">Add to watchlist</button>
@@ -23,6 +22,7 @@ function createPopupFilmDetailsControlViewTemplate(movie) {
   <button type="button" class="film-details__control-button ${isActiveFavorite} film-details__control-button--favorite" id="favorite" name="favorite">Add to favorites</button>
   </section>
   `);
+
 }
 
 export default class PopupFilmDetailsControlView extends AbstractStatefulView {
@@ -34,7 +34,6 @@ export default class PopupFilmDetailsControlView extends AbstractStatefulView {
   constructor({movie, onWatchlistPopupClick, onAlreadyWatchedClick, onFavoriteClick}) {
     super();
     this.#movie = movie;
-
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
@@ -66,4 +65,3 @@ export default class PopupFilmDetailsControlView extends AbstractStatefulView {
   };
 
 }
-
