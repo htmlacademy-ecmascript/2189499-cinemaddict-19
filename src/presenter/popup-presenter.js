@@ -20,9 +20,7 @@ export default class PopupPresenter {
 
   async init(movie) {
     this.#movie = movie.movie;
-
     await this.#commentsModel.init(movie.movie);
-
     this.#comments = this.#commentsModel.comments;
 
     this.#popupViewComponent = new PopupView({
@@ -35,6 +33,7 @@ export default class PopupPresenter {
       onCloseComment: this.#closeCommentHandle,
       onAddCommentHandler: this.#handleCommentAdd,
     });
+
     render(this.#popupViewComponent, this.#body);
     this.#closeEscBtnPopup();
     this.#popupViewComponent.element.scrollBy(0, localStorage.scrollX);
@@ -50,21 +49,22 @@ export default class PopupPresenter {
 
   #closeEscBtnPopup = () => {
     const escKeydownHandler = (evt) => {
+
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
         this.#handleClosePopupClick();
         document.removeEventListener('keydown', escKeydownHandler);
       }
+
     };
     document.addEventListener('keydown', escKeydownHandler);
   };
 
   #handleCommentAdd = (commentAdd) => {
-    const movie = this.#movie;
     this.#handleDataChange(
       UserAction.ADD_COMMENT,
       UpdateType.MINOR,
-      {commentAdd, movie},
+      {commentAdd, movie: this.#movie},
     );
   };
 
@@ -125,4 +125,5 @@ export default class PopupPresenter {
   setAbortingWatchProgress() {
     this.#popupViewComponent.setAbortingWatchProgress(this.#popupViewComponent);
   }
+
 }

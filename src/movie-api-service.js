@@ -2,12 +2,12 @@ import ApiService from './framework/api-service';
 import { Method } from './const.js';
 
 export default class MovieApiService extends ApiService {
-  get movie(){
+  get movie() {
     return this._load({url: 'movies'})
       .then(ApiService.parseResponse);
   }
 
-  async updateMovie(movie){
+  async updateMovie(movie) {
     const response = await this._load({
       url: `movies/${movie.id}`,
       method: Method.PUT,
@@ -19,7 +19,7 @@ export default class MovieApiService extends ApiService {
     return parsedResponse;
   }
 
-  #adaptToServer(movie){
+  #adaptToServer(movie) {
     const adaptedMovie = {...movie,
       ['film_info']:{...movie.filmInfo,
         ['age_rating']: movie.filmInfo.ageRating,

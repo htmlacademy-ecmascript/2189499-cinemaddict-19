@@ -230,14 +230,17 @@ export default class BoardPresenter {
   }
 
   #renderMovieList() {
+
     if (this.movie.length <= BoardPresenter.MOVIE_COUNT_PER_STEP) {
       remove(this.#loadMoreButtonComponent);
     }
 
-    for (let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++){
+    for (let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++) {
+
       if (i === this.movie.length) {
         return;
       }
+
       this.#renderMovie(this.movie[i]);
 
     }

@@ -15,7 +15,7 @@ export default class FilterMoviePresenter {
   #historyMovieLength = null;
   #favoritesMoviesLength = null;
 
-  constructor({filterModel, movieModel, filterContainer}){
+  constructor({filterModel, movieModel, filterContainer}) {
     this.#filterContainer = filterContainer;
     this.#filterModel = filterModel;
     this.#movieModel = movieModel;

@@ -6,7 +6,7 @@ export default class MovieModel extends Observable {
   #movieApiService = null;
   #movie = [];
 
-  constructor({movieApiService}){
+  constructor({movieApiService}) {
     super();
     this.#movieApiService = movieApiService;
   }

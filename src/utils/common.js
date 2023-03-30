@@ -9,7 +9,7 @@ function adaptCommentsToClient(comment) {
   };
 }
 
-function adaptToClient(movie){
+function adaptToClient(movie) {
   const adaptedMovie = {
     ...movie,
     filmInfo: {...movie['film_info'],
