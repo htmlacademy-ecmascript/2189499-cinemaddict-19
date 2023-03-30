@@ -93,10 +93,4 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
       }
     }
   };
-
-  #commentKeyDownHandler = (evt) => {
-    if (evt.ctrlKey && evt.key === 'Enter') {
-      console.log('submit');
-    }
-  };
 }

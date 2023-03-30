@@ -47,6 +47,8 @@ export default class FilterView extends AbstractView {
 
   #filterTypeChangeHandler = (evt) => {
     evt.preventDefault();
-    this.#handleFilterTypeChange(evt.target.dataset.filterType);
+    if (evt.target.dataset.filterType === 'Watchlist' || evt.target.dataset.filterType === 'History' || evt.target.dataset.filterType === 'Favorites' || evt.target.dataset.filterType === 'All') {
+      this.#handleFilterTypeChange(evt.target.dataset.filterType);
+    }
   };
 }
