@@ -42,5 +42,4 @@ export default class CommentsModel extends Observable {
       throw new Error('Can\'t delete comment');
     }
   }
-
 }

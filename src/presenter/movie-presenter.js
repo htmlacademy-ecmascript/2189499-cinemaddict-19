@@ -68,4 +68,3 @@ export default class MoviePresenter {
     this.#movieCardComponent.shake();
   }
 }
-
