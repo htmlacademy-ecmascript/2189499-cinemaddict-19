@@ -1,4 +1,4 @@
-import MenuView from '../view/menu-view';
+import FilterView from '../view/filter-view.js';
 import { render, replace, remove } from '../framework/render';
 import {FilterType, UpdateType} from '../const.js';
 import { filter } from '../utils/filter';
@@ -61,7 +61,7 @@ export default class FilterMoviePresenter {
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
 
-    this.#filterComponent = new MenuView({
+    this.#filterComponent = new FilterView({
       filters,
       currentFilterType: this.#filterModel.filter,
       onFilterTypeChange: this.#filterTypeChange,

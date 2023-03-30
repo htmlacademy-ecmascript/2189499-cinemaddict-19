@@ -71,29 +71,25 @@ export default class PopupFilmDetailNewCommentView extends AbstractStatefulView 
     if(evt.target.tagName !== 'IMG') {
       return;
     }
+
     this.updateElement({
-      emotion: evt.target.src,
+      emotion: this.#initialState.emotion = evt.target.src,
       comment: document.querySelector('.film-details__comment-input').value,
     });
+
   };
 
   #commentKeyDownHandler = (evt) => {
     if ((evt.metaKey || evt.ctrlKey) && evt.key === 'Enter') {
-      const emotion = document.querySelector('.film-details__add-emoji-label').querySelector('img');
-      if (emotion !== null) {
-        const emotionSrc = emotion.src;
-        const emotionSrcSubstring = String(emotionSrc.substring(35).split('.')[0]);
+
+      if (this.#initialState.emotion !== null) {
+        const emotionSrcSubstring = String(this.#initialState.emotion.substring(35).split('.')[0]);
 
         this.#hanleComment({
           emotion: emotionSrcSubstring,
           comment: document.querySelector('.film-details__comment-input').value,
         });
-      }
-      if (emotion === null) {
-        this.#hanleComment({
-          emotion: emotion,
-          comment: document.querySelector('.film-details__comment-input').value,
-        });
+
       }
     }
   };
