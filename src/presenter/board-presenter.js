@@ -92,6 +92,10 @@ export default class BoardPresenter {
   }
 
   #renderMovie(movie) {
+    // debugger;
+    // if (this.#sortComponent)
+    // console.log(this.#sortComponent);
+
     const moviePresenter = new MoviePresenter({
       filmContainerElement: this.#filmContainerElement,
       onShowPopupClick: this.#openPopup,
@@ -242,8 +246,8 @@ export default class BoardPresenter {
       }
 
       this.#renderMovie(this.movie[i]);
-
     }
+    render(this.#sortComponent, this.#main);
   }
 
   #renderBoard() {

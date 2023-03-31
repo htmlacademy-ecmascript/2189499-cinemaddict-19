@@ -60,7 +60,6 @@ export default class FilterMoviePresenter {
 
   init() {
     this.#sortComponent = document.querySelector('.sort');
-    console.log(this.#sortComponent);
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
 
