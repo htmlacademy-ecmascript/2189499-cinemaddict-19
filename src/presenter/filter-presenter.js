@@ -14,6 +14,7 @@ export default class FilterMoviePresenter {
   #watchlistMovieLength = null;
   #historyMovieLength = null;
   #favoritesMoviesLength = null;
+  #sortComponent = null;
 
   constructor({filterModel, movieModel, filterContainer}) {
     this.#filterContainer = filterContainer;
@@ -58,6 +59,8 @@ export default class FilterMoviePresenter {
   }
 
   init() {
+    this.#sortComponent = document.querySelector('.sort');
+    console.log(this.#sortComponent);
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
 
@@ -81,7 +84,7 @@ export default class FilterMoviePresenter {
 
     if (this.#filterModel.filter === 'All' && this.#allMovieLength === 0 ) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
-
+      this.#sortComponent.remove();
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
@@ -91,7 +94,7 @@ export default class FilterMoviePresenter {
 
     if (this.#filterModel.filter === 'Watchlist' && this.#watchlistMovieLength === 0) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
-
+      this.#sortComponent.remove();
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
@@ -101,7 +104,7 @@ export default class FilterMoviePresenter {
 
     if (this.#filterModel.filter === 'History' && this.#historyMovieLength === 0) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
-
+      this.#sortComponent.remove();
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
@@ -111,7 +114,7 @@ export default class FilterMoviePresenter {
 
     if (this.#filterModel.filter === 'Favorites' && this.#favoritesMoviesLength === 0) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
-
+      this.#sortComponent.remove();
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
