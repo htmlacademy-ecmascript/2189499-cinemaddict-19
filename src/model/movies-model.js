@@ -38,7 +38,9 @@ export default class MovieModel extends Observable {
 
     try {
       const response = await this.#movieApiService.updateMovie(update);
+      // console.log(response);
       const adaptedMovie = adaptToClient(response);
+
       this.#movie = [
         ...this.#movie.slice(0, index),
         adaptedMovie,

@@ -40,6 +40,7 @@ export default class MoviePresenter {
   }
 
   #hadleWatchlistClick = () => {
+    ;
     this.#handleDataChange(
       UserAction.UPDATE_MOVIE,
       UpdateType.MINOR,
