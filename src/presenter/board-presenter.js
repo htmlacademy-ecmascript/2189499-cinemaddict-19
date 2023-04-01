@@ -36,6 +36,7 @@ export default class BoardPresenter {
   #commentsModel = null;
   #loadingComponent = new LoadingView();
   #isLoading = true;
+  #wrapSort = this.#filmListComponent.element.querySelector('.wrap-sort');
   #uiBLocker = new UiBlocker({
     LOWER_LIMIT:TimeLimit.LOWER_LIMIT,
     UPPER_LIMIT: TimeLimit.UPPER_LIMIT,
@@ -92,10 +93,6 @@ export default class BoardPresenter {
   }
 
   #renderMovie(movie) {
-    // debugger;
-    // if (this.#sortComponent)
-    // console.log(this.#sortComponent);
-
     const moviePresenter = new MoviePresenter({
       filmContainerElement: this.#filmContainerElement,
       onShowPopupClick: this.#openPopup,
@@ -230,11 +227,10 @@ export default class BoardPresenter {
     this.#sortComponent = new SortView({
       onSortTypeChange: this.#handleSortTypeChange,
     });
-    render(this.#sortComponent, this.#main);
+    render(this.#sortComponent, this.#wrapSort);
   }
 
   #renderMovieList() {
-
     if (this.movie.length <= BoardPresenter.MOVIE_COUNT_PER_STEP) {
       remove(this.#loadMoreButtonComponent);
     }
@@ -247,7 +243,8 @@ export default class BoardPresenter {
 
       this.#renderMovie(this.movie[i]);
     }
-    render(this.#sortComponent, this.#main);
+    render(this.#sortComponent, this.#wrapSort);
+
   }
 
   #renderBoard() {
