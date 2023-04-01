@@ -90,6 +90,7 @@ export default class BoardPresenter {
 
   init() {
     this.#renderBoard();
+    
   }
 
   #renderMovie(movie) {
@@ -257,7 +258,11 @@ export default class BoardPresenter {
     }
     this.#renderMovieList();
     this.#renderShowMoreBtn();
-    render(new FooterStatisticsView(), this.#footer);
+
+    setTimeout(() => render(new FooterStatisticsView({movieCount: this.#movieModel.movie.length,}),
+     this.#footer),
+      1000);
+    
   }
 
   #renderShowMoreBtn() {
