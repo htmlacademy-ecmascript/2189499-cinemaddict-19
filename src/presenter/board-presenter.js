@@ -13,6 +13,7 @@ import LoadingView from '../view/loading-view.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
 import { PopupState } from '../const.js';
 import { TimeLimit } from '../const.js';
+import UserNameStatusSectionView from '../view/user-name-status-section-view.js'
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -37,6 +38,9 @@ export default class BoardPresenter {
   #loadingComponent = new LoadingView();
   #isLoading = true;
   #wrapSort = this.#filmListComponent.element.querySelector('.wrap-sort');
+  // #UserNameStatusSectionComponent = null
+  #userNameStatusSectionComponent = new UserNameStatusSectionView();
+  #userNameStatusEntrails = null;
   #uiBLocker = new UiBlocker({
     LOWER_LIMIT:TimeLimit.LOWER_LIMIT,
     UPPER_LIMIT: TimeLimit.UPPER_LIMIT,
@@ -232,6 +236,8 @@ export default class BoardPresenter {
   }
 
   #renderMovieList() {
+
+
     if (this.movie.length <= BoardPresenter.MOVIE_COUNT_PER_STEP) {
       remove(this.#loadMoreButtonComponent);
     }
@@ -246,10 +252,13 @@ export default class BoardPresenter {
     }
     render(this.#sortComponent, this.#wrapSort);
 
+    this.#userNameStatusEntrails = new UserNameStatusView({movieCount: this.#movieModel.movie.length,});
+    render(this.#userNameStatusEntrails, this.#userNameStatusSectionComponent.element);
   }
 
   #renderBoard() {
-    render(new UserNameStatusView(), this.#header);
+    render(this.#userNameStatusSectionComponent, this.#header);
+    
     this.#renderSort();
     render(this.#filmListComponent, this.#main);
 
