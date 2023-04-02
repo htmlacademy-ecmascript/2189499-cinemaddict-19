@@ -10,11 +10,11 @@ function createCardFilmsTemplate(movie) {
   let filmDecriptionSubr = '';
 
   if (filmDecription.length > 140) {
-    filmDecriptionSubr = filmDecription.substring(0, 139) + '...';
+    filmDecriptionSubr = `${filmDecription.substring(0, 139) }...`;
   } else {
     filmDecriptionSubr = filmDecription;
   }
-  
+
   const isActiveWatchlist = watchlist
     ? 'film-card__controls-item--active'
     : '';

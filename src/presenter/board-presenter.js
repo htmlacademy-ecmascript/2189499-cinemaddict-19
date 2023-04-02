@@ -6,14 +6,14 @@ import UserNameStatusView from '../view/user-name-status-view.js';
 import FooterStatisticsView from '../view/footer-statistics-view.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
-import { SortType, UpdateType, UserAction } from '../const.js';
+import { SortType, UpdateType, UserAction, SortCount } from '../const.js';
 import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-transform';
 import { filter } from '../utils/filter.js';
 import LoadingView from '../view/loading-view.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
 import { PopupState } from '../const.js';
 import { TimeLimit } from '../const.js';
-import UserNameStatusSectionView from '../view/user-name-status-section-view.js'
+import UserNameStatusSectionView from '../view/user-name-status-section-view.js';
 
 export default class BoardPresenter {
   static MOVIE_COUNT_PER_STEP = 5;
@@ -94,7 +94,7 @@ export default class BoardPresenter {
 
   init() {
     this.#renderBoard();
-    
+
   }
 
   #renderMovie(movie) {
@@ -236,7 +236,7 @@ export default class BoardPresenter {
   }
 
   #renderMovieList() {
-
+    // console.log(SortCount.WATCHLIST_COUNT);
 
     if (this.movie.length <= BoardPresenter.MOVIE_COUNT_PER_STEP) {
       remove(this.#loadMoreButtonComponent);
@@ -252,13 +252,20 @@ export default class BoardPresenter {
     }
     render(this.#sortComponent, this.#wrapSort);
 
-    this.#userNameStatusEntrails = new UserNameStatusView({movieCount: this.#movieModel.movie.length,});
-    render(this.#userNameStatusEntrails, this.#userNameStatusSectionComponent.element);
+    if (this.#userNameStatusEntrails) {
+      this.#userNameStatusEntrails.element.remove();
+    }
+
+    setTimeout(() => {
+      this.#userNameStatusEntrails = new UserNameStatusView({movieCount: SortCount.WATCHLIST_COUNT});
+      render(this.#userNameStatusEntrails, this.#userNameStatusSectionComponent.element);
+    }, 10);
+
   }
 
   #renderBoard() {
     render(this.#userNameStatusSectionComponent, this.#header);
-    
+
     this.#renderSort();
     render(this.#filmListComponent, this.#main);
 
@@ -269,9 +276,9 @@ export default class BoardPresenter {
     this.#renderShowMoreBtn();
 
     setTimeout(() => render(new FooterStatisticsView({movieCount: this.#movieModel.movie.length,}),
-     this.#footer),
-      1000);
-    
+      this.#footer),
+    1000);
+
   }
 
   #renderShowMoreBtn() {

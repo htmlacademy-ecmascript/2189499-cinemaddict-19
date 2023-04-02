@@ -1,6 +1,6 @@
 import FilterView from '../view/filter-view.js';
 import { render, replace, remove } from '../framework/render';
-import {FilterType, UpdateType} from '../const.js';
+import {FilterType, UpdateType, SortCount} from '../const.js';
 import { filter } from '../utils/filter';
 import NoMovieView from '../view/no-moviecard-view.js';
 
@@ -30,6 +30,10 @@ export default class FilterMoviePresenter {
     this.#watchlistMovieLength = filter[FilterType.WATCHLIST](movie).length;
     this.#historyMovieLength = filter[FilterType.HISTORY](movie).length;
     this.#favoritesMoviesLength = filter[FilterType.FAVORITES](movie).length;
+
+    SortCount.WATCHLIST_COUNT = filter[FilterType.WATCHLIST](movie).length;
+    SortCount.HISTORY_COUNT = filter[FilterType.HISTORY](movie).length;
+    SortCount.FAVORITES_COUNT = filter[FilterType.FAVORITES](movie).length;
 
     return [
       {

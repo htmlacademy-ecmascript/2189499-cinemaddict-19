@@ -52,4 +52,10 @@ const Format = {
   RELEASE_FORMAT: 'DD MMMM YYYY'
 };
 
-export {FilterType, SortType, UpdateType, UserAction, Method, PopupState, TimeLimit, Format};
+const SortCount = {
+  WATCHLIST_COUNT: 0,
+  HISTORY_COUNT: 0,
+  FAVORITES_COUNT: 0,
+};
+
+export {FilterType, SortType, UpdateType, UserAction, Method, PopupState, TimeLimit, Format, SortCount};

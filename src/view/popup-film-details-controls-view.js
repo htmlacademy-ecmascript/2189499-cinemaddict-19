@@ -37,7 +37,7 @@ export default class PopupFilmDetailsControlView extends AbstractStatefulView {
     this.#hadleWatchlistClick = onWatchlistPopupClick ;
     this.#handleAlreadyWatchedClick = onAlreadyWatchedClick;
     this.#handleFavoriteClick = onFavoriteClick;
-    
+
     this.element.querySelector('.film-details__control-button--watchlist')
       .addEventListener('click', this.#addToWatchlistPopupClickHandler);
 
