@@ -33,6 +33,7 @@ export default class BoardPresenter {
   #filterModel = null;
   #noMovieComponent = null;
   #filterType = null;
+  #footerStatisticsComponent = null;
   #commentsModel = null;
   #loadingComponent = new LoadingView();
   #isLoading = true;
@@ -259,11 +260,18 @@ export default class BoardPresenter {
       this.#userNameStatusEntrails.element.remove();
     }
 
-    setTimeout(() => {
-      this.#userNameStatusEntrails = new UserNameStatusView({movieCount: SortCount.WATCHLIST_COUNT});
-      render(this.#userNameStatusEntrails, this.#userNameStatusSectionComponent.element);
-    }, 100);
+    // setTimeout(() => {
+    //   this.#userNameStatusEntrails = new UserNameStatusView({movieCount: SortCount.WATCHLIST_COUNT});
+    //   render(this.#userNameStatusEntrails, this.#userNameStatusSectionComponent.element);
+    // }, 100);
 
+
+    if ( this.#movieModel.movie.length > 0 ) {
+      if (this.#footerStatisticsComponent === null) {
+        this.#footerStatisticsComponent = new FooterStatisticsView({movieCount: this.#movieModel.movie.length});
+        render(this.#footerStatisticsComponent, this.#footer);
+      }
+    }
   }
 
   #renderBoard() {
@@ -278,9 +286,8 @@ export default class BoardPresenter {
     this.#renderMovieList();
     this.#renderShowMoreBtn();
 
-    setTimeout(() => render(new FooterStatisticsView({movieCount: this.#movieModel.movie.length,}),
-      this.#footer),
-    100);
+    // document.addEventListener("DOMContentLoaded", render(new FooterStatisticsView({movieCount: this.#movieModel.movie.length,}),
+    //   this.#footer));
 
   }
 
