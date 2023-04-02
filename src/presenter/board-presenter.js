@@ -260,17 +260,17 @@ export default class BoardPresenter {
       this.#userNameStatusEntrails.element.remove();
     }
 
-    // setTimeout(() => {
-    //   this.#userNameStatusEntrails = new UserNameStatusView({movieCount: SortCount.WATCHLIST_COUNT});
-    //   render(this.#userNameStatusEntrails, this.#userNameStatusSectionComponent.element);
-    // }, 100);
-
 
     if ( this.#movieModel.movie.length > 0 ) {
       if (this.#footerStatisticsComponent === null) {
         this.#footerStatisticsComponent = new FooterStatisticsView({movieCount: this.#movieModel.movie.length});
         render(this.#footerStatisticsComponent, this.#footer);
       }
+
+      setTimeout(() => {
+        this.#userNameStatusEntrails = new UserNameStatusView({movieCount: SortCount.WATCHLIST_COUNT});
+        render(this.#userNameStatusEntrails, this.#userNameStatusSectionComponent.element);
+      }, 100);
     }
   }
 
