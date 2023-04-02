@@ -1,6 +1,6 @@
 import FilterView from '../view/filter-view.js';
 import { render, replace, remove } from '../framework/render';
-import {FilterType, UpdateType, SortCount} from '../const.js';
+import {FilterType, UpdateType, SortCount, RenderMovieCount} from '../const.js';
 import { filter } from '../utils/filter';
 import NoMovieView from '../view/no-moviecard-view.js';
 
@@ -15,7 +15,6 @@ export default class FilterMoviePresenter {
   #historyMovieLength = null;
   #favoritesMoviesLength = null;
   #sortComponent = null;
-
   constructor({filterModel, movieModel, filterContainer}) {
     this.#filterContainer = filterContainer;
     this.#filterModel = filterModel;
@@ -171,7 +170,8 @@ export default class FilterMoviePresenter {
     if (this.#filterModel.filter === filterType) {
       return;
     }
-
+    // debugger;
+    RenderMovieCount.RENDER = 5;
     this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   };
 

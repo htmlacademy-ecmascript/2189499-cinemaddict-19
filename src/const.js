@@ -58,4 +58,8 @@ const SortCount = {
   FAVORITES_COUNT: 0,
 };
 
-export {FilterType, SortType, UpdateType, UserAction, Method, PopupState, TimeLimit, Format, SortCount};
+const RenderMovieCount = {
+  RENDER: 5,
+};
+
+export {FilterType, SortType, UpdateType, UserAction, Method, PopupState, TimeLimit, Format, SortCount, RenderMovieCount};

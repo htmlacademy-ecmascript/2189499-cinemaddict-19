@@ -1,7 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
 function createUserNameStatusTemplate(movieCount) {
-  console.log(movieCount);
   let statusText = '';
 
   if (movieCount > 21) {

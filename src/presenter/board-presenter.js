@@ -6,7 +6,7 @@ import UserNameStatusView from '../view/user-name-status-view.js';
 import FooterStatisticsView from '../view/footer-statistics-view.js';
 import MoviePresenter from './movie-presenter.js';
 import PopupPresenter from './popup-presenter.js';
-import { SortType, UpdateType, UserAction, SortCount } from '../const.js';
+import { SortType, UpdateType, UserAction, SortCount, RenderMovieCount } from '../const.js';
 import {sortMovieDate, sortMovieRating, sortMovieDefault} from '../utils/date-transform';
 import { filter } from '../utils/filter.js';
 import LoadingView from '../view/loading-view.js';
@@ -23,7 +23,7 @@ export default class BoardPresenter {
   #footer = null;
   #movieModel = null;
   #body = null;
-  #renderMovieCount = BoardPresenter.MOVIE_COUNT_PER_STEP;
+  // renderMovieCount = 5;
   #moviePresenter = new Map();
   #filmListComponent = new FilmListView();
   #filmContainerElement = this.#filmListComponent.element.querySelector('.films-list__container');
@@ -49,11 +49,12 @@ export default class BoardPresenter {
   #popupState = PopupState.CLOSED;
   #loadMoreButtonHandler = () => {
     const movieCount = this.movie.length;
+    // console.log(RenderMovieCount.RENDER);
     this.movie
-      .slice(this.#renderMovieCount, this.#renderMovieCount + BoardPresenter.MOVIE_COUNT_PER_STEP)
+      .slice(RenderMovieCount.RENDER, RenderMovieCount.RENDER + BoardPresenter.MOVIE_COUNT_PER_STEP)
       .forEach((movie) => this.#renderMovie(movie));
-    this.#renderMovieCount += BoardPresenter.MOVIE_COUNT_PER_STEP;
-    if (this.#renderMovieCount >= movieCount) {
+    RenderMovieCount.RENDER += BoardPresenter.MOVIE_COUNT_PER_STEP;
+    if (RenderMovieCount.RENDER >= movieCount) {
       remove(this.#loadMoreButtonComponent);
     }
   };
@@ -223,6 +224,7 @@ export default class BoardPresenter {
     if (this.#currentSortType === sortType) {
       return;
     }
+    RenderMovieCount.RENDER = 5;
     this.#currentSortType = sortType;
     this.#clearMovieList();
     this.#renderMovieList();
@@ -236,16 +238,15 @@ export default class BoardPresenter {
   }
 
   #renderMovieList() {
-    // console.log(SortCount.WATCHLIST_COUNT);
 
-    if (this.movie.length <= BoardPresenter.MOVIE_COUNT_PER_STEP) {
+    if (this.movie.length < BoardPresenter.MOVIE_COUNT_PER_STEP) {
       remove(this.#loadMoreButtonComponent);
     }
 
     for (let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++) {
-
+      // console.log(this.movie.length);
       if (i === this.movie.length) {
-        return;
+        break;
       }
 
       this.#renderMovie(this.movie[i]);
@@ -277,7 +278,7 @@ export default class BoardPresenter {
 
     setTimeout(() => render(new FooterStatisticsView({movieCount: this.#movieModel.movie.length,}),
       this.#footer),
-    1000);
+    100);
 
   }
 
