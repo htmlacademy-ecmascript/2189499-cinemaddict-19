@@ -170,7 +170,7 @@ export default class FilterMoviePresenter {
     if (this.#filterModel.filter === filterType) {
       return;
     }
-    // debugger;
+
     RenderMovieCount.RENDER = 5;
     this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   };

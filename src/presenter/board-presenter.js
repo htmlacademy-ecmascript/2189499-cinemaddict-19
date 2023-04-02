@@ -23,7 +23,6 @@ export default class BoardPresenter {
   #footer = null;
   #movieModel = null;
   #body = null;
-  // renderMovieCount = 5;
   #moviePresenter = new Map();
   #filmListComponent = new FilmListView();
   #filmContainerElement = this.#filmListComponent.element.querySelector('.films-list__container');
@@ -38,7 +37,6 @@ export default class BoardPresenter {
   #loadingComponent = new LoadingView();
   #isLoading = true;
   #wrapSort = this.#filmListComponent.element.querySelector('.wrap-sort');
-  // #UserNameStatusSectionComponent = null
   #userNameStatusSectionComponent = new UserNameStatusSectionView();
   #userNameStatusEntrails = null;
   #uiBLocker = new UiBlocker({
@@ -48,8 +46,8 @@ export default class BoardPresenter {
 
   #popupState = PopupState.CLOSED;
   #loadMoreButtonHandler = () => {
+    console.log(RenderMovieCount.RENDER);
     const movieCount = this.movie.length;
-    // console.log(RenderMovieCount.RENDER);
     this.movie
       .slice(RenderMovieCount.RENDER, RenderMovieCount.RENDER + BoardPresenter.MOVIE_COUNT_PER_STEP)
       .forEach((movie) => this.#renderMovie(movie));
@@ -115,6 +113,7 @@ export default class BoardPresenter {
         this.#movieModel.updateType(updateType, update);
         break;
       case UserAction.UPDATE_MOVIE:
+        RenderMovieCount.RENDER = 5;
         try {
           await this.#movieModel.updateMovie(updateType, update);
         } catch {
@@ -122,6 +121,7 @@ export default class BoardPresenter {
         }
         break;
       case UserAction.UPDATE_POPUP:
+        RenderMovieCount.RENDER = 5;
         try {
           await this.#movieModel.updateMovie(updateType, update);
         } catch {
@@ -129,6 +129,7 @@ export default class BoardPresenter {
         }
         break;
       case UserAction.DELETE_COMMENT:
+        RenderMovieCount.RENDER = 5;
         this.#popupPresenterComponent.setDeletingComment(update.commentId);
         try {
           await this.#commentsModel.deleteComment(updateType, update);
@@ -138,6 +139,7 @@ export default class BoardPresenter {
         }
         break;
       case UserAction.ADD_COMMENT:
+        RenderMovieCount.RENDER = 5;
         this.#popupPresenterComponent.setSavingComment();
         try {
           await this.#commentsModel.addComment(updateType, update);
@@ -244,7 +246,7 @@ export default class BoardPresenter {
     }
 
     for (let i = 0; i < BoardPresenter.MOVIE_COUNT_PER_STEP ; i++) {
-      // console.log(this.movie.length);
+
       if (i === this.movie.length) {
         break;
       }
@@ -260,7 +262,7 @@ export default class BoardPresenter {
     setTimeout(() => {
       this.#userNameStatusEntrails = new UserNameStatusView({movieCount: SortCount.WATCHLIST_COUNT});
       render(this.#userNameStatusEntrails, this.#userNameStatusSectionComponent.element);
-    }, 10);
+    }, 100);
 
   }
 
