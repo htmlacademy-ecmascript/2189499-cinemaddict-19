@@ -47,7 +47,6 @@ export default class BoardPresenter {
 
   #popupState = PopupState.CLOSED;
   #loadMoreButtonHandler = () => {
-    console.log(RenderMovieCount.RENDER);
     const movieCount = this.movie.length;
     this.movie
       .slice(RenderMovieCount.RENDER, RenderMovieCount.RENDER + BoardPresenter.MOVIE_COUNT_PER_STEP)
@@ -285,9 +284,6 @@ export default class BoardPresenter {
     }
     this.#renderMovieList();
     this.#renderShowMoreBtn();
-
-    // document.addEventListener("DOMContentLoaded", render(new FooterStatisticsView({movieCount: this.#movieModel.movie.length,}),
-    //   this.#footer));
 
   }
 

@@ -3,7 +3,7 @@ import AbstractView from '../framework/view/abstract-view.js';
 function createUserNameStatusTemplate(movieCount) {
   let statusText = '';
 
-  if (movieCount > 21) {
+  if (movieCount >= 21) {
     statusText = 'Movie buss';
   }
 
