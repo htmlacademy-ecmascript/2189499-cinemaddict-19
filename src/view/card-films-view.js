@@ -6,6 +6,15 @@ function createCardFilmsTemplate(movie) {
   const {filmInfo, comments, userDetails: {watchlist, alreadyWatched, favorite}} = movie;
   const commentsLength = comments.length;
 
+  const filmDecription = filmInfo.description;
+  let filmDecriptionSubr = '';
+
+  if (filmDecription.length > 140) {
+    filmDecriptionSubr = `${filmDecription.substring(0, 139) }...`;
+  } else {
+    filmDecriptionSubr = filmDecription;
+  }
+
   const isActiveWatchlist = watchlist
     ? 'film-card__controls-item--active'
     : '';
@@ -28,7 +37,7 @@ function createCardFilmsTemplate(movie) {
       <span class="film-card__genre">${filmInfo.genre[0]}</span>
     </p>
     <img src="${filmInfo.poster}" alt="" class="film-card__poster">
-    <p class="film-card__description">${filmInfo.description}</p>
+    <p class="film-card__description">${filmDecriptionSubr}</p>
     <span class="film-card__comments">${commentsLength} comments</span>
   </a>
   <div class="film-card__controls">

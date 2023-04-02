@@ -31,7 +31,7 @@ export default class MovieApiService extends ApiService {
       },
       ['user_details']:{...movie.userDetails,
         ['already_watched']: movie.userDetails.alreadyWatched,
-        ['watching_date']: movie.userDetails.watchingDate.toISOString(),
+        ['watching_date']: movie.userDetails.watchingDate,
       },
 
     };

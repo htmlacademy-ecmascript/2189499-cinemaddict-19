@@ -1,7 +1,3 @@
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
 function adaptCommentsToClient(comment) {
   return {
     ...comment,
@@ -42,4 +38,4 @@ function adaptToClient(movie) {
   return adaptedMovie;
 }
 
-export {getRandomArrayElement, adaptToClient, adaptCommentsToClient};
+export {adaptToClient, adaptCommentsToClient};

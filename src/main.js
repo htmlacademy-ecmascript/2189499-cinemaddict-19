@@ -38,6 +38,7 @@ const filterPresenter = new FilterMoviePresenter({
   movieModel,
 });
 
+movieModel.init();
 filterPresenter.init();
 mainPresenter.init();
-movieModel.init();
+

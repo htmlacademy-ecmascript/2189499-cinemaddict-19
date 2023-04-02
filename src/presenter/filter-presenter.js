@@ -1,6 +1,6 @@
 import FilterView from '../view/filter-view.js';
 import { render, replace, remove } from '../framework/render';
-import {FilterType, UpdateType} from '../const.js';
+import {FilterType, UpdateType, SortCount, RenderMovieCount} from '../const.js';
 import { filter } from '../utils/filter';
 import NoMovieView from '../view/no-moviecard-view.js';
 
@@ -14,7 +14,7 @@ export default class FilterMoviePresenter {
   #watchlistMovieLength = null;
   #historyMovieLength = null;
   #favoritesMoviesLength = null;
-
+  #sortComponent = null;
   constructor({filterModel, movieModel, filterContainer}) {
     this.#filterContainer = filterContainer;
     this.#filterModel = filterModel;
@@ -29,6 +29,10 @@ export default class FilterMoviePresenter {
     this.#watchlistMovieLength = filter[FilterType.WATCHLIST](movie).length;
     this.#historyMovieLength = filter[FilterType.HISTORY](movie).length;
     this.#favoritesMoviesLength = filter[FilterType.FAVORITES](movie).length;
+
+    SortCount.WATCHLIST_COUNT = filter[FilterType.WATCHLIST](movie).length;
+    SortCount.HISTORY_COUNT = filter[FilterType.HISTORY](movie).length;
+    SortCount.FAVORITES_COUNT = filter[FilterType.FAVORITES](movie).length;
 
     return [
       {
@@ -58,6 +62,7 @@ export default class FilterMoviePresenter {
   }
 
   init() {
+    this.#sortComponent = document.querySelector('.sort');
     const filters = this.filters;
     const prevFilterComponent = this.#filterComponent;
 
@@ -81,7 +86,7 @@ export default class FilterMoviePresenter {
 
     if (this.#filterModel.filter === 'All' && this.#allMovieLength === 0 ) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
-
+      this.#sortComponent.remove();
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
@@ -91,7 +96,7 @@ export default class FilterMoviePresenter {
 
     if (this.#filterModel.filter === 'Watchlist' && this.#watchlistMovieLength === 0) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
-
+      this.#sortComponent.remove();
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
@@ -101,7 +106,7 @@ export default class FilterMoviePresenter {
 
     if (this.#filterModel.filter === 'History' && this.#historyMovieLength === 0) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
-
+      this.#sortComponent.remove();
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
@@ -111,7 +116,7 @@ export default class FilterMoviePresenter {
 
     if (this.#filterModel.filter === 'Favorites' && this.#favoritesMoviesLength === 0) {
       const textNoMovieMessgae = this.#filterContainer.querySelector('#no-movie');
-
+      this.#sortComponent.remove();
       if (textNoMovieMessgae !== null) {
         textNoMovieMessgae.remove();
       }
@@ -166,6 +171,7 @@ export default class FilterMoviePresenter {
       return;
     }
 
+    RenderMovieCount.RENDER = 5;
     this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
   };
 
