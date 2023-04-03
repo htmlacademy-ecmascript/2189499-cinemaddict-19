@@ -20,7 +20,7 @@ function createMenuTemplate(currentFilterType, filters) {
 
   return (`
     <nav class="main-navigation">
-      <a href="#all" class="main-navigation__item ${isAll}" data-filter-type="All">All movies ${currentFilterType[0].count}</a>
+      <a href="#all" class="main-navigation__item ${isAll}" data-filter-type="All">All movies</a>
       <a href="#watchlist" class="main-navigation__item ${isWatchlist}" data-filter-type="Watchlist">Watchlist <span class="main-navigation__item-count">${currentFilterType[1].count}</span></a>
       <a href="#history" class="main-navigation__item ${isHistory}" data-filter-type="History">History <span class="main-navigation__item-count">${currentFilterType[2].count}</span></a>
       <a href="#favorites" class="main-navigation__item ${isFavorite}" data-filter-type="Favorites">Favorites <span class="main-navigation__item-count">${currentFilterType[3].count}</span></a>
