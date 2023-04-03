@@ -267,7 +267,7 @@ export default class BoardPresenter {
       }
 
       setTimeout(() => {
-        this.#userNameStatusEntrails = new UserNameStatusView({movieCount: SortCount.WATCHLIST_COUNT});
+        this.#userNameStatusEntrails = new UserNameStatusView({movieCount: SortCount.HISTORY_COUNT});
         render(this.#userNameStatusEntrails, this.#userNameStatusSectionComponent.element);
       }, 100);
     }
